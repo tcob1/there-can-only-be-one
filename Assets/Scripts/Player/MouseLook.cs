@@ -24,6 +24,7 @@ public class MouseLook : MonoBehaviour
     // current base Y position of the camera
     private float baseY;
     private float bobTimer;
+    private float currentBobAmount;
 
     void Start()
     {
@@ -64,31 +65,29 @@ public class MouseLook : MonoBehaviour
     {
         if (!e.isGrounded)
         {
-            ResetBob();
-            return;
-        }
-
-        float horizontalSpeed = new Vector2(e.velocity.x, e.velocity.z).magnitude;
-
-        if (horizontalSpeed > 0.01f)
-        {
-            bobTimer += Time.deltaTime * bobSpeed;
-            float yOffset = Mathf.Sin(bobTimer) * bobAmount;
-            //lowkey setting Y for all funcs right here
-            SetCameraY(baseY + yOffset);
+            currentBobAmount = Mathf.Lerp(currentBobAmount, 0f, Time.deltaTime * 10f);
         }
         else
         {
-            ResetBob();
+            float horizontalSpeed = new Vector2(e.velocity.x, e.velocity.z).magnitude;
+
+            float targetAmount = horizontalSpeed > 0.01f ? bobAmount : 0f;
+            currentBobAmount = Mathf.Lerp(currentBobAmount, targetAmount, Time.deltaTime * 10f);
         }
+
+        bobTimer += Time.deltaTime * bobSpeed;
+
+        float yOffset = Mathf.Sin(bobTimer) * currentBobAmount;
+        SetCameraY(baseY + yOffset);
     }
 
-    private void ResetBob()
-    {
-        bobTimer = 0f;
-        //lowkey setting Y for all funcs right here
-        SetCameraY(baseY);
-    }
+    //replaced with currentBobAmount = Mathf.Lerp(currentBobAmount, 0f, Time.deltaTime * 10f); a smooth lerp back to height
+    //private void ResetBob()
+    //{
+    //    bobTimer = 0f;
+    //    //lowkey setting Y for all funcs right here
+    //    SetCameraY(baseY);
+    //}
 
     //Crouch
     private void PlayerMovement_OnCrouchToggled(object sender, PlayerMovement.OnCrouchEventArgs e)

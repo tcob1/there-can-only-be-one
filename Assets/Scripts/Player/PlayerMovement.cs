@@ -59,7 +59,16 @@ public class PlayerMovement : MonoBehaviour
 
         //Ground check
         wasGrounded = isGrounded;
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        RaycastHit hit;
+        isGrounded = Physics.Raycast(
+            groundCheck.position,
+            Vector3.down,
+            out hit,
+            groundDistance,
+            groundMask
+        );
+
 
         // Sound for land/jump
         //if (isGrounded != wasGrounded)
@@ -77,11 +86,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Movement input
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        float x = Input.GetAxisRaw("Horizontal");
+        float z = Input.GetAxisRaw("Vertical");
 
         // Calculate movement direction (reuse transform cache)
         Vector3 move = cachedTransform.right * x + cachedTransform.forward * z;
+        //restrict diagonal speed boost-i saw this in a yt short
+        move = Vector3.ClampMagnitude(move, 1f);
 
         // Apply horizontal movement
         controller.Move(move * (currentSpeed * Time.deltaTime));
