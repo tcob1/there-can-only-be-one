@@ -21,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float baseSpeed = 12f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpHeight = 1f;
+
+    //Ground checking
+    [SerializeField] private float capsuleCastRadius = 0.3f;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.4f;
     [SerializeField] private LayerMask groundMask;
@@ -61,8 +64,16 @@ public class PlayerMovement : MonoBehaviour
         wasGrounded = isGrounded;
 
         RaycastHit hit;
-        isGrounded = Physics.Raycast(
-            groundCheck.position,
+
+        // bottom and top of the capsule in world space
+        Vector3 capsuleBottom = groundCheck.position;
+        Vector3 capsuleTop = groundCheck.position + Vector3.up * 0.1f; // tiny height above the bottom
+
+        //spawns capsult at origin then casts to find floor
+        isGrounded = Physics.CapsuleCast(
+            capsuleBottom,
+            capsuleTop,
+            capsuleCastRadius,
             Vector3.down,
             out hit,
             groundDistance,
