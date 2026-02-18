@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3828119029099070485
+--- !u!1 &496669337840083611
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8661398804586011443}
-  - component: {fileID: 2985036206439280137}
-  - component: {fileID: 2696600080923993825}
+  - component: {fileID: 8969532583265414381}
+  - component: {fileID: 10382792842974269}
+  - component: {fileID: 8830248572545939250}
   m_Layer: 0
   m_Name: Swinging Door
   m_TagString: Untagged
@@ -18,34 +18,38 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8661398804586011443
+--- !u!4 &8969532583265414381
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3828119029099070485}
+  m_GameObject: {fileID: 496669337840083611}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 14.66, y: 1.63, z: 4.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4170098840473593785}
+  - {fileID: 7052222359476077681}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2985036206439280137
+--- !u!114 &10382792842974269
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3828119029099070485}
+  m_GameObject: {fileID: 496669337840083611}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6703d5d8eb30d2b59b7a8585aab176be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uniqueID: HouseFrontDoor
+  OnInitialized:
+    m_PersistentCalls:
+      m_Calls: []
   OnOpen:
     m_PersistentCalls:
       m_Calls: []
@@ -58,13 +62,16 @@ MonoBehaviour:
   OnUnlock:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2696600080923993825
+  interactable: {fileID: 5745056172450222502}
+  initialState: 1
+  keyItemName: Key
+--- !u!114 &8830248572545939250
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3828119029099070485}
+  m_GameObject: {fileID: 496669337840083611}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073e07be5043c68c38982e2810e8fded, type: 3}
@@ -73,7 +80,7 @@ MonoBehaviour:
   rotationDuration: 0.5
   openAngle: -90
   closedAngle: 0
---- !u!1 &5347211977566219743
+--- !u!1 &7105326340608872379
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -81,12 +88,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4170098840473593785}
-  - component: {fileID: 4756397096121033471}
-  - component: {fileID: 2033272907098718591}
-  - component: {fileID: 9058090005795348493}
-  - component: {fileID: 8319081335708727054}
-  - component: {fileID: 6560014011218061400}
+  - component: {fileID: 7052222359476077681}
+  - component: {fileID: 2163669646211000440}
+  - component: {fileID: 8380691959969722395}
+  - component: {fileID: 7235254864474033514}
+  - component: {fileID: 2141705456383410439}
+  - component: {fileID: 5745056172450222502}
   m_Layer: 7
   m_Name: Door Mesh
   m_TagString: Untagged
@@ -94,36 +101,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4170098840473593785
+--- !u!4 &7052222359476077681
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5347211977566219743}
+  m_GameObject: {fileID: 7105326340608872379}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 2, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8661398804586011443}
+  m_Father: {fileID: 8969532583265414381}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4756397096121033471
+--- !u!33 &2163669646211000440
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5347211977566219743}
+  m_GameObject: {fileID: 7105326340608872379}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2033272907098718591
+--- !u!23 &8380691959969722395
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5347211977566219743}
+  m_GameObject: {fileID: 7105326340608872379}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -162,13 +169,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &9058090005795348493
+--- !u!65 &7235254864474033514
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5347211977566219743}
+  m_GameObject: {fileID: 7105326340608872379}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -183,13 +190,13 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &8319081335708727054
+--- !u!54 &2141705456383410439
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5347211977566219743}
+  m_GameObject: {fileID: 7105326340608872379}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -210,13 +217,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6560014011218061400
+--- !u!114 &5745056172450222502
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5347211977566219743}
+  m_GameObject: {fileID: 7105326340608872379}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21223dd3378636200ba8ff628d5183a1, type: 3}
@@ -224,16 +231,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnInteract:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2985036206439280137}
-        m_TargetAssemblyTypeName: Door, Assembly-CSharp
-        m_MethodName: TryToggle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []

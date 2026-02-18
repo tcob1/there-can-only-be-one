@@ -12,12 +12,16 @@ public class SwingingDoor : MonoBehaviour
 
     private Coroutine currentRotation;
 
-    void Start()
+    void Awake()
     {
         door = GetComponent<Door>();
+        door.OnInitialized.AddListener(Initialize);
         door.OnOpen.AddListener(SwingOpen);
         door.OnClose.AddListener(SwingClosed);
+    }
 
+    void Initialize()
+    {
         if (door.State == Door.DoorState.Open)
         {
             transform.rotation = Quaternion.Euler(0f, openAngle, 0f);
