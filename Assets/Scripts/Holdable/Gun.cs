@@ -45,11 +45,9 @@ public class Gun : Weapon
         if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, range))
         {
             Debug.Log("Hit: " + hit.collider.name);
-            Debug.Log("Hit Position: " + hit.point);
 
             ParticleSystem effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)).GetComponent<ParticleSystem>();
             effect.Play();
-            Destroy(effect.gameObject, effect.main.duration);
         }
 
         ApplyRecoil();
