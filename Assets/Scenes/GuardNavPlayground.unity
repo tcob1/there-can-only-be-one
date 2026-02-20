@@ -339,6 +339,70 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09135c03210603f42b4207ff66b56781, type: 3}
+--- !u!1 &514194055
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 514194058}
+  - component: {fileID: 514194057}
+  - component: {fileID: 514194056}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &514194056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514194055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3764ba40a169c0e4e94d44cb7ad9753f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &514194057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514194055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78f873a95f0109b42a8180af1a047504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundEffects:
+  - name: jump
+    clip: {fileID: 8300000, guid: 3f6e27c0488cbd142a5399508a01d416, type: 3}
+  - name: land
+    clip: {fileID: 8300000, guid: 222f086d36f599e42b0020d3018c9a8f, type: 3}
+  - name: shoot
+    clip: {fileID: 8300000, guid: 25a18d351fc477849815383f50362d24, type: 3}
+--- !u!4 &514194058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514194055}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5360377, y: 3.7501457, z: -2.8212318}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &541724484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,14 +1163,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1279124061}
-  speed: 9
+  baseSpeed: 12
   gravity: -30
   jumpHeight: 2
+  capsuleCastRadius: 0.3
   groundCheck: {fileID: 1279124062}
   groundDistance: 1.2
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  crouchSpeedMultiplier: 0.5
 --- !u!143 &1279124061
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1776,6 +1842,10 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
+      propertyPath: patrolPoints.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 788778091}
@@ -1880,6 +1950,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 514194058}
   - {fileID: 917453880}
   - {fileID: 1279124062}
   - {fileID: 1005124850}

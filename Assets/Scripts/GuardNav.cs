@@ -12,7 +12,7 @@ public class GuardNav : MonoBehaviour
     public float DetectRange = 100;
     public float DetectAngle = 60;
 
-    bool isChasing = false;
+    public bool isChasing = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
