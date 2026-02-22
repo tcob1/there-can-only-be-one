@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public abstract class Weapon : Holdable
+public abstract class Weapon : WorldItem
 {
     public float damage;
     public float cooldown;
     protected float lastUseTime;
 
-    public abstract void Use();
+    public abstract void Attack();
 
     public float GetDamage() => damage;
 
