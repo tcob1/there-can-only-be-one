@@ -1,14 +1,16 @@
 using UnityEngine;
 
-public class WorldItem : MonoBehaviour
+public abstract class WorldItem : MonoBehaviour
 {
-    public ItemData itemData;
+    [SerializeField] protected ItemData itemData;
 
-    private Interactable interactable;
+    protected Interactable interactable;
+    public bool isHeld;
 
-    void Start()
+    protected virtual void Start()
     {
         interactable = GetComponent<Interactable>();
+
         if (interactable == null)
         {
             Debug.LogError("WorldItem requires an Interactable component!");
@@ -18,14 +20,15 @@ public class WorldItem : MonoBehaviour
         interactable.OnInteract.AddListener(PickUp);
     }
 
-    public void PickUp(GameObject picker)
+    protected virtual void PickUp(GameObject picker)
     {
         Inventory inventory = picker.GetComponent<Inventory>();
+
         if (inventory != null)
         {
-            // Don't destroy the item if it can't be added to the inventory!
             if (inventory.AddItem(itemData))
             {
+                //isHeld = true;
                 Destroy(gameObject);
             }
         }

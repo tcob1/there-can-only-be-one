@@ -21,7 +21,7 @@ public class GuardPistol : Weapon
     {
         if (guard.currentGuardState == GuardNav.GuardState.Shooting)
         {
-            Use();
+            Attack();
         }
 
     }
@@ -31,7 +31,7 @@ public class GuardPistol : Weapon
         transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilRecoverySpeed);
     }
 
-    public override void Use()
+    public override void Attack()
     {
         if (!CanUse())
         {

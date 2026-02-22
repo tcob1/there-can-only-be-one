@@ -21,7 +21,8 @@ public class Gun : Weapon
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Use();
+                Debug.Log("SSHSHSHSHOOOOOT");
+                Attack();
             }
         }
 
@@ -32,7 +33,7 @@ public class Gun : Weapon
         transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilRecoverySpeed);
     }
 
-    public override void Use()
+    public override void Attack()
     {
         if (!CanUse())
         {

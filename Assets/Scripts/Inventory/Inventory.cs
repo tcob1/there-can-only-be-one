@@ -26,6 +26,12 @@ public class Inventory : MonoBehaviour
     public InventorySlot weaponSlot;
     public List<InventorySlot> itemSlots = new();
 
+    public Transform rightHoldPosition;
+    public Transform leftHoldPosition;
+
+    // to track items in ur hands
+    private Dictionary<InventorySlot, GameObject> heldItems = new();
+
     public bool AddItem(ItemData itemData)
     {
         // Check if the item can be stacked with an existing slot.
@@ -38,9 +44,50 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // If not, add it to a new slot.
+        // Decide which hand to use
+        Transform targetHand = null;
+
+        bool rightOccupied = false;
+        bool leftOccupied = false;
+
+        foreach (var held in heldItems.Values)
+        {
+            if (held.transform.parent == rightHoldPosition)
+                rightOccupied = true;
+            if (held.transform.parent == leftHoldPosition)
+                leftOccupied = true;
+        }
+
+        if (!rightOccupied)
+            targetHand = rightHoldPosition;
+        else if (!leftOccupied)
+            targetHand = leftHoldPosition;
+        else
+        {
+            Debug.Log("hands full! Cant pick up: " + itemData.itemName);
+            return false;
+        }
+
+        // Instantiate item in chosen hand
+        GameObject heldItem = null;
+        if (itemData.worldPrefab != null)
+        {
+            heldItem = Instantiate(itemData.worldPrefab, targetHand);
+            WorldItem worldItemComponent = heldItem.GetComponent<WorldItem>();
+            if (worldItemComponent != null)
+                worldItemComponent.isHeld = true;
+
+            heldItem.transform.localPosition = Vector3.zero;
+            heldItem.transform.localRotation = Quaternion.identity;
+        }
+
+        // Add to inventory slot
         InventorySlot newSlot = new(itemData, 1);
         itemSlots.Add(newSlot);
+
+        if (heldItem != null)
+            heldItems[newSlot] = heldItem;
+
         return true;
     }
 
@@ -59,8 +106,25 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        // Instantiate the world prefab at the drop position.
-        Instantiate(slot.itemData.worldPrefab, dropPosition, Quaternion.identity);
+        if (heldItems.TryGetValue(slot, out GameObject heldInstance))
+        {
+            // Move it to the drop position
+            heldInstance.transform.parent = null;
+            heldInstance.transform.position = dropPosition;
+            WorldItem worldItemComponent = heldInstance.GetComponent<WorldItem>();
+            if (worldItemComponent != null)
+            {
+                worldItemComponent.isHeld = false;
+            }
+
+            // Remove reference from dictionary
+            heldItems.Remove(slot);
+        }
+        else
+        {
+            // If we somehow didn’t have the instance, instantiate a new one
+            Instantiate(slot.itemData.worldPrefab, dropPosition, Quaternion.identity);
+        }
 
         // Decrease the quantity or remove the slot if it was the last item.
         slot.quantity--;

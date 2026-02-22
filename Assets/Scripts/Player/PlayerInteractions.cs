@@ -30,10 +30,12 @@ public class PlayerInteractions : MonoBehaviour
 
     void SendInteractionRay()
     {
+        Debug.Log("sent ray");
         Ray interactionRay = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(interactionRay, out RaycastHit hitInfo, interactionRange, layerMask))
         {
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+            Debug.Log("hit " + hitInfo.collider.name);
             interactable?.Interact(player);
         }
     }
