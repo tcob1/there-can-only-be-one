@@ -64,7 +64,7 @@ public class CameraMovement : MonoBehaviour
         //transform.position += cameraMovement;
 
 
-        currScrollSpeed = Mouse.current.scroll.value.y;
+        currScrollSpeed = 0;//Mouse.current.scroll.value.y;
         transform.position += transform.forward * cameraZoomSpeed * currScrollSpeed * Time.deltaTime;
 
 
