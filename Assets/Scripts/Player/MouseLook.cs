@@ -12,20 +12,41 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float bobAmount = 0.05f;
     [SerializeField] private float bobSpeed = 10f;
 
-    private float xRotation = 0f;
+    [Header("Crouch Settings")]
+    [SerializeField] private float crouchCameraOffset = -0.5f;
+    [SerializeField] private float crouchLerpSpeed = 10f;
+    private float targetBaseY;
+
+
+    private float xRotation;
+    //starting Y position of the camera
     private float defaultY;
-    private float bobTimer = 0f;
+    // current base Y position of the camera
+    private float baseY;
+    private float bobTimer;
+    private float currentBobAmount;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
 
         defaultY = cameraTransform.localPosition.y;
+        targetBaseY = defaultY;
+        baseY = defaultY;
 
         playerMovement.OnPlayerMove += PlayerMovement_BobWhileMoving;
+        playerMovement.OnCrouchToggled += PlayerMovement_OnCrouchToggled;
     }
 
     void Update()
+    {
+        HandleMouseLook();
+        UpdateCrouchLerp();
+
+    }
+
+    //Mouse look
+    private void HandleMouseLook()
     {
         float delta = Time.deltaTime;
 
@@ -39,42 +60,55 @@ public class MouseLook : MonoBehaviour
         playerBody.Rotate(Vector3.up * mouseX);
     }
 
+    //Bobbin
     private void PlayerMovement_BobWhileMoving(object sender, PlayerMovement.OnPlayerMoveEventArgs e)
     {
         if (!e.isGrounded)
         {
-            bobTimer = 0f;
-            cameraTransform.localPosition = new Vector3(
-                cameraTransform.localPosition.x,
-                defaultY,
-                cameraTransform.localPosition.z
-            );
-            return;
-        }
-
-        //just ignoring the y value caus it doesnt effect how we bobbbin
-        float speed = new Vector2(e.velocity.x, e.velocity.z).magnitude;
-
-        if (speed > 0.01f)
-        {
-            //progressing bobtimer value along the sine wave
-            bobTimer += Time.deltaTime * bobSpeed;
-            float yOffset = Mathf.Sin(bobTimer) * bobAmount;
-
-            cameraTransform.localPosition = new Vector3(
-                cameraTransform.localPosition.x,
-                defaultY + yOffset,
-                cameraTransform.localPosition.z
-            );
+            currentBobAmount = Mathf.Lerp(currentBobAmount, 0f, Time.deltaTime * 10f);
         }
         else
         {
-            bobTimer = 0f;
-            cameraTransform.localPosition = new Vector3(
-                cameraTransform.localPosition.x,
-                defaultY,
-                cameraTransform.localPosition.z
-            );
+            float horizontalSpeed = new Vector2(e.velocity.x, e.velocity.z).magnitude;
+
+            float targetAmount = horizontalSpeed > 0.01f ? bobAmount : 0f;
+            currentBobAmount = Mathf.Lerp(currentBobAmount, targetAmount, Time.deltaTime * 10f);
         }
+
+        bobTimer += Time.deltaTime * bobSpeed;
+
+        float yOffset = Mathf.Sin(bobTimer) * currentBobAmount;
+        SetCameraY(baseY + yOffset);
+    }
+
+    //replaced with currentBobAmount = Mathf.Lerp(currentBobAmount, 0f, Time.deltaTime * 10f); a smooth lerp back to height
+    //private void ResetBob()
+    //{
+    //    bobTimer = 0f;
+    //    //lowkey setting Y for all funcs right here
+    //    SetCameraY(baseY);
+    //}
+
+    //Crouch
+    private void PlayerMovement_OnCrouchToggled(object sender, PlayerMovement.OnCrouchEventArgs e)
+    {
+        bobTimer = 0f;
+
+        targetBaseY = e.isCrouching ? defaultY + crouchCameraOffset : defaultY;
+    }
+
+
+    private void UpdateCrouchLerp()
+    {
+        baseY = Mathf.Lerp(baseY, targetBaseY, Time.deltaTime * crouchLerpSpeed);
+    }
+
+
+    //Camera support func
+    private void SetCameraY(float y)
+    {
+        Vector3 pos = cameraTransform.localPosition;
+        pos.y = y;
+        cameraTransform.localPosition = pos;
     }
 }
