@@ -19,6 +19,7 @@ public class GuardNav : MonoBehaviour
     public GameObject Player;
     private Vector3 lastKnownPlayerPosition;
     public float DetectRange = 100;
+    public float HearingRange = 50;
     public float ForgetRange = 150;
     public float StopAndShootRange = 10;
     public float DetectAngle = 90;
@@ -34,6 +35,16 @@ public class GuardNav : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(patrolPoints[currentPointIndex].position);
+    }
+
+    void OnEnable()
+    {
+        GlobalEvents.Instance.OnPlayerShoot += OnHearNoise;
+    }
+
+    void OnDisable()
+    {
+        GlobalEvents.Instance.OnPlayerShoot -= OnHearNoise;
     }
 
     // Update is called once per frame
@@ -223,6 +234,19 @@ public class GuardNav : MonoBehaviour
         {
             // If we lost sight of the player, move back to chasing to try to find them again
             SwapToChasing();
+        }
+    }
+
+    private void OnHearNoise(Vector3 noisePosition)
+    {
+        if (currentGuardState == GuardState.Patrolling || currentGuardState == GuardState.Searching)
+        {
+            float distanceToNoise = Vector3.Distance(transform.position, noisePosition);
+            if (distanceToNoise <= HearingRange)
+            {
+                lastKnownPlayerPosition = noisePosition;
+                SwapToSearching();
+            }
         }
     }
 

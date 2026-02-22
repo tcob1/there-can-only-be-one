@@ -53,6 +53,9 @@ public class Gun : Weapon
         ApplyRecoil();
 
         lastUseTime = Time.time;
+
+        // Trigger global event for player shooting (for guard reactions, etc.)
+        GlobalEvents.Instance.TriggerPlayerShoot(firePoint.position);
     }
 
     private void ApplyRecoil()
