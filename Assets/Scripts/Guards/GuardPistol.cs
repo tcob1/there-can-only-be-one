@@ -19,7 +19,7 @@ public class GuardPistol : Weapon
 
     void Update()
     {
-        if (guard.isChasing)
+        if (guard.currentGuardState == GuardNav.GuardState.Shooting)
         {
             Use();
         }

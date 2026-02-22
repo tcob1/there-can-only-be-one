@@ -1821,10 +1821,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 878464995662668146, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
-      propertyPath: m_StoppingDistance
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 1658827571108088277, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
       propertyPath: m_Name
       value: Guard
