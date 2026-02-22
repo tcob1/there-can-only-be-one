@@ -8,6 +8,7 @@ public class TimetravelerInputs : MonoBehaviour
     public float chargeMod = 250f;
 
     private InputAction chargeTTAction;
+    private InputAction chargeTTScroll;
     private bool chargingTT;
     private float scrollCharge;
     
@@ -21,22 +22,24 @@ public class TimetravelerInputs : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scrollCharge = Mouse.current.scroll.ReadValue().y;
         
+        scrollCharge = chargeTTScroll.ReadValue<Vector2>().y;
+        if (chargingTT)
+        {
+            
+            currCharge += (chargeMod * scrollCharge * Time.deltaTime * Mathf.Sqrt(Mathf.Abs(currCharge) + .1f));
+            if (currCharge > 43200) currCharge = 43200;
+            if (currCharge < -43200) currCharge = -43200;
+            print("Charge: " + (int) currCharge);
+            
+        }
+
+        TimeHub.Instance.updateClock(TimeHub.Instance.getTime());
     }
 
     void FixedUpdate()
     {
-        if (chargingTT)
-        {
-            
-            currCharge += (chargeMod * scrollCharge);
-            print(currCharge);
-            
-        } else
-        {
-            TimeHub.Instance.printTime(TimeHub.Instance.getTime());
-        }
+        
     }
 
     void OnEnable()
@@ -46,15 +49,15 @@ public class TimetravelerInputs : MonoBehaviour
         chargeTTAction.started += OnTimetravelStarted;
         chargeTTAction.canceled += OnTimetravelCanceled;
 
-        // chargeTTScroll = InputSystem.actions.FindAction("ChargeTimetravel");
-        // chargeTTScroll.Enable();
+        chargeTTScroll = InputSystem.actions.FindAction("ChargeTimetravel");
+        chargeTTScroll.Enable();
 
     }
 
     void OnDisable()
     {
         chargeTTAction.Disable();
-        // chargeTTScroll.Disable();
+        chargeTTScroll.Disable();
     }
 
     void OnTimetravelStarted(InputAction.CallbackContext context)
@@ -66,7 +69,7 @@ public class TimetravelerInputs : MonoBehaviour
     void OnTimetravelCanceled(InputAction.CallbackContext context)
     {
         
-        TimeHub.Instance.timeForewards((int) currCharge);
+        TimeHub.Instance.timeChange((int) currCharge);
         chargingTT = false;
         currCharge = 0;
         
