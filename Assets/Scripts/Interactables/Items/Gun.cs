@@ -21,7 +21,6 @@ public class Gun : Weapon
         {
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("SSHSHSHSHOOOOOT");
                 Attack();
             }
         }

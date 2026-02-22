@@ -35,11 +35,15 @@ public class GuardNav : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(patrolPoints[currentPointIndex].position);
+
+
+        GlobalEvents.Instance.OnPlayerShoot += OnHearNoise;
     }
 
     void OnEnable()
     {
-        GlobalEvents.Instance.OnPlayerShoot += OnHearNoise;
+        //Debug.Log(GlobalEvents.Instance);
+        //GlobalEvents.Instance.OnPlayerShoot += OnHearNoise;
     }
 
     void OnDisable()
