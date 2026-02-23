@@ -12,8 +12,6 @@ public class Gun : Weapon
     //Recoil
     public float recoilAmount = 5f;
     public float recoilRecoverySpeed = 10f;
-    private Vector3 currentRecoil;
-    private Vector3 recoilVelocity;
 
     void Update()
     {
@@ -29,7 +27,11 @@ public class Gun : Weapon
 
     private void LateUpdate()
     {
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilRecoverySpeed);
+        if (isHeld)
+        {
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilRecoverySpeed);
+        }
+        
     }
 
     public override void Attack()
@@ -44,7 +46,7 @@ public class Gun : Weapon
 
         if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, range))
         {
-            Debug.Log("Hit: " + hit.collider.name);
+            //Debug.Log("Hit: " + hit.collider.name);
 
             ParticleSystem effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)).GetComponent<ParticleSystem>();
             effect.Play();
@@ -63,8 +65,6 @@ public class Gun : Weapon
         // Random horizontal + vertical kick
         float x = Random.Range(-0.5f, 0.5f);
         float y = recoilAmount;
-
-        currentRecoil += new Vector3(-y, x, 0);
 
         // Apply gun model recoil
         transform.localRotation *= Quaternion.Euler(-y, x, 0);
