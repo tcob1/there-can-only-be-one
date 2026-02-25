@@ -830,6 +830,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1959988629555393254, guid: 303901261b6e24845865f13ff04e3c4b, type: 3}
+      propertyPath: damage
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1959988629555393254, guid: 303901261b6e24845865f13ff04e3c4b, type: 3}
+      propertyPath: isHeld
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2992511512375121445, guid: 303901261b6e24845865f13ff04e3c4b, type: 3}
       propertyPath: m_Name
       value: Pistol

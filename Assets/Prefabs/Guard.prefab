@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2333666133991519241}
   - component: {fileID: 878464995662668146}
   - component: {fileID: 7495458128451230273}
+  - component: {fileID: 5153170174484650329}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Untagged
@@ -150,10 +151,24 @@ MonoBehaviour:
   patrolPoints: []
   Player: {fileID: 0}
   DetectRange: 100
+  HearingRange: 50
   ForgetRange: 150
   StopAndShootRange: 10
   DetectAngle: 60
   currentGuardState: 0
+--- !u!114 &5153170174484650329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658827571108088277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aeb69b3e6c56e346834d007537f1c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 30
 --- !u!1 &3973732198082163130
 GameObject:
   m_ObjectHideFlags: 0

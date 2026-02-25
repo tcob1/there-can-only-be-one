@@ -45,6 +45,16 @@ public class Usable : Weapon
             Destroy(effect.gameObject, effect.main.duration + effect.main.startLifetime.constantMax);
         }
 
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f))
+        {
+            HealthManager victimHealth = hit.collider.GetComponent<HealthManager>();
+            if (victimHealth != null)
+            {
+                victimHealth.TakeDamage(GetDamage());
+            }
+        }
+
         ApplyRecoil();
         lastUseTime = Time.time;
     }
