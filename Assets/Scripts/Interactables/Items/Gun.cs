@@ -15,7 +15,7 @@ public class Gun : Weapon
 
     private int layerMask;
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
         layerMask = ~LayerMask.GetMask("InteractableDetector");

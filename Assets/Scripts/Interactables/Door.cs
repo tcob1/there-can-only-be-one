@@ -22,7 +22,8 @@ public class Door : StatefulInteractable
 
     public DoorState State { get; private set; }
 
-    [SerializeField] private Interactable interactable;
+    [SerializeField] private Interactable moveInteractable;
+    [SerializeField] private Interactable lockInteractable;
     [SerializeField] private DoorState initialState = DoorState.Closed;
     [SerializeField] private string keyItemName = "Key";
 
@@ -39,7 +40,8 @@ public class Door : StatefulInteractable
 
         StateRegistry.Instance.Register(this);
 
-        interactable.OnInteract.AddListener(TryToggleWithKey);
+        lockInteractable.OnInteract.AddListener(TryToggleLockWithKey);
+        moveInteractable.OnInteract.AddListener(TryToggleMove);
 
         OnInitialized.Invoke();
     }
@@ -109,7 +111,7 @@ public class Door : StatefulInteractable
         }
     }
 
-    public void TryToggle()
+    public void TryToggleMove(GameObject interactor)
     {
         if (State == DoorState.Open)
         {
@@ -121,15 +123,11 @@ public class Door : StatefulInteractable
         }
     }
 
-    public void TryToggleWithKey(GameObject interactor)
+    public void TryToggleLockWithKey(GameObject interactor)
     {
-        if (State == DoorState.Open)
+        if (State == DoorState.Closed)
         {
-            TryClose();
-        }
-        else if (State == DoorState.Closed)
-        {
-            TryOpen();
+            TryLockWithKey(interactor);
         }
         else if (State == DoorState.Locked)
         {
