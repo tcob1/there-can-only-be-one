@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 878464995662668146}
   - component: {fileID: 7495458128451230273}
   - component: {fileID: 5153170174484650329}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Guard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 3355575093523245556}
   - component: {fileID: 147134182380490327}
   - component: {fileID: 5044516148712980424}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Interactions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3995888422636587315}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Hold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,6 +294,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GuardPistol
       objectReference: {fileID: 0}
+    - target: {fileID: 443462226190826886, guid: 1f3f0297d102b8e449246d22258d9fcc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 832161316111772618, guid: 1f3f0297d102b8e449246d22258d9fcc, type: 3}
       propertyPath: guard
       value: 
@@ -322,6 +326,18 @@ PrefabInstance:
       propertyPath: hitEffectPrefab
       value: 
       objectReference: {fileID: 3472946442528340331, guid: 4361436247780e845a39eab5f1052584, type: 3}
+    - target: {fileID: 1395444120210157562, guid: 1f3f0297d102b8e449246d22258d9fcc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3640101298579287933, guid: 1f3f0297d102b8e449246d22258d9fcc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7515258284552276843, guid: 1f3f0297d102b8e449246d22258d9fcc, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 7533553196988810968, guid: 1f3f0297d102b8e449246d22258d9fcc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

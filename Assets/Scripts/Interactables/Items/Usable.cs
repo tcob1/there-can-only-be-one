@@ -10,6 +10,14 @@ public class Usable : Weapon
 
     [SerializeField] private GameObject hitEffectPrefab;
 
+    private LayerMask layerMask;
+
+    void Start()
+    {
+        base.Start();
+        layerMask = ~LayerMask.GetMask("InteractableDetector");
+    }
+
     void Update()
     {
         if (isHeld)
@@ -34,7 +42,8 @@ public class Usable : Weapon
             origin,
             sphereRadius,
             direction,
-            range
+            range,
+            layerMask
         );
 
         foreach (RaycastHit hit in hits)

@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6344802298613999878}
   m_Layer: 7
   m_Name: Pistol
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -13,6 +13,14 @@ public class Gun : Weapon
     public float recoilAmount = 5f;
     public float recoilRecoverySpeed = 10f;
 
+    private int layerMask;
+
+    void Start()
+    {
+        base.Start();
+        layerMask = ~LayerMask.GetMask("InteractableDetector");
+    }
+
     void Update()
     {
         if (isHeld)
@@ -31,7 +39,7 @@ public class Gun : Weapon
         {
             transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilRecoverySpeed);
         }
-        
+
     }
 
     public override void Attack()
@@ -44,7 +52,7 @@ public class Gun : Weapon
         SFXManager.Instance.PlaySFX("shoot");
         shootPS.Play();
 
-        if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, range))
+        if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, range, layerMask))
         {
             //Debug.Log("Hit: " + hit.collider.name);
 
