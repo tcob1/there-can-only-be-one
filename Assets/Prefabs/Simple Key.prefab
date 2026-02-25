@@ -141,3 +141,8 @@ MonoBehaviour:
   isHeld: 0
   damage: 10
   cooldown: 0
+  range: 1.5
+  sphereRadius: 0.2
+  recoilAmount: 25
+  recoilRecoverySpeed: 10
+  hitEffectPrefab: {fileID: 3472946442528340331, guid: 4d92a56e1a9d2e94c82a147d1cdd6670, type: 3}
