@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 5268491467575196851}
   m_Layer: 0
   m_Name: CHRONOSGODOFTIME
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,6 +178,7 @@ MonoBehaviour:
     quantity: 0
   itemSlots: []
   rightHoldPosition: {fileID: 7477260683246221651}
+  leftHoldPosition: {fileID: 8788873597177001510}
 --- !u!1 &7946351165802573510
 GameObject:
   m_ObjectHideFlags: 0
