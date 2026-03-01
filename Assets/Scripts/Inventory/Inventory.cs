@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 
 [System.Serializable]
@@ -18,120 +19,157 @@ public class InventorySlot
         this.itemData = itemData;
         this.quantity = quantity;
     }
+
+    // checks specific item slot
+    public bool IsEmpty()
+    {
+        return itemData == null || quantity <= 0;
+    }
+
+    // clears item slot
+    public void Clear()
+    {
+        itemData = null;
+        quantity = 0;
+    }
 }
 
 
 public class Inventory : MonoBehaviour
 {
-    public InventorySlot weaponSlot;
-    public List<InventorySlot> itemSlots = new();
+    private const int NUM_ITEM_SLOTS = 5;
+
+    //public InventorySlot weaponSlot;
+    public InventorySlot[] itemSlots;
+
 
     public Transform rightHoldPosition;
-    public Transform leftHoldPosition;
 
-    // to track items in ur hands
-    private Dictionary<InventorySlot, GameObject> heldItems = new();
+    private GameObject currentHeldItem;
+
+    // which slot is equipped
+    public int activeSlotIndex = -1;
+
+    [Header("Events")]
+    public Action OnInventoryChanged;
+
+
+    private void Awake()
+    {
+        // inventory has fixed items
+        itemSlots = new InventorySlot[NUM_ITEM_SLOTS];
+
+        //initialize the fixed # of slots
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            itemSlots[i] = new InventorySlot();
+        }
+    }
 
     public bool AddItem(ItemData itemData)
     {
-        // Check if the item can be stacked with an existing slot.
-        foreach (InventorySlot slot in itemSlots)
+        // Try stacking first
+        for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (slot.itemData == itemData && slot.quantity < itemData.maxStackSize)
+            if (!itemSlots[i].IsEmpty() &&
+                itemSlots[i].itemData == itemData &&
+                itemSlots[i].quantity < itemData.maxStackSize)
             {
-                slot.quantity++;
+                itemSlots[i].quantity++;
+
+                OnInventoryChanged?.Invoke();
                 return true;
             }
         }
 
-        // Decide which hand to use
-        Transform targetHand = null;
-
-        bool rightOccupied = false;
-        bool leftOccupied = false;
-
-        foreach (var held in heldItems.Values)
+        // Find empty slot
+        for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (held.transform.parent == rightHoldPosition)
-                rightOccupied = true;
-            if (held.transform.parent == leftHoldPosition)
-                leftOccupied = true;
+            if (itemSlots[i].IsEmpty())
+            {
+                itemSlots[i].itemData = itemData;
+                itemSlots[i].quantity = 1;
+
+                if (activeSlotIndex == -1)
+                {
+                    activeSlotIndex = i;
+                    EquipSlot(i);
+                }
+                OnInventoryChanged?.Invoke();
+
+                return true;
+            }
         }
 
-        if (!rightOccupied)
-            targetHand = rightHoldPosition;
-        else if (!leftOccupied)
-            targetHand = leftHoldPosition;
-        else
-        {
-            Debug.Log("hands full! Cant pick up: " + itemData.itemName);
-            return false;
-        }
-
-        // Instantiate item in chosen hand
-        GameObject heldItem = null;
-        if (itemData.worldPrefab != null)
-        {
-            heldItem = Instantiate(itemData.worldPrefab, targetHand);
-            WorldItem worldItemComponent = heldItem.GetComponent<WorldItem>();
-            if (worldItemComponent != null)
-                worldItemComponent.isHeld = true;
-
-            heldItem.transform.localPosition = Vector3.zero;
-            heldItem.transform.localRotation = Quaternion.identity;
-        }
-
-        // Add to inventory slot
-        InventorySlot newSlot = new(itemData, 1);
-        itemSlots.Add(newSlot);
-
-        if (heldItem != null)
-            heldItems[newSlot] = heldItem;
-
-        return true;
+        Debug.Log("Inventory full!");
+        return false;
     }
 
-    public void DropItem(int slotIndex, Vector3 dropPosition)
+    // equip item
+    public void EquipSlot(int index)
     {
-        if (slotIndex < 0 || slotIndex >= itemSlots.Count)
-        {
-            Debug.LogWarning("Invalid slot index!");
+        if (index < 0 || index >= itemSlots.Length)
             return;
+
+        if (itemSlots[index].IsEmpty())
+            return;
+
+        //get rid of item currently in hand
+        if (currentHeldItem != null)
+        {
+            Destroy(currentHeldItem);
         }
 
-        InventorySlot slot = itemSlots[slotIndex];
-        if (slot.itemData == null || slot.quantity <= 0)
-        {
-            Debug.LogWarning("No item to drop in this slot!");
-            return;
-        }
+        activeSlotIndex = index;
 
-        if (heldItems.TryGetValue(slot, out GameObject heldInstance))
+        // Instantiate new held object
+        currentHeldItem = Instantiate(itemSlots[index].itemData.worldPrefab, rightHoldPosition);
+
+        currentHeldItem.transform.localPosition = Vector3.zero;
+        currentHeldItem.transform.localRotation = Quaternion.identity;
+
+        WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
+        if (worldItemComponent != null)
+            worldItemComponent.isHeld = true;
+
+        OnInventoryChanged?.Invoke();
+    }
+
+    public void DropItem(Vector3 dropPosition)
+    {
+        if (activeSlotIndex == -1)
+            return;
+
+        InventorySlot slot = itemSlots[activeSlotIndex];
+
+        if (slot.IsEmpty())
+            return;
+
+        if (currentHeldItem != null)
         {
-            // Move it to the drop position
-            heldInstance.transform.parent = null;
-            heldInstance.transform.position = dropPosition;
-            WorldItem worldItemComponent = heldInstance.GetComponent<WorldItem>();
+            currentHeldItem.transform.parent = null;
+            currentHeldItem.transform.position = dropPosition;
+
+            WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
             if (worldItemComponent != null)
-            {
                 worldItemComponent.isHeld = false;
-            }
 
-            // Remove reference from dictionary
-            heldItems.Remove(slot);
+            currentHeldItem = null;
         }
         else
         {
-            // If we somehow didn’t have the instance, instantiate a new one
             Instantiate(slot.itemData.worldPrefab, dropPosition, Quaternion.identity);
         }
 
-        // Decrease the quantity or remove the slot if it was the last item.
         slot.quantity--;
+
         if (slot.quantity <= 0)
         {
-            itemSlots.RemoveAt(slotIndex);
+            slot.Clear();
+            activeSlotIndex = -1;
         }
+
+        OnInventoryChanged?.Invoke();
     }
 
     public bool HasItem(ItemData itemData)
@@ -160,6 +198,13 @@ public class Inventory : MonoBehaviour
 
     public bool IsEmpty()
     {
-        return itemSlots.Count == 0 && (weaponSlot.itemData == null || weaponSlot.quantity <= 0);
+        // Updated to work with array
+        foreach (InventorySlot slot in itemSlots)
+        {
+            if (!slot.IsEmpty())
+                return false;
+        }
+
+        return true;
     }
 }

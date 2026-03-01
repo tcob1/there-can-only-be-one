@@ -29,11 +29,28 @@ public class PlayerInteractions : MonoBehaviour
         inventory = player.GetComponent<Inventory>();
 
         layerMask = LayerMask.GetMask("Interactable") | LayerMask.GetMask("InteractableHover");
+
+        inventory.EquipSlot(0);
     }
 
     void Update()
     {
         UpdateHovered();
+
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+            inventory.EquipSlot(0);
+
+        if (Keyboard.current.digit2Key.wasPressedThisFrame)
+            inventory.EquipSlot(1);
+
+        if (Keyboard.current.digit3Key.wasPressedThisFrame)
+            inventory.EquipSlot(2);
+
+        if (Keyboard.current.digit4Key.wasPressedThisFrame)
+            inventory.EquipSlot(3);
+
+        if (Keyboard.current.digit5Key.wasPressedThisFrame)
+            inventory.EquipSlot(4);
     }
 
     private void UpdateHovered()
@@ -83,7 +100,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (inventory != null && !inventory.IsEmpty())
         {
-            inventory.DropItem(0, player.transform.position + player.transform.forward);
+            inventory.DropItem(player.transform.position + player.transform.forward);
         }
     }
 }
