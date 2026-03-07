@@ -62,18 +62,23 @@ public class StateRegistry : MonoBehaviour
         return allStates;
     }
 
+    public void SetSingleState(string id, Dictionary<string, object> state)
+    {
+        if (interactables.TryGetValue(id, out IStateful interactable))
+        {
+            interactable.SetState(state);
+        }
+        else
+        {
+            Debug.LogWarning($"No interactable found with ID {id} to set state.");
+        }
+    }
+
     public void SetAllStates(Dictionary<string, Dictionary<string, object>> allStates)
     {
         foreach (var kvp in allStates)
         {
-            if (interactables.TryGetValue(kvp.Key, out IStateful interactable))
-            {
-                interactable.SetState(kvp.Value);
-            }
-            else
-            {
-                Debug.LogWarning($"No interactable found with ID {kvp.Key} to set state.");
-            }
+            SetSingleState(kvp.Key, kvp.Value);
         }
     }
 
