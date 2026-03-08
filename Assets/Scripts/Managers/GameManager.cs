@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     // ---------- Properties ----------
     public bool IsGameRunning { get; private set; }
 
+    [SerializeField] public Transform playerAttackPosition;
+
 
     private void Awake()
     {
@@ -29,12 +31,16 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        StartGame();
+    }
+
     public void StartGame()
     {
         if (IsGameRunning) return;
 
         IsGameRunning = true;
-        Debug.Log("Game Started!");
         OnGameStart?.Invoke();
     }
 
@@ -43,7 +49,6 @@ public class GameManager : MonoBehaviour
         if (!IsGameRunning) return;
 
         IsGameRunning = false;
-        Debug.Log("Game Over!");
         OnGameOver?.Invoke();
     }
 

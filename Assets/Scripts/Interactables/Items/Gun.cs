@@ -3,7 +3,7 @@ using UnityEngine;
 public class Gun : Weapon
 {
     [SerializeField] private float range = 100f;
-    [SerializeField] private Transform firePoint;
+    private Transform firePoint;
 
     //Effects
     [SerializeField] private GameObject hitEffectPrefab;
@@ -19,6 +19,7 @@ public class Gun : Weapon
     {
         base.Start();
         layerMask = ~LayerMask.GetMask("InteractableDetector");
+        firePoint = GameManager.Instance.playerAttackPosition;
     }
 
     void Update()
@@ -54,7 +55,6 @@ public class Gun : Weapon
 
         if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, range, layerMask))
         {
-            //Debug.Log("Hit: " + hit.collider.name);
 
             ParticleSystem effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)).GetComponent<ParticleSystem>();
             effect.Play();

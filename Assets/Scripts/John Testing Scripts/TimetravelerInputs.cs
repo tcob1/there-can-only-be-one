@@ -30,7 +30,7 @@ public class TimetravelerInputs : MonoBehaviour
             currCharge += (chargeMod * scrollCharge * Time.deltaTime * Mathf.Sqrt(Mathf.Abs(currCharge) + .1f));
             if (currCharge > 43200) currCharge = 43200;
             if (currCharge < -43200) currCharge = -43200;
-            print("Charge: " + (int) currCharge);
+            //print("Charge: " + (int) currCharge);
             
         }
 

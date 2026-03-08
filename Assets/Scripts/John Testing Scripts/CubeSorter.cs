@@ -11,54 +11,46 @@ public class CubeSorter : MobileInteractable
     private GameObject target;
     private GameObject inventory;
 
-
-    void Awake()
-    {
-        StateRegistry.Instance.Register(this);
-
-    }
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
         inventory = null;
+        StateRegistry.Instance.Register(this);
+        FindNewTarget();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        getTarget();
-        
-
-    }
-
 
     void FixedUpdate()
     {
         if (!inventory && target)
         {
+            // return;
             transform.LookAt(target.transform.position);
             transform.position += transform.forward * speed;
             if (Vector3.Distance(transform.position, target.transform.position) <= REACH)
-            {   
-                
+            {
                 target.GetComponent<TestingBlock>().pickedUp();
+                FindNewTarget();
             }
         }
-        
+
     }
 
-    private GameObject getTarget()
+    private void FindNewTarget()
     {
         List<GameObject> cubes = GameObject.FindGameObjectsWithTag("Cube").Where(x => x.GetComponent<Renderer>().enabled == true).ToList();
-        if (cubes.Count == 0) return null;
+        if (cubes.Count == 0)
+        {
+            target = null;
+            return;
+        }
+
         target = cubes[0];
         foreach (GameObject cube in cubes)
         {
-            if (Vector3.Distance(transform.position, cube.transform.position) < Vector3.Distance(transform.position, target.transform.position)) target = cube; 
+            if (Vector3.Distance(transform.position, cube.transform.position) < Vector3.Distance(transform.position, target.transform.position))
+            {
+                target = cube;
+            }
         }
-
-        return target;
     }
 }

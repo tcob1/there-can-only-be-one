@@ -16,6 +16,15 @@ public class HealthManager : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+
+        if (gameObject.tag == "Player")
+        {
+            GameManager.Instance.EndGame();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
 }

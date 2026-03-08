@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 public class TestingBlock : StatefulInteractable
 {
-    
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 
     // Update is called once per frame
 
-    void Awake()
+    void Start()
     {
         StateRegistry.Instance.Register(this);
 
@@ -17,14 +17,14 @@ public class TestingBlock : StatefulInteractable
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if(Physics.Raycast(ray,out hit))
+            if (Physics.Raycast(ray, out hit))
             {
-                if(hit.collider.gameObject == this.gameObject)
+                if (hit.collider.gameObject == this.gameObject)
                 {
                     transform.position += new Vector3(.1f, 0f, 0f);
 
@@ -38,7 +38,7 @@ public class TestingBlock : StatefulInteractable
     public override Dictionary<string, object> GetState()
     {
         base.SetValue("Position", transform.position);
-        base.SetValue("Visible", gameObject.GetComponent<Renderer>().enabled);
+        base.SetValue("Visible", gameObject.activeSelf);
         return base.GetState();
     }
 
@@ -46,12 +46,12 @@ public class TestingBlock : StatefulInteractable
     {
         base.SetState(newState);
         transform.position = base.GetValue<Vector3>("Position");
-        gameObject.GetComponent<Renderer>().enabled = (base.GetValue<bool>("Visible"));
+        gameObject.SetActive(base.GetValue<bool>("Visible"));
     }
 
     public void pickedUp()
     {
-        gameObject.GetComponent<Renderer>().enabled = false;
+        gameObject.SetActive(false);
         TimeHub.Instance.logChange(this);
     }
 }
