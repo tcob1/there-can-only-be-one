@@ -43,7 +43,7 @@ public class TimeHub : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log("START");
+        //Debug.Log("START");
         renderer = Camera.main;
         renderer.enabled = true;
         time = START_TIME;
@@ -72,11 +72,14 @@ public class TimeHub : MonoBehaviour
     {
         if (goalTime != 0 && goalTime > time)
         {
-            //renderer.enabled = false;
-            Time.fixedDeltaTime = 1 / ((float) FIXED_UPDATE_RATE * 100);
+            renderer.enabled = false;
+            clock.enabled = false;
+            Time.fixedDeltaTime = 1 / ((float) FIXED_UPDATE_RATE * 10000);
+            
         } else
         {
             Time.fixedDeltaTime = 1 / ((float) FIXED_UPDATE_RATE);
+            renderer.enabled = true;
             renderer.enabled = true;
             goalTime = 0;
         }
@@ -98,13 +101,13 @@ public class TimeHub : MonoBehaviour
     }
 
     public void timeForewards(int newTime){
-        print("Traveled " + newTime + " seconds forewards");
+        //print("Traveled " + newTime + " seconds forewards");
         newTime*=FIXED_UPDATE_RATE;
         goalTime = (time + newTime) - (time + newTime)%FIXED_UPDATE_RATE; //Makes sure new time is multiple of a second
     }
 
     public void timeBackwards(int newTime){
-        print("Traveled " + newTime + " seconds backwards");
+        //print("Traveled " + newTime + " seconds backwards");
         newTime*=FIXED_UPDATE_RATE;
         time = (time - newTime) - (time - newTime)%FIXED_UPDATE_RATE; //Makes sure new time is multiple of a second
 
@@ -129,7 +132,7 @@ public class TimeHub : MonoBehaviour
         StateChange stateChange = new StateChange(obj.GetState(), nextSec(getTime()));
         if (timeline.ContainsKey(id)){
             timeline[id].Insert(0, stateChange);
-            print($"Change Logged: {id} changed at time {stateChange.timeStamp}");
+            //print($"Change Logged: {id} changed at time {stateChange.timeStamp}");
 
         } else Debug.LogWarning($"Interactable with ID {id} is not in the timeline.");
         
