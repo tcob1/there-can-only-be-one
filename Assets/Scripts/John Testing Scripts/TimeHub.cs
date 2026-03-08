@@ -12,7 +12,6 @@ public class TimeHub : MonoBehaviour
     public int START_TIME = 1000000;
     public int FIXED_UPDATE_RATE = 10;
 
-    private Camera renderer;
 
     public delegate void OnSecond();              
     public static event OnSecond onSecond;
@@ -43,9 +42,6 @@ public class TimeHub : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Debug.Log("START");
-        renderer = Camera.main;
-        renderer.enabled = true;
         time = START_TIME;
         Time.fixedDeltaTime = 1 / (float) FIXED_UPDATE_RATE;
 
@@ -72,15 +68,12 @@ public class TimeHub : MonoBehaviour
     {
         if (goalTime != 0 && goalTime > time)
         {
-            renderer.enabled = false;
-            clock.enabled = false;
+            //clock.enabled = false;
             Time.fixedDeltaTime = 1 / ((float) FIXED_UPDATE_RATE * 10000);
             
         } else
         {
             Time.fixedDeltaTime = 1 / ((float) FIXED_UPDATE_RATE);
-            renderer.enabled = true;
-            renderer.enabled = true;
             goalTime = 0;
         }
 
