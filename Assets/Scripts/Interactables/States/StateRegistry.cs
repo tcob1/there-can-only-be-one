@@ -22,7 +22,7 @@ public class StateRegistry : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(DebugPrintStates());
+        //StartCoroutine(DebugPrintStates());
     }
 
     public void Register(IStateful interactable)
@@ -36,7 +36,7 @@ public class StateRegistry : MonoBehaviour
         {
             Debug.LogWarning($"Interactable with ID {id} is already registered.");
         }
-        Debug.Log("Registered interactable with ID: " + id);
+        //Debug.Log("Registered interactable with ID: " + id);
     }
 
     public void Unregister(IStateful interactable)
