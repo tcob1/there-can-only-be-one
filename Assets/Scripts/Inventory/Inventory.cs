@@ -111,8 +111,9 @@ public class Inventory : MonoBehaviour
         if (index < 0 || index >= itemSlots.Length)
             return;
 
-        if (itemSlots[index].IsEmpty())
-            return;
+        //equipping only exisitng items
+        //if (itemSlots[index].IsEmpty())
+        //    return;
 
         //get rid of item currently in hand
         if (currentHeldItem != null)
@@ -123,14 +124,18 @@ public class Inventory : MonoBehaviour
         activeSlotIndex = index;
 
         // Instantiate new held object
-        currentHeldItem = Instantiate(itemSlots[index].itemData.worldPrefab, rightHoldPosition);
+        if (!itemSlots[index].IsEmpty())
+        {
+            currentHeldItem = Instantiate(itemSlots[index].itemData.worldPrefab, rightHoldPosition);
 
-        currentHeldItem.transform.localPosition = Vector3.zero;
-        currentHeldItem.transform.localRotation = Quaternion.identity;
+            currentHeldItem.transform.localPosition = Vector3.zero;
+            currentHeldItem.transform.localRotation = Quaternion.identity;
 
-        WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
-        if (worldItemComponent != null)
-            worldItemComponent.isHeld = true;
+            WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
+            if (worldItemComponent != null)
+                worldItemComponent.isHeld = true;
+        }
+        
 
         OnInventoryChanged?.Invoke();
     }

@@ -40,7 +40,7 @@ public class InventoryUI : MonoBehaviour
             else
             {
                 slotImages[i].sprite = null;
-                slotImages[i].color = new Color(1, 1, 1, 0.1f);
+                slotImages[i].color = new Color(1, 1, 1, 0f);
             }
         }
 

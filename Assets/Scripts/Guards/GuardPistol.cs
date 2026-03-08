@@ -47,6 +47,12 @@ public class GuardPistol : Weapon
 
             ParticleSystem effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)).GetComponent<ParticleSystem>();
             effect.Play();
+
+            HealthManager victimHealth = hit.collider.GetComponent<HealthManager>();
+            if (victimHealth != null)
+            {
+                victimHealth.TakeDamage(30);
+            }
         }
 
         ApplyRecoil();
