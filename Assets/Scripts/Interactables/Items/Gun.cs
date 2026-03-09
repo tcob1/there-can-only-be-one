@@ -15,6 +15,8 @@ public class Gun : Weapon
 
     private int layerMask;
 
+    public GuardNav guard;
+
     protected override void Start()
     {
         base.Start();
@@ -30,17 +32,19 @@ public class Gun : Weapon
             {
                 Attack();
             }
+        } else if (guard != null)
+        {
+            if (guard.currentGuardState == GuardNav.GuardState.Shooting)
+            {
+                Attack();
+            }
         }
 
     }
 
     private void LateUpdate()
     {
-        if (isHeld)
-        {
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilRecoverySpeed);
-        }
-
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilRecoverySpeed);
     }
 
     public override void Attack()

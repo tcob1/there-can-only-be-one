@@ -50,6 +50,10 @@ public class Inventory : MonoBehaviour
     // which slot is equipped
     public int activeSlotIndex = -1;
 
+    public bool isGuard = false;
+
+    public ItemData[] startItems;
+
     [Header("Events")]
     public Action OnInventoryChanged;
 
@@ -63,6 +67,14 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < itemSlots.Length; i++)
         {
             itemSlots[i] = new InventorySlot();
+        }
+
+        if (isGuard)
+        {
+            for (int i = 0; i < startItems.Length; i++)
+            {
+                AddItem(startItems[i]);
+            }
         }
     }
 
@@ -90,7 +102,7 @@ public class Inventory : MonoBehaviour
                 itemSlots[i].itemData = itemData;
                 itemSlots[i].quantity = 1;
 
-                if (activeSlotIndex == -1)
+                if (activeSlotIndex == -1 && !isGuard)
                 {
                     activeSlotIndex = i;
                     EquipSlot(i);
@@ -211,5 +223,44 @@ public class Inventory : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void DropAll()
+    {
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            InventorySlot slot = itemSlots[i];
+            if (slot.IsEmpty())
+            {
+                continue;
+            }
+            
+            for (int q = 0; q < slot.quantity; q++)
+            {
+                Vector3 dropPos = transform.position + GetScatterOffset(i, q);
+
+                GameObject dropped = Instantiate(slot.itemData.worldPrefab, dropPos, UnityEngine.Random.rotation);
+
+                WorldItem worldItem = dropped.GetComponent<WorldItem>();
+                if (worldItem != null)
+                {
+                    worldItem.isHeld = false;
+                }
+            }
+
+            slot.Clear();
+        }
+
+        activeSlotIndex = -1;
+        OnInventoryChanged?.Invoke();
+    }
+
+    private Vector3 GetScatterOffset(int slotIndex, int stackIndex)
+    {
+        // Spread items in a circle based on slot
+        float angle = (slotIndex / (float)itemSlots.Length) * Mathf.PI * 2f + stackIndex * 0.4f;
+        float radius = 0.5f + stackIndex * 0.2f;
+
+        return new Vector3(Mathf.Cos(angle) * radius, 0.2f, Mathf.Sin(angle) * radius);
     }
 }
