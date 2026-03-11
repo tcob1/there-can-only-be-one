@@ -3,6 +3,7 @@ using UnityEngine;
 public class HealthManager : MonoBehaviour
 {
     [SerializeField] float health = 30.0f;
+    public Inventory inv;
 
     public void TakeDamage(float amount)
     {
@@ -23,6 +24,11 @@ public class HealthManager : MonoBehaviour
         }
         else
         {
+            if (inv != null)
+            {
+                inv.DropAll();
+            }
+
             Destroy(gameObject);
         }
 
