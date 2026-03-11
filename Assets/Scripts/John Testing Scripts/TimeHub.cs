@@ -2,23 +2,24 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using TMPro;
-
+using System;
 
 public class TimeHub : MonoBehaviour
 {
     public static TimeHub Instance;
     public TextMeshProUGUI clock;
-    private long time;
-    public int START_TIME = 1000000;
-    public int FIXED_UPDATE_RATE = 10;
 
+    // measured in seconds
+    private long time;
+    public int START_TIME = 10000;
+    public int FIXED_UPDATE_RATE = 10;
+    private int subsecondCounter = 0;
 
     public delegate void OnSecond();
     public static event OnSecond onSecond;
 
     public struct StateChange
     {
-
         public Dictionary<string, object> state;
         public long timeStamp;
 
@@ -29,7 +30,7 @@ public class TimeHub : MonoBehaviour
         }
     }
 
-    private Dictionary<string, List<StateChange>> timeline;
+    private Dictionary<string, Stack<StateChange>> timeline;
     private long goalTime = 0;
 
 
@@ -47,7 +48,9 @@ public class TimeHub : MonoBehaviour
         time = START_TIME;
         Time.fixedDeltaTime = 1 / (float)FIXED_UPDATE_RATE;
 
-        timeline = new Dictionary<string, List<StateChange>>();
+        onSecond += () => updateClock(time);
+
+        timeline = new Dictionary<string, Stack<StateChange>>();
 
         Dictionary<string, Dictionary<string, object>> existing = StateRegistry.Instance.GetAllStates();
         foreach (KeyValuePair<string, Dictionary<string, object>> kvp in existing)
@@ -72,11 +75,13 @@ public class TimeHub : MonoBehaviour
             goalTime = 0;
         }
 
-        long prevTime = time;
-        time++;
-        if (((long)(time / FIXED_UPDATE_RATE) != (long)(prevTime / FIXED_UPDATE_RATE)) && onSecond != null) onSecond();
-        //print(time);
-        //printTime(time);
+        subsecondCounter++;
+        if (subsecondCounter >= FIXED_UPDATE_RATE)
+        {
+            onSecond?.Invoke();
+            subsecondCounter = 0;
+            time += 1;
+        }
     }
 
     private void AddNewObject(IStateful obj)
@@ -92,7 +97,7 @@ public class TimeHub : MonoBehaviour
     {
         if (!timeline.ContainsKey(id))
         {
-            timeline.Add(id, new List<StateChange> { new StateChange(state, time) });
+            timeline.Add(id, new Stack<StateChange>(new[] { new StateChange(state, time) }));
         }
     }
 
@@ -110,42 +115,54 @@ public class TimeHub : MonoBehaviour
     public void timeForewards(int newTime)
     {
         //print("Traveled " + newTime + " seconds forewards");
-        newTime *= FIXED_UPDATE_RATE;
-        goalTime = (time + newTime) - (time + newTime) % FIXED_UPDATE_RATE; //Makes sure new time is multiple of a second
+        goalTime = time + newTime;
     }
 
     public void timeBackwards(int newTime)
     {
         //print("Traveled " + newTime + " seconds backwards");
-        newTime *= FIXED_UPDATE_RATE;
-        time = (time - newTime) - (time - newTime) % FIXED_UPDATE_RATE; //Makes sure new time is multiple of a second
+        time = Math.Max(time - newTime, START_TIME);
 
         Dictionary<string, Dictionary<string, object>> currStates = StateRegistry.Instance.GetAllStates();
 
         foreach (KeyValuePair<string, Dictionary<string, object>> kvp in currStates)
         {
             string id = kvp.Key;
-            List<StateChange> stateChanges = timeline[id];
-            while (stateChanges[0].timeStamp > time)
+            Stack<StateChange> stateChanges = timeline[id];
+            // ^1 = last element
+            while (stateChanges.Peek().timeStamp > time)
             {
-                stateChanges.RemoveAt(0);
-                if (stateChanges.Count == 0)
+                if (stateChanges.Count == 1)
+                {
+                    Debug.LogWarning($"Stopping state change removal at initial state; likely traveled back past limit or this object was instantiated late.");
+                }
+                else if (stateChanges.Count == 0)
                 {
                     Debug.LogWarning($"Timeline is Empty, how tf did you manage to do that?");
                 }
+                else
+                {
+                    stateChanges.Pop();
+                }
             }
 
-            StateRegistry.Instance.SetSingleState(id, stateChanges[0].state);
+            StateRegistry.Instance.SetSingleState(id, stateChanges.Peek().state);
         }
     }
 
     public void logChange(IStateful obj)
     {
         string id = obj.GetUniqueID();
-        StateChange stateChange = new StateChange(obj.GetState(), nextSec(getTime()));
+        // Time + 1 is important here because the state applied in the current
+        // instant should be considered taken into effect in any moments after
+        // the current time, not before the current time.
+        // Sequential logs within one second will also properly override each
+        // other, as this list will remain sorted in chronological order with
+        // the most recent state change at the end of the list.
+        StateChange stateChange = new StateChange(obj.GetState(), time + 1);
         if (timeline.ContainsKey(id))
         {
-            timeline[id].Insert(0, stateChange);
+            timeline[id].Push(stateChange);
             //print($"Change Logged: {id} changed at time {stateChange.timeStamp}");
 
         }
@@ -156,8 +173,6 @@ public class TimeHub : MonoBehaviour
     public void printTime(long time)
     {
         long sec, min, hour, day;
-        time = (int)(time / FIXED_UPDATE_RATE);
-        //print(time);
 
         day = time / (60 * 60 * 24);
         time -= day * 60 * 60 * 24;
@@ -176,8 +191,6 @@ public class TimeHub : MonoBehaviour
     public void updateClock(long time)
     {
         long sec, min, hour, day;
-        time = (int)(time / FIXED_UPDATE_RATE);
-        //print(time);
 
         day = time / (60 * 60 * 24);
         time -= day * 60 * 60 * 24;
