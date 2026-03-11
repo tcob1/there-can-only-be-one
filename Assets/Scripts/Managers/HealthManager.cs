@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-    [SerializeField] float health = 30.0f;
+    public float health = 30.0f;
     public Inventory inv;
 
     public void TakeDamage(float amount)
@@ -29,7 +29,8 @@ public class HealthManager : MonoBehaviour
                 inv.DropAll();
             }
 
-            Destroy(gameObject);
+            // Don't destroy, just disable to keep timeline intact
+            gameObject.SetActive(false);
         }
 
     }

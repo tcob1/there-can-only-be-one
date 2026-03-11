@@ -16,13 +16,14 @@ public class GuardNav : MonoBehaviour
     private int currentPointIndex = 0;
     private NavMeshAgent agent;
 
-    public GameObject Player;
+    // TODO: support multiple players
+    public GameObject player;
     private Vector3 lastKnownPlayerPosition;
-    public float DetectRange = 100;
-    public float HearingRange = 50;
-    public float ForgetRange = 150;
-    public float StopAndShootRange = 10;
-    public float DetectAngle = 90;
+    public float detectRange = 100;
+    public float hearingRange = 50;
+    public float forgetRange = 150;
+    public float stopAndShootRange = 10;
+    public float detectAngle = 90;
 
     private bool isInAngle = false;
     private bool isInDetectRange = false;
@@ -35,7 +36,6 @@ public class GuardNav : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(patrolPoints[currentPointIndex].position);
-
 
         GlobalEvents.Instance.OnPlayerShoot += OnHearNoise;
     }
@@ -79,23 +79,23 @@ public class GuardNav : MonoBehaviour
         isInDetectRange = false;
         isVisible = false;
 
-        float distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
-        if (distanceToPlayer <= DetectRange)
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        if (distanceToPlayer <= detectRange)
         {
             isInDetectRange = true;
         }
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, (Player.transform.position - transform.position), out hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, (player.transform.position - transform.position), out hit, Mathf.Infinity))
         {
-            if (hit.transform == Player.transform)
+            if (hit.transform == player.transform)
             {
                 isVisible = true;
             }
         }
 
-        float angle = Vector3.Angle(transform.forward, Player.transform.position - transform.position);
-        if (angle < DetectAngle)
+        float angle = Vector3.Angle(transform.forward, player.transform.position - transform.position);
+        if (angle < detectAngle)
         {
             isInAngle = true;
         }
@@ -136,7 +136,7 @@ public class GuardNav : MonoBehaviour
     {
         Debug.Log("Swapping to chasing");
         currentGuardState = GuardState.Chasing;
-        lastKnownPlayerPosition = Player.transform.position;
+        lastKnownPlayerPosition = player.transform.position;
         agent.SetDestination(lastKnownPlayerPosition);
     }
 
@@ -145,17 +145,17 @@ public class GuardNav : MonoBehaviour
         if (isVisible)
         {
             // If we can see the player, move forward until we can shoot, then shoot
-            lastKnownPlayerPosition = Player.transform.position;
+            lastKnownPlayerPosition = player.transform.position;
 
-            float distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-            if (distanceToPlayer <= StopAndShootRange)
+            if (distanceToPlayer <= stopAndShootRange)
             {
                 SwapToShooting();
             }
             else
             {
-                agent.SetDestination(Player.transform.position);
+                agent.SetDestination(player.transform.position);
             }
         }
         else
@@ -165,7 +165,7 @@ public class GuardNav : MonoBehaviour
         }
 
         // In any case, if the player gets too far, stop chasing
-        if (Vector3.Distance(transform.position, lastKnownPlayerPosition) > ForgetRange)
+        if (Vector3.Distance(transform.position, lastKnownPlayerPosition) > forgetRange)
         {
             SwapToPatrolling();
         }
@@ -219,13 +219,13 @@ public class GuardNav : MonoBehaviour
         // Shooting logic handled in GuardPistol, so just check if we should stop shooting
         if (isVisible)
         {
-            transform.LookAt(Player.transform.position); // Always face the player when shooting
+            transform.LookAt(player.transform.position); // Always face the player when shooting
 
             // If the guard can see the player, either keep shooting or chase if they get too far
-            lastKnownPlayerPosition = Player.transform.position;
+            lastKnownPlayerPosition = player.transform.position;
 
-            float distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
-            if (distanceToPlayer > StopAndShootRange)
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            if (distanceToPlayer > stopAndShootRange)
             {
                 SwapToChasing();
             }
@@ -246,7 +246,7 @@ public class GuardNav : MonoBehaviour
         if (currentGuardState == GuardState.Patrolling || currentGuardState == GuardState.Searching)
         {
             float distanceToNoise = Vector3.Distance(transform.position, noisePosition);
-            if (distanceToNoise <= HearingRange)
+            if (distanceToNoise <= hearingRange)
             {
                 lastKnownPlayerPosition = noisePosition;
                 SwapToSearching();
@@ -261,7 +261,7 @@ public class GuardNav : MonoBehaviour
         Vector3 origin = transform.position;
         int rayCount = 30;
 
-        float halfAngle = DetectAngle;
+        float halfAngle = detectAngle;
         float angleStep = (halfAngle * 2) / rayCount;
 
         Vector3 previousPoint = origin;
@@ -270,7 +270,7 @@ public class GuardNav : MonoBehaviour
         {
             float currentAngle = -halfAngle + angleStep * i;
             Vector3 direction = Quaternion.Euler(0, currentAngle, 0) * transform.forward;
-            Vector3 currentPoint = origin + direction * DetectRange;
+            Vector3 currentPoint = origin + direction * detectRange;
 
             Gizmos.DrawLine(origin, currentPoint);
 

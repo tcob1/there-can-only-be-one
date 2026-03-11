@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
 public class MobileInteractable : StatefulInteractable
 {
     private void OnEnable()
@@ -35,6 +34,4 @@ public class MobileInteractable : StatefulInteractable
         transform.position = base.GetValue<Vector3>("Position");
         transform.rotation = base.GetValue<Quaternion>("Rotation");
     }
-
-
 }

@@ -33,6 +33,7 @@ public class StateRegistry : MonoBehaviour
         string id = interactable.GetUniqueID();
         if (!interactables.ContainsKey(id))
         {
+            Debug.Log($"Registering interactable with ID: {id}");
             interactables[id] = interactable;
             OnRegister?.Invoke(interactable);
         }
