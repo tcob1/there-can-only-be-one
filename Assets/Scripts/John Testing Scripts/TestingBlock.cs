@@ -12,7 +12,6 @@ public class TestingBlock : StatefulInteractable
     void Start()
     {
         StateRegistry.Instance.Register(this);
-
     }
 
     void Update()
@@ -38,7 +37,6 @@ public class TestingBlock : StatefulInteractable
     public override Dictionary<string, object> GetState()
     {
         base.SetValue("Position", transform.position);
-        base.SetValue("Visible", gameObject.activeSelf);
         return base.GetState();
     }
 
@@ -46,7 +44,6 @@ public class TestingBlock : StatefulInteractable
     {
         base.SetState(newState);
         transform.position = base.GetValue<Vector3>("Position");
-        gameObject.SetActive(base.GetValue<bool>("Visible"));
     }
 
     public void pickedUp()

@@ -4,13 +4,9 @@ using System.Collections.Generic;
 
 public class MobileInteractable : StatefulInteractable
 {
-    
-
     private void OnEnable()
     {
-        
         TimeHub.onSecond += NewChange;
-  
     }
 
     private void OnDisable()
@@ -18,31 +14,12 @@ public class MobileInteractable : StatefulInteractable
         TimeHub.onSecond -= NewChange;
     }
 
-    private void Awake()
-    {
-        
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-   protected void NewChange()
+    protected void NewChange()
     {
         if (TimeHub.Instance != null)
         {
             TimeHub.Instance.logChange(this);
         }
-        
-
     }
 
     public override Dictionary<string, object> GetState()
