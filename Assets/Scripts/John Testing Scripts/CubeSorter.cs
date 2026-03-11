@@ -53,4 +53,16 @@ public class CubeSorter : MobileInteractable
             }
         }
     }
+
+    public override Dictionary<string, object> GetState()
+    {
+        base.SetValue("Target", target);
+        return base.GetState();
+    }
+
+    public override void SetState(Dictionary<string, object> newState)
+    {
+        base.SetState(newState);
+        target = base.GetValue<GameObject>("Target");
+    }
 }

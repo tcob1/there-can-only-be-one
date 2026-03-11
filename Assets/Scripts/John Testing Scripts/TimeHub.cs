@@ -13,15 +13,17 @@ public class TimeHub : MonoBehaviour
     public int FIXED_UPDATE_RATE = 10;
 
 
-    public delegate void OnSecond();              
+    public delegate void OnSecond();
     public static event OnSecond onSecond;
 
-    public struct StateChange {
+    public struct StateChange
+    {
 
         public Dictionary<string, object> state;
         public long timeStamp;
 
-        public StateChange(Dictionary<string, object> state, long timeStamp) {
+        public StateChange(Dictionary<string, object> state, long timeStamp)
+        {
             this.state = state;
             this.timeStamp = timeStamp;
         }
@@ -33,7 +35,7 @@ public class TimeHub : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null) 
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -43,25 +45,17 @@ public class TimeHub : MonoBehaviour
     void Start()
     {
         time = START_TIME;
-        Time.fixedDeltaTime = 1 / (float) FIXED_UPDATE_RATE;
-
-        Dictionary<string, Dictionary<string, object>> nullStates = StateRegistry.Instance.GetAllStates();
+        Time.fixedDeltaTime = 1 / (float)FIXED_UPDATE_RATE;
 
         timeline = new Dictionary<string, List<StateChange>>();
-        //Debug.Log("Initializing timeline:");    
-        foreach (KeyValuePair<string, Dictionary<string, object>> kvp in nullStates) {
-            //Debug.Log(kvp.Key + " " + kvp.Value);
-            timeline.Add(kvp.Key, new List<StateChange> {new StateChange(kvp.Value, 0)});
+
+        Dictionary<string, Dictionary<string, object>> existing = StateRegistry.Instance.GetAllStates();
+        foreach (KeyValuePair<string, Dictionary<string, object>> kvp in existing)
+        {
+            AddNewState(kvp.Key, kvp.Value);
         }
 
-
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        StateRegistry.Instance.OnRegister += AddNewObject;
     }
 
     void FixedUpdate()
@@ -69,49 +63,74 @@ public class TimeHub : MonoBehaviour
         if (goalTime != 0 && goalTime > time)
         {
             //clock.enabled = false;
-            Time.fixedDeltaTime = 1 / ((float) FIXED_UPDATE_RATE * 10000);
-            
-        } else
+            Time.fixedDeltaTime = 1 / ((float)FIXED_UPDATE_RATE * 10000);
+
+        }
+        else
         {
-            Time.fixedDeltaTime = 1 / ((float) FIXED_UPDATE_RATE);
+            Time.fixedDeltaTime = 1 / ((float)FIXED_UPDATE_RATE);
             goalTime = 0;
         }
 
         long prevTime = time;
         time++;
-        if (((long) (time/FIXED_UPDATE_RATE) != (long) (prevTime/FIXED_UPDATE_RATE)) && onSecond != null) onSecond();
+        if (((long)(time / FIXED_UPDATE_RATE) != (long)(prevTime / FIXED_UPDATE_RATE)) && onSecond != null) onSecond();
         //print(time);
         //printTime(time);
     }
 
-    public long getTime(){
+    private void AddNewObject(IStateful obj)
+    {
+        string id = obj.GetUniqueID();
+        if (!timeline.ContainsKey(id))
+        {
+            AddNewState(id, obj.GetState());
+        }
+    }
+
+    private void AddNewState(string id, Dictionary<string, object> state)
+    {
+        if (!timeline.ContainsKey(id))
+        {
+            timeline.Add(id, new List<StateChange> { new StateChange(state, time) });
+        }
+    }
+
+    public long getTime()
+    {
         return time;
     }
 
-    public void timeChange(int newTime){
+    public void timeChange(int newTime)
+    {
         if (newTime > 0) timeForewards(newTime);
         else if (newTime < 0) timeBackwards(-newTime);
     }
 
-    public void timeForewards(int newTime){
+    public void timeForewards(int newTime)
+    {
         //print("Traveled " + newTime + " seconds forewards");
-        newTime*=FIXED_UPDATE_RATE;
-        goalTime = (time + newTime) - (time + newTime)%FIXED_UPDATE_RATE; //Makes sure new time is multiple of a second
+        newTime *= FIXED_UPDATE_RATE;
+        goalTime = (time + newTime) - (time + newTime) % FIXED_UPDATE_RATE; //Makes sure new time is multiple of a second
     }
 
-    public void timeBackwards(int newTime){
+    public void timeBackwards(int newTime)
+    {
         //print("Traveled " + newTime + " seconds backwards");
-        newTime*=FIXED_UPDATE_RATE;
-        time = (time - newTime) - (time - newTime)%FIXED_UPDATE_RATE; //Makes sure new time is multiple of a second
+        newTime *= FIXED_UPDATE_RATE;
+        time = (time - newTime) - (time - newTime) % FIXED_UPDATE_RATE; //Makes sure new time is multiple of a second
 
         Dictionary<string, Dictionary<string, object>> currStates = StateRegistry.Instance.GetAllStates();
 
-        foreach (KeyValuePair<string, Dictionary<string, object>> kvp in currStates) {
+        foreach (KeyValuePair<string, Dictionary<string, object>> kvp in currStates)
+        {
             string id = kvp.Key;
             List<StateChange> stateChanges = timeline[id];
-            while (stateChanges[0].timeStamp > time) {
+            while (stateChanges[0].timeStamp > time)
+            {
                 stateChanges.RemoveAt(0);
-                if (stateChanges.Count == 0) {
+                if (stateChanges.Count == 0)
+                {
                     Debug.LogWarning($"Timeline is Empty, how tf did you manage to do that?");
                 }
             }
@@ -120,49 +139,54 @@ public class TimeHub : MonoBehaviour
         }
     }
 
-    public void logChange(IStateful obj) {
+    public void logChange(IStateful obj)
+    {
         string id = obj.GetUniqueID();
         StateChange stateChange = new StateChange(obj.GetState(), nextSec(getTime()));
-        if (timeline.ContainsKey(id)){
+        if (timeline.ContainsKey(id))
+        {
             timeline[id].Insert(0, stateChange);
             //print($"Change Logged: {id} changed at time {stateChange.timeStamp}");
 
-        } else Debug.LogWarning($"Interactable with ID {id} is not in the timeline.");
-        
+        }
+        else Debug.LogWarning($"Interactable with ID {id} is not in the timeline.");
+
     }
 
-    public void printTime(long time) {
+    public void printTime(long time)
+    {
         long sec, min, hour, day;
-        time = (int) (time/FIXED_UPDATE_RATE);
+        time = (int)(time / FIXED_UPDATE_RATE);
         //print(time);
 
-        day = time/(60*60*24);
-        time -= day*60*60*24;
+        day = time / (60 * 60 * 24);
+        time -= day * 60 * 60 * 24;
 
-        hour = time/(60*60);
-        time -= hour*60*60;
+        hour = time / (60 * 60);
+        time -= hour * 60 * 60;
 
-        min = time/(60);
-        time -= min*60;
+        min = time / (60);
+        time -= min * 60;
 
         sec = time;
 
         print(day + ":" + hour + ":" + min + ":" + sec);
     }
 
-    public void updateClock(long time) {
+    public void updateClock(long time)
+    {
         long sec, min, hour, day;
-        time = (int) (time/FIXED_UPDATE_RATE);
+        time = (int)(time / FIXED_UPDATE_RATE);
         //print(time);
 
-        day = time/(60*60*24);
-        time -= day*60*60*24;
+        day = time / (60 * 60 * 24);
+        time -= day * 60 * 60 * 24;
 
-        hour = time/(60*60);
-        time -= hour*60*60;
+        hour = time / (60 * 60);
+        time -= hour * 60 * 60;
 
-        min = time/(60);
-        time -= min*60;
+        min = time / (60);
+        time -= min * 60;
 
         sec = time;
 
@@ -171,11 +195,10 @@ public class TimeHub : MonoBehaviour
 
     public long nextSec(long time)
     {
-        time = time/FIXED_UPDATE_RATE;
+        time = time / FIXED_UPDATE_RATE;
         time++;
-        time = time*FIXED_UPDATE_RATE;
-        
+        time = time * FIXED_UPDATE_RATE;
+
         return time;
     }
 }
-
