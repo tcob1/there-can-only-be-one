@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 3355575093523245556}
   - component: {fileID: 147134182380490327}
   - component: {fileID: 5044516148712980424}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: Interactions
   m_TagString: Untagged
   m_Icon: {fileID: 0}

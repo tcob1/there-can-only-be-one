@@ -467,6 +467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
+  inv: {fileID: 0}
 --- !u!1001 &44442337
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2236,69 +2237,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4420830335550748, guid: 6fb840e833a0f2049b655aba4bf98513, type: 3}
   m_PrefabInstance: {fileID: 615901431}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &652302753 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5764073053763252855, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
-  m_PrefabInstance: {fileID: 1824635344}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &652302754 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1063635744533554460, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
   m_PrefabInstance: {fileID: 1824635344}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &652302755
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652302753}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: c0e236a7fc062174db9473bdf64ca751, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &652302756
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 652302753}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &680311049
 GameObject:
   m_ObjectHideFlags: 0
@@ -3064,6 +3007,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 222f086d36f599e42b0020d3018c9a8f, type: 3}
   - name: shoot
     clip: {fileID: 8300000, guid: 25a18d351fc477849815383f50362d24, type: 3}
+  - name: AnotherMe
+    clip: {fileID: 8300000, guid: e18441665bf56af4bb3c575056fd09e2, type: 3}
 --- !u!4 &929747340
 Transform:
   m_ObjectHideFlags: 0
@@ -6149,12 +6094,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5937500225051845263, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
       insertIndex: -1
       addedObject: {fileID: 31451554}
-    - targetCorrespondingSourceObject: {fileID: 5764073053763252855, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 652302756}
-    - targetCorrespondingSourceObject: {fileID: 5764073053763252855, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 652302755}
   m_SourcePrefab: {fileID: 100100000, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
 --- !u!1001 &1825399037
 PrefabInstance:

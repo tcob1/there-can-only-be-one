@@ -20,7 +20,7 @@ public class Gun : Weapon
     protected override void Start()
     {
         base.Start();
-        layerMask = ~LayerMask.GetMask("InteractableDetector");
+        layerMask = ~LayerMask.GetMask("Interactable");
         firePoint = GameManager.Instance.playerAttackPosition;
     }
 
