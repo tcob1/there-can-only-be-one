@@ -8,6 +8,7 @@ public class GuardNav : MonoBehaviour
     {
         Patrolling,
         Chasing,
+        Inspecting,
         Searching,
         Shooting
     }
@@ -17,6 +18,7 @@ public class GuardNav : MonoBehaviour
     private NavMeshAgent agent;
 
     public GameObject Player;
+    public GameObject guard;
     private Vector3 lastKnownPlayerPosition;
     public float DetectRange = 100;
     public float HearingRange = 50;
@@ -27,6 +29,10 @@ public class GuardNav : MonoBehaviour
     private bool isInAngle = false;
     private bool isInDetectRange = false;
     private bool isVisible = false;
+
+    private GameObject targetInteractable = null;
+    public float pickupRange = 2.0f;
+    public LayerMask InteractableLayerMask;
 
     public GuardState currentGuardState = GuardState.Patrolling;
 
@@ -69,6 +75,9 @@ public class GuardNav : MonoBehaviour
                 break;
             case GuardState.Shooting:
                 HandleShooting();
+                break;
+            case GuardState.Inspecting:
+                HandleInspecting();
                 break;
         }
     }
@@ -117,18 +126,24 @@ public class GuardNav : MonoBehaviour
         if (isInAngle && isInDetectRange && isVisible)
         {
             SwapToChasing();
+            return;
         }
-        else
+
+        GameObject interactable = FindInteractableInView();
+        if (interactable != null)
         {
-            if (!agent.pathPending && agent.remainingDistance < 2.0f)
+            SwapToInspecting(interactable);
+            return;
+        }
+
+        if (!agent.pathPending && agent.remainingDistance < 2.0f)
+        {
+            if (patrolPoints.Length == 0)
             {
-                if (patrolPoints.Length == 0)
-                {
-                    return;
-                }
-                currentPointIndex = (currentPointIndex + 1) % patrolPoints.Length;
-                agent.SetDestination(patrolPoints[currentPointIndex].position);
+                return;
             }
+            currentPointIndex = (currentPointIndex + 1) % patrolPoints.Length;
+            agent.SetDestination(patrolPoints[currentPointIndex].position);
         }
     }
 
@@ -252,6 +267,78 @@ public class GuardNav : MonoBehaviour
                 SwapToSearching();
             }
         }
+    }
+
+    private void SwapToInspecting(GameObject interactable)
+    {
+        Debug.Log("Swapping To Inspecting");
+        currentGuardState = GuardState.Inspecting;
+        targetInteractable = interactable;
+        agent.SetDestination(targetInteractable.transform.position);
+    }
+
+    private void HandleInspecting()
+    {
+        if (isInAngle && isInDetectRange && isVisible)
+        {
+            targetInteractable = null;
+            SwapToChasing();
+            return;
+        }
+
+        if (targetInteractable == null)
+        {
+            SwapToPatrolling();
+            return;
+        }
+
+        float distToObj = Vector3.Distance(transform.position, targetInteractable.transform.position);
+        if (distToObj <= pickupRange)
+        {
+            Interactable inter = targetInteractable.GetComponent<Interactable>();
+            if (inter != null)
+            {
+                Debug.Log($"Picking Up Item: {targetInteractable.name}");
+            }
+            inter?.Interact(guard);
+            Destroy(targetInteractable);
+            targetInteractable = null;
+            SwapToPatrolling();
+        } 
+        else
+        {
+            agent.SetDestination(targetInteractable.transform.position);
+        }
+    }
+
+    private GameObject FindInteractableInView()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, DetectRange);
+        foreach (Collider coll in hits)
+        {
+            if (!coll.CompareTag("Interactable"))
+            {
+                continue;
+            }
+
+            Vector3 dirToObj = coll.transform.position - transform.position;
+            float angle = Vector3.Angle(transform.forward, dirToObj);
+            if (angle < DetectAngle)
+            {
+                continue;
+            }
+
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, dirToObj.normalized, out hit, DetectRange))
+            {
+                if (hit.collider == coll)
+                {
+                    return coll.gameObject;
+                }
+            }
+        }
+
+        return null;
     }
 
     void OnDrawGizmosSelected()

@@ -166,11 +166,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   Player: {fileID: 0}
+  guard: {fileID: 1658827571108088277}
   DetectRange: 100
   HearingRange: 50
   ForgetRange: 150
   StopAndShootRange: 10
   DetectAngle: 60
+  pickupRange: 2
+  InteractableLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   currentGuardState: 0
 --- !u!114 &5153170174484650329
 MonoBehaviour:
