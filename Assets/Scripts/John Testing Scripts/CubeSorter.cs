@@ -15,8 +15,8 @@ public class CubeSorter : MobileInteractable
     void Start()
     {
         inventory = null;
-        StateRegistry.Instance.Register(this);
         FindNewTarget();
+        StateRegistry.Instance.Register(this);
     }
 
     void FixedUpdate()
@@ -37,7 +37,7 @@ public class CubeSorter : MobileInteractable
 
     private void FindNewTarget()
     {
-        List<GameObject> cubes = GameObject.FindGameObjectsWithTag("Cube").Where(x => x.GetComponent<Renderer>().enabled == true).ToList();
+        List<GameObject> cubes = GameObject.FindGameObjectsWithTag("Cube").ToList();
         if (cubes.Count == 0)
         {
             target = null;
@@ -52,5 +52,17 @@ public class CubeSorter : MobileInteractable
                 target = cube;
             }
         }
+    }
+
+    public override Dictionary<string, object> GetState()
+    {
+        base.SetValue("Target", target);
+        return base.GetState();
+    }
+
+    public override void SetState(Dictionary<string, object> newState)
+    {
+        base.SetState(newState);
+        target = base.GetValue<GameObject>("Target");
     }
 }

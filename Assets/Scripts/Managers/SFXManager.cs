@@ -21,16 +21,12 @@ public class SFXManager : MonoBehaviour
 
     void Start()
     {
-
         audioSource = gameObject.AddComponent<AudioSource>();
         musicSource = gameObject.AddComponent<AudioSource>();
-        StopLoopingMusic();
-        InitializeSFXDictionary();
     }
 
     void Awake()
     {
-
         if (Instance == null)
         {
             Instance = this;
@@ -39,7 +35,14 @@ public class SFXManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
+
+        // Initialize AudioSources here
+        audioSource = gameObject.AddComponent<AudioSource>();
+        musicSource = gameObject.AddComponent<AudioSource>();
+
+        InitializeSFXDictionary();
     }
 
     private void InitializeSFXDictionary()
@@ -69,13 +72,14 @@ public class SFXManager : MonoBehaviour
     }
 
 
-    public void PlayLoopingMusic(string name, float startTime = 0f)
+    public void PlayLoopingMusic(string name, float startTime = 0f, float volume = 1f)
     {
         if (sfxDictionary.TryGetValue(name, out AudioClip clip))
         {
             musicSource.clip = clip;
             musicSource.loop = true;
             musicSource.time = startTime;
+            musicSource.volume = volume;
             musicSource.Play();
         }
         else

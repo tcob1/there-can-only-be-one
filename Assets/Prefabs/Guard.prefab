@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7495458128451230273}
   - component: {fileID: 5153170174484650329}
   - component: {fileID: 6534256162720344751}
+  - component: {fileID: 6544448219758690198}
   m_Layer: 11
   m_Name: Guard
   m_TagString: Untagged
@@ -209,6 +210,19 @@ MonoBehaviour:
   isGuard: 1
   startItems:
   - {fileID: 11400000, guid: 548f6a4cc31417642a9fc0365439da1d, type: 2}
+--- !u!114 &6544448219758690198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658827571108088277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1e163cf2a0cb06b8213f4383920b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: Guard
 --- !u!1 &1803736065849827155
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +234,7 @@ GameObject:
   - component: {fileID: 3355575093523245556}
   - component: {fileID: 147134182380490327}
   - component: {fileID: 5044516148712980424}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: Interactions
   m_TagString: Untagged
   m_Icon: {fileID: 0}

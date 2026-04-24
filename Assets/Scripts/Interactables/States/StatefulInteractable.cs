@@ -24,11 +24,13 @@ public class StatefulInteractable : MonoBehaviour, IStateful
 
     public virtual Dictionary<string, object> GetState()
     {
+        state["Enabled"] = gameObject.activeSelf;
         return new Dictionary<string, object>(state);
     }
 
     public virtual void SetState(Dictionary<string, object> newState)
     {
         state = new Dictionary<string, object>(newState);
+        gameObject.SetActive(GetValue("Enabled", true));
     }
 }

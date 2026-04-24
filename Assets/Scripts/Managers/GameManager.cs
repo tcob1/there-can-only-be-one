@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
 
         IsGameRunning = true;
         OnGameStart?.Invoke();
+
+        SFXManager.Instance.PlayLoopingMusic("AnotherMe", 0f, 0.3f);
     }
 
     public void EndGame()

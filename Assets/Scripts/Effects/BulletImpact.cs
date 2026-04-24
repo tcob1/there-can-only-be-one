@@ -4,9 +4,22 @@ public class BulletImpact : MonoBehaviour
 {
 
     [SerializeField] private float lifetime = 5f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private GameObject target;
+
+    public void SetTarget(GameObject t) => target = t;
+
+    void Update()
+    {
+        if (target == null)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         Destroy(gameObject, lifetime);
+
     }
 }
