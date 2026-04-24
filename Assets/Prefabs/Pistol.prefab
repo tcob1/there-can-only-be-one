@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6344802298613999878}
   m_Layer: 7
   m_Name: Pistol
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,11 +130,11 @@ MonoBehaviour:
   damage: 30
   cooldown: 0
   range: 100
-  firePoint: {fileID: 4117185597104229465}
   hitEffectPrefab: {fileID: 3472946442528340331, guid: 4361436247780e845a39eab5f1052584, type: 3}
   shootPS: {fileID: 8835965440194418936}
   recoilAmount: 10
   recoilRecoverySpeed: 10
+  guard: {fileID: 0}
 --- !u!114 &-3403798869203903135
 MonoBehaviour:
   m_ObjectHideFlags: 0

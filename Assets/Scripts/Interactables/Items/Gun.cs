@@ -61,6 +61,7 @@ public class Gun : Weapon
         {
 
             ParticleSystem effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)).GetComponent<ParticleSystem>();
+            effect.GetComponent<BulletImpact>().SetTarget(hit.collider.gameObject);
             effect.Play();
 
             HealthManager victimHealth = hit.collider.GetComponent<HealthManager>();
