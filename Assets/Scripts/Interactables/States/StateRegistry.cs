@@ -8,6 +8,9 @@ public class StateRegistry : MonoBehaviour
 
     private Dictionary<string, IStateful> interactables = new Dictionary<string, IStateful>();
 
+    public delegate void RegisterHandler(IStateful obj);
+    public event RegisterHandler OnRegister;
+
     void Awake()
     {
         // TODO: Clean up during scene transitions?
@@ -30,13 +33,14 @@ public class StateRegistry : MonoBehaviour
         string id = interactable.GetUniqueID();
         if (!interactables.ContainsKey(id))
         {
+            Debug.Log($"Registering interactable with ID: {id}");
             interactables[id] = interactable;
+            OnRegister?.Invoke(interactable);
         }
         else
         {
             Debug.LogWarning($"Interactable with ID {id} is already registered.");
         }
-        //Debug.Log("Registered interactable with ID: " + id);
     }
 
     public void Unregister(IStateful interactable)

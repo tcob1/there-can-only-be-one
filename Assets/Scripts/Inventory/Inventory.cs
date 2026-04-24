@@ -147,7 +147,7 @@ public class Inventory : MonoBehaviour
             if (worldItemComponent != null)
                 worldItemComponent.isHeld = true;
         }
-        
+
 
         OnInventoryChanged?.Invoke();
     }
@@ -234,7 +234,7 @@ public class Inventory : MonoBehaviour
             {
                 continue;
             }
-            
+
             for (int q = 0; q < slot.quantity; q++)
             {
                 Vector3 dropPos = transform.position + GetScatterOffset(i, q);

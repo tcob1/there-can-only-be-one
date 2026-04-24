@@ -1163,8 +1163,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6544448219758690198, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
+      propertyPath: uniqueID
+      value: Guard2
+      objectReference: {fileID: 0}
     - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
       propertyPath: Player
+      value: 
+      objectReference: {fileID: 31451549}
+    - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
+      propertyPath: player
       value: 
       objectReference: {fileID: 31451549}
     - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
@@ -5058,8 +5066,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Guard
       objectReference: {fileID: 0}
+    - target: {fileID: 6544448219758690198, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
+      propertyPath: uniqueID
+      value: Guard0
+      objectReference: {fileID: 0}
     - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
       propertyPath: Player
+      value: 
+      objectReference: {fileID: 31451549}
+    - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
+      propertyPath: player
       value: 
       objectReference: {fileID: 31451549}
     - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
@@ -5669,8 +5685,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6544448219758690198, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
+      propertyPath: uniqueID
+      value: Guard1
+      objectReference: {fileID: 0}
     - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
       propertyPath: Player
+      value: 
+      objectReference: {fileID: 31451549}
+    - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
+      propertyPath: player
       value: 
       objectReference: {fileID: 31451549}
     - target: {fileID: 7495458128451230273, guid: 10fd45af9a6844f39b99d68ba3bf3674, type: 3}
