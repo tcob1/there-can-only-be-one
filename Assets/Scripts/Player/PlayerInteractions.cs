@@ -62,6 +62,7 @@ public class PlayerInteractions : MonoBehaviour
             {
                 if (!hoveredInteractables.Contains(interactable))
                 {
+
                     hoveredInteractables.Add(interactable);
                     interactable.OnHoverEnter();
                 }

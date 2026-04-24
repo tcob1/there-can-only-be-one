@@ -102,7 +102,7 @@ public class Inventory : MonoBehaviour
                 itemSlots[i].itemData = itemData;
                 itemSlots[i].quantity = 1;
 
-                if (activeSlotIndex == -1 && !isGuard)
+                if (!isGuard)
                 {
                     activeSlotIndex = i;
                     EquipSlot(i);
