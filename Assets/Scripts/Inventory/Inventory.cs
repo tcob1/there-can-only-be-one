@@ -51,6 +51,7 @@ public class Inventory : MonoBehaviour
     public int activeSlotIndex = -1;
 
     public bool isGuard = false;
+    public GuardNav guardNav;
 
     public ItemData[] startItems;
 
@@ -139,17 +140,41 @@ public class Inventory : MonoBehaviour
         if (!itemSlots[index].IsEmpty())
         {
             currentHeldItem = Instantiate(itemSlots[index].itemData.worldPrefab, rightHoldPosition);
+            Debug.Log($"Held item: {currentHeldItem.name}");
+            if (currentHeldItem.name == "Pistol" && isGuard)
+            {
+                Gun GunScript = currentHeldItem.GetComponent<Gun>();
+                GunScript.guard = guardNav;
+            }
+            Debug.Log($"Held item parent: {currentHeldItem.transform.parent?.name ?? "NULL"}");
 
             currentHeldItem.transform.localPosition = Vector3.zero;
             currentHeldItem.transform.localRotation = Quaternion.identity;
 
             WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
-            if (worldItemComponent != null)
+            if (worldItemComponent != null && !isGuard)
                 worldItemComponent.isHeld = true;
         }
 
 
         OnInventoryChanged?.Invoke();
+    }
+
+    // function for guards to equip items by name like switching from gun to keys and vice versa
+    public void GuardEquipByName(string itemName)
+    {
+        if (!isGuard) return;
+        Debug.Log($"Attempting to equip: {itemName}");
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (!itemSlots[i].IsEmpty() &&
+                 itemSlots[i].itemData.itemName == itemName)
+            {
+                Debug.Log($"Equipping: {itemSlots[i].itemData}");
+                EquipSlot(i);
+                return;
+            }
+        }
     }
 
     public void DropItem(Vector3 dropPosition)

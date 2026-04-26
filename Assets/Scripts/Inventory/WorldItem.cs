@@ -16,7 +16,7 @@ public abstract class WorldItem : MonoBehaviour
             Debug.LogError("WorldItem requires an Interactable component!");
             return;
         }
-
+        
         interactable.OnInteract.AddListener(PickUp);
     }
 

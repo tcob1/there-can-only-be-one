@@ -32,7 +32,8 @@ public class Gun : Weapon
             {
                 Attack();
             }
-        } else if (guard != null)
+        } 
+        else if (guard != null)
         {
             if (guard.currentGuardState == GuardNav.GuardState.Shooting)
             {

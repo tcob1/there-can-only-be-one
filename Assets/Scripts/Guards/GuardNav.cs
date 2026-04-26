@@ -17,8 +17,9 @@ public class GuardNav : MonoBehaviour
     private int currentPointIndex = 0;
     private NavMeshAgent agent;
 
-    public GameObject Player;
+    public GameObject player;
     public GameObject guard;
+    public Inventory inv;
     private Vector3 lastKnownPlayerPosition;
     public float detectRange = 100;
     public float hearingRange = 50;
@@ -150,6 +151,7 @@ public class GuardNav : MonoBehaviour
     {
         Debug.Log("Swapping to chasing");
         currentGuardState = GuardState.Chasing;
+        inv.GuardEquipByName("Gun");
         lastKnownPlayerPosition = player.transform.position;
         agent.SetDestination(lastKnownPlayerPosition);
     }
@@ -312,7 +314,7 @@ public class GuardNav : MonoBehaviour
 
     private GameObject FindInteractableInView()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.position, DetectRange);
+        Collider[] hits = Physics.OverlapSphere(transform.position, detectRange);
         foreach (Collider coll in hits)
         {
             if (!coll.CompareTag("Interactable"))
@@ -322,13 +324,13 @@ public class GuardNav : MonoBehaviour
 
             Vector3 dirToObj = coll.transform.position - transform.position;
             float angle = Vector3.Angle(transform.forward, dirToObj);
-            if (angle < DetectAngle)
+            if (angle < detectAngle)
             {
                 continue;
             }
 
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, dirToObj.normalized, out hit, DetectRange))
+            if (Physics.Raycast(transform.position, dirToObj.normalized, out hit, detectRange))
             {
                 if (hit.collider == coll)
                 {
