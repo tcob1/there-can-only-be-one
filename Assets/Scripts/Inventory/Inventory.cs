@@ -79,15 +79,6 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        Debug.Log("GUARD INV:");
-        for (int i = 0; i < NUM_ITEM_SLOTS; i++)
-        {
-            Debug.Log($"Item Slot: {itemSlots[i].itemData}");
-        }
-    }
-
     public bool AddItem(ItemData itemData)
     {
         // Try stacking first
@@ -155,8 +146,11 @@ public class Inventory : MonoBehaviour
                 GunScript.guard = guardNav;
             }
 
-            //currentHeldItem.transform.localPosition = Vector3.zero;
-            //currentHeldItem.transform.localRotation = Quaternion.identity;
+            if (!isGuard)
+            {
+                currentHeldItem.transform.localPosition = Vector3.zero;
+                currentHeldItem.transform.localRotation = Quaternion.identity;
+            }
 
             WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
             if (worldItemComponent != null && !isGuard)
