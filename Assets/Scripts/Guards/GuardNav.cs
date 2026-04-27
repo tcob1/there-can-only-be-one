@@ -112,7 +112,7 @@ public class GuardNav : MonoBehaviour
 
     private void SwapToPatrolling()
     {
-        Debug.Log("Swapping to patrolling");
+        //Debug.Log("Swapping to patrolling");
         currentGuardState = GuardState.Patrolling;
         if (patrolPoints.Length > 0)
         {
@@ -149,7 +149,7 @@ public class GuardNav : MonoBehaviour
 
     private void SwapToChasing()
     {
-        Debug.Log("Swapping to chasing");
+        //Debug.Log("Swapping to chasing");
         currentGuardState = GuardState.Chasing;
         inv.GuardEquipByName("Gun");
         lastKnownPlayerPosition = player.transform.position;
@@ -189,7 +189,7 @@ public class GuardNav : MonoBehaviour
 
     private void SwapToSearching()
     {
-        Debug.Log("Swapping to searching");
+        //Debug.Log("Swapping to searching");
         currentGuardState = GuardState.Searching;
         agent.SetDestination(lastKnownPlayerPosition); // Stop moving to search
     }
@@ -225,7 +225,7 @@ public class GuardNav : MonoBehaviour
 
     private void SwapToShooting()
     {
-        Debug.Log("Swapping to shooting");
+        //Debug.Log("Swapping to shooting");
         currentGuardState = GuardState.Shooting;
         agent.SetDestination(transform.position); // Stop moving to shoot
     }
@@ -272,7 +272,7 @@ public class GuardNav : MonoBehaviour
 
     private void SwapToInspecting(GameObject interactable)
     {
-        Debug.Log("Swapping To Inspecting");
+        //Debug.Log("Swapping To Inspecting");
         currentGuardState = GuardState.Inspecting;
         targetInteractable = interactable;
         agent.SetDestination(targetInteractable.transform.position);
@@ -299,7 +299,7 @@ public class GuardNav : MonoBehaviour
             Interactable inter = targetInteractable.GetComponent<Interactable>();
             if (inter != null)
             {
-                Debug.Log($"Picking Up Item: {targetInteractable.name}");
+                //Debug.Log($"Picking Up Item: {targetInteractable.name}");
             }
             inter?.Interact(guard);
             Destroy(targetInteractable);
@@ -324,7 +324,7 @@ public class GuardNav : MonoBehaviour
 
             Vector3 dirToObj = coll.transform.position - transform.position;
             float angle = Vector3.Angle(transform.forward, dirToObj);
-            if (angle < detectAngle)
+            if (angle > detectAngle)
             {
                 continue;
             }

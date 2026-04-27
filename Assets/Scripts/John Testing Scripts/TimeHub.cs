@@ -114,13 +114,13 @@ public class TimeHub : MonoBehaviour
 
     public void timeForewards(int newTime)
     {
-        //print("Traveled " + newTime + " seconds forewards");
+        Debug.Log("Traveled " + newTime + " seconds forewards");
         goalTime = time + newTime;
     }
 
     public void timeBackwards(int newTime)
     {
-        //print("Traveled " + newTime + " seconds backwards");
+        Debug.Log("Traveled " + newTime + " seconds backwards");
         time = Math.Max(time - newTime, START_TIME);
 
         Dictionary<string, Dictionary<string, object>> currStates = StateRegistry.Instance.GetAllStates();

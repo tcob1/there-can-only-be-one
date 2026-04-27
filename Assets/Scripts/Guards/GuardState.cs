@@ -22,7 +22,11 @@ public class GuardState : MobileInteractable
         base.SetValue("Target", guardNav.player);
         base.SetValue("TrackingState", guardNav.currentGuardState);
         base.SetValue("Health", healthManager.health);
-        base.SetValue("Inventory", (InventorySlot[])inventory.itemSlots.Clone());
+        // Deep copy so saved snapshots aren't affected by later changes
+        InventorySlot[] inventoryCopy = inventory.itemSlots
+            .Select(slot => new InventorySlot(slot.itemData, slot.quantity))
+            .ToArray();
+        base.SetValue("Inventory", inventoryCopy);
         base.SetValue("ActiveSlotIndex", inventory.activeSlotIndex);
         return base.GetState();
     }
@@ -36,5 +40,7 @@ public class GuardState : MobileInteractable
         inventory.itemSlots = base.GetValue<InventorySlot[]>("Inventory");
         inventory.activeSlotIndex = base.GetValue<int>("ActiveSlotIndex");
 
+        // Re-equip so the held world object matches restored state
+        inventory.EquipSlot(inventory.activeSlotIndex);
     }
 }

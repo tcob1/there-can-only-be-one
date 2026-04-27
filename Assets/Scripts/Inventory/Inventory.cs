@@ -79,6 +79,15 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        Debug.Log("GUARD INV:");
+        for (int i = 0; i < NUM_ITEM_SLOTS; i++)
+        {
+            Debug.Log($"Item Slot: {itemSlots[i].itemData}");
+        }
+    }
+
     public bool AddItem(ItemData itemData)
     {
         // Try stacking first
@@ -140,16 +149,14 @@ public class Inventory : MonoBehaviour
         if (!itemSlots[index].IsEmpty())
         {
             currentHeldItem = Instantiate(itemSlots[index].itemData.worldPrefab, rightHoldPosition);
-            Debug.Log($"Held item: {currentHeldItem.name}");
             if (currentHeldItem.name == "Pistol" && isGuard)
             {
                 Gun GunScript = currentHeldItem.GetComponent<Gun>();
                 GunScript.guard = guardNav;
             }
-            Debug.Log($"Held item parent: {currentHeldItem.transform.parent?.name ?? "NULL"}");
 
-            currentHeldItem.transform.localPosition = Vector3.zero;
-            currentHeldItem.transform.localRotation = Quaternion.identity;
+            //currentHeldItem.transform.localPosition = Vector3.zero;
+            //currentHeldItem.transform.localRotation = Quaternion.identity;
 
             WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
             if (worldItemComponent != null && !isGuard)
@@ -164,13 +171,12 @@ public class Inventory : MonoBehaviour
     public void GuardEquipByName(string itemName)
     {
         if (!isGuard) return;
-        Debug.Log($"Attempting to equip: {itemName}");
+
         for (int i = 0; i < itemSlots.Length; i++)
         {
             if (!itemSlots[i].IsEmpty() &&
                  itemSlots[i].itemData.itemName == itemName)
             {
-                Debug.Log($"Equipping: {itemSlots[i].itemData}");
                 EquipSlot(i);
                 return;
             }
