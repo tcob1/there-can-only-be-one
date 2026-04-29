@@ -6,54 +6,86 @@ using System;
 public class GameEvent
 {
     public string id;
-    public float triggerTime;
+    // reflects Timehub time
+    public long triggerTime;
     public bool hasTriggered;
 }
 
 public class GameEventArgs : EventArgs
 {
     public GameEvent Event;
-    public float CurrentTime;
+    public long CurrentTime;
 }
 
 public class GameEvents : MonoBehaviour
 {
-    [Header("Time")]
-    public float currentTime = 0f;
-    public bool isRunning = true;
-
+    // where we can list the events happening throughout day
     [Header("Events")]
-    //list events that happen here
     [SerializeField]
     private List<GameEvent> events = new List<GameEvent>
     {
-        new GameEvent { id = "guard_drops_key", triggerTime = 30f  },
+        new GameEvent { id = "guard_drops_key", triggerTime = 5000007L },
     };
 
-    // Subscribe to this from any MonoBehaviour to react to events
+    // create event handler
     public static event EventHandler<GameEventArgs> OnGameEvent;
 
-    void Update()
+    public static GameEvents Instance;
+
+    void Awake()
     {
-        if (!isRunning) return;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+            
+    }
 
-        currentTime += Time.deltaTime;
+    void OnEnable()
+    {
+        //subscribe to timehub ticks
+        TimeHub.onSecond += OnSecondTick;
+    }
 
+    void OnDisable()
+    {
+        TimeHub.onSecond -= OnSecondTick;
+    }
+
+    private void OnSecondTick()
+    {
+        long currentTime = TimeHub.Instance.getTime();
+        Debug.Log(currentTime);
+
+        // when going back in time reset events that haven't happened yet
+        foreach (var gameEvent in events)
+        {
+            if (gameEvent.hasTriggered && gameEvent.triggerTime > currentTime)
+            {
+                gameEvent.hasTriggered = false;
+                Debug.Log($"(GameEvents) '{gameEvent.id}' has been reset");
+            }
+        }
+
+        // Trigger events that should have fired by now
         foreach (var gameEvent in events)
         {
             if (!gameEvent.hasTriggered && currentTime >= gameEvent.triggerTime)
             {
-                TriggerEvent(gameEvent);
+                TriggerEvent(gameEvent, currentTime);
             }
         }
     }
 
-    void TriggerEvent(GameEvent gameEvent)
+
+    void TriggerEvent(GameEvent gameEvent, long currentTime)
     {
         gameEvent.hasTriggered = true;
-
-        Debug.Log($"[GameEvents] ▶ '{gameEvent.id}' fired at t={currentTime:F1}s");
-
+        Debug.Log($"(GameEvents) '{gameEvent.id}' triggered at t={currentTime}s");
         OnGameEvent?.Invoke(this, new GameEventArgs
         {
             Event = gameEvent,
@@ -61,20 +93,10 @@ public class GameEvents : MonoBehaviour
         });
     }
 
-    public void RewindTo(float targetTime)
-    {
-        currentTime = targetTime;
-        foreach (var gameEvent in events)
-            if (gameEvent.triggerTime >= targetTime)
-                gameEvent.hasTriggered = false;
-
-        Debug.Log($"[GameEvents] Rewound to t={targetTime}s");
-    }
-
-    public void SetPaused(bool paused) => isRunning = !paused;
-
+    // add a new event from other scripts. like when certain events in time only happen under certain conditions
     public void RegisterEvent(GameEvent newEvent)
     {
+        long currentTime = TimeHub.Instance.getTime();
         newEvent.hasTriggered = currentTime >= newEvent.triggerTime;
         events.Add(newEvent);
     }
