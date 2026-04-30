@@ -3047,8 +3047,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events:
   - id: guard_drops_key
-    triggerTime: 10007
+    triggerTimeString: 0:2:47:0
+    triggerTime: 0
     hasTriggered: 0
+  keyPrefab: {fileID: 2762554950203291354, guid: 2fbab5f68d4dac214a80534b7f98dbde, type: 3}
 --- !u!1001 &941402062
 PrefabInstance:
   m_ObjectHideFlags: 0

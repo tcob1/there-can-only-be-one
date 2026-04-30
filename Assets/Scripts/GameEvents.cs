@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using UnityEditor;
 
 [Serializable]
 public class GameEvent
@@ -32,6 +33,9 @@ public class GameEvents : MonoBehaviour
     public static event EventHandler<GameEventArgs> OnGameEvent;
 
     public static GameEvents Instance;
+
+    // events objects
+    [SerializeField] private GameObject keyPrefab;
 
     void Awake()
     {
@@ -76,7 +80,7 @@ public class GameEvents : MonoBehaviour
         long minute = parts.Length > 1 ? long.Parse(parts[parts.Length - 2]) : 0;
         long second = long.Parse(parts[parts.Length - 1]);
 
-        return (day * 86400) + (hour * 3600) + (minute * 60) + second + TimeHub.Instance.START_TIME;
+        return (day * 86400) + (hour * 3600) + (minute * 60) + second;
     }
 
     private void OnSecondTick()
@@ -109,6 +113,21 @@ public class GameEvents : MonoBehaviour
     {
         gameEvent.hasTriggered = true;
         Debug.Log($"(GameEvents) '{gameEvent.id}' triggered at t={currentTime}s");
+
+        // we can set events in this script or sub to OnGameEvent in other scripts to trigger things when certain events happen
+        switch (gameEvent.id)
+        {
+            case "guard_drops_key":
+                // not efficient for now
+                GuardNav guard = FindAnyObjectByType<GuardNav>();
+                if (guard != null && keyPrefab != null)
+                {
+                    Instantiate(keyPrefab, guard.transform.position, Quaternion.identity);
+                }
+                break;
+        }
+
+
         OnGameEvent?.Invoke(this, new GameEventArgs
         {
             Event = gameEvent,
