@@ -2755,7 +2755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clock: {fileID: 1510442528}
-  START_TIME: 5000000
+  START_TIME: 10000
   FIXED_UPDATE_RATE: 10
 --- !u!4 &804703178
 Transform:
@@ -3047,7 +3047,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events:
   - id: guard_drops_key
-    triggerTime: 30
+    triggerTime: 10007
     hasTriggered: 0
 --- !u!1001 &941402062
 PrefabInstance:
@@ -4981,8 +4981,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: CurrTime
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
+  m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

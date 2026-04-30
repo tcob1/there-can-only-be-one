@@ -6,7 +6,8 @@ using System;
 public class GameEvent
 {
     public string id;
-    // reflects Timehub time
+    // enter something like "0:1:30:0" in Inspector
+    public string triggerTimeString; 
     public long triggerTime;
     public bool hasTriggered;
 }
@@ -24,7 +25,7 @@ public class GameEvents : MonoBehaviour
     [SerializeField]
     private List<GameEvent> events = new List<GameEvent>
     {
-        new GameEvent { id = "guard_drops_key", triggerTime = 5000007L },
+        new GameEvent { id = "guard_drops_key", triggerTime = 10007L },
     };
 
     // create event handler
@@ -54,6 +55,28 @@ public class GameEvents : MonoBehaviour
     void OnDisable()
     {
         TimeHub.onSecond -= OnSecondTick;
+    }
+
+    void Start()
+    {
+        foreach (var gameEvent in events)
+        {
+            gameEvent.triggerTime = ParseTime(gameEvent.triggerTimeString);
+        }
+    }
+
+    // Ai generated, for ease of inspector input
+    // D:HH:MM:SS to seconds
+    public static long ParseTime(string time)
+    {
+        string[] parts = time.Split(':');
+
+        long day = parts.Length > 3 ? long.Parse(parts[parts.Length - 4]) : 0;
+        long hour = parts.Length > 2 ? long.Parse(parts[parts.Length - 3]) : 0;
+        long minute = parts.Length > 1 ? long.Parse(parts[parts.Length - 2]) : 0;
+        long second = long.Parse(parts[parts.Length - 1]);
+
+        return (day * 86400) + (hour * 3600) + (minute * 60) + second + TimeHub.Instance.START_TIME;
     }
 
     private void OnSecondTick()
