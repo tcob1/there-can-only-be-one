@@ -40,12 +40,14 @@ public class TimeHub : MonoBehaviour
         {
             Instance = this;
         }
+
+        time = START_TIME;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        time = START_TIME;
+
         Time.fixedDeltaTime = 1 / (float)FIXED_UPDATE_RATE;
 
         onSecond += () => updateClock(time);
