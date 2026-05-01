@@ -19,10 +19,8 @@ public class Usable : Weapon
     }
 
 
-    public override void Attack()
+    public override void CustomAttack()
     {
-        if (!CanUse())
-            return;
 
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward;
@@ -49,7 +47,6 @@ public class Usable : Weapon
         }
 
         ApplyRecoil();
-        lastUseTime = Time.time;
     }
 
     private void LateUpdate()

@@ -3,6 +3,7 @@ using UnityEngine;
 public class Fists : Usable
 {
     [SerializeField] private Inventory inventory;
+    [SerializeField] private CooldownBar cooldownBar;
 
     protected override void Start()
     {
@@ -21,6 +22,11 @@ public class Fists : Usable
     private void UpdateVisibility()
     {
         gameObject.SetActive(!inventory.HasItemInHand());
+    }
+
+    private void OnEnable()
+    {
+        cooldownBar.Bind(this);
     }
 
     private void LateUpdate()

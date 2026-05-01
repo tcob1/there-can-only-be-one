@@ -128,7 +128,7 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: 548f6a4cc31417642a9fc0365439da1d, type: 2}
   isHeld: 0
   damage: 30
-  cooldown: 0
+  cooldown: 0.1
   range: 100
   hitEffectPrefab: {fileID: 3472946442528340331, guid: 4361436247780e845a39eab5f1052584, type: 3}
   shootPS: {fileID: 8835965440194418936}

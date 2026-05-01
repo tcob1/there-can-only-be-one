@@ -47,6 +47,8 @@ public class Inventory : MonoBehaviour
 
     private GameObject currentHeldItem;
 
+    [SerializeField] private CooldownBar cooldownBar;
+
     // which slot is equipped
     public int activeSlotIndex = -1;
 
@@ -123,9 +125,6 @@ public class Inventory : MonoBehaviour
         if (index < 0 || index >= itemSlots.Length)
             return;
 
-        //equipping only exisitng items
-        //if (itemSlots[index].IsEmpty())
-        //    return;
 
         //get rid of item currently in hand
         if (currentHeldItem != null)
@@ -146,6 +145,17 @@ public class Inventory : MonoBehaviour
             WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
             if (worldItemComponent != null)
                 worldItemComponent.isHeld = true;
+
+            //add cooldown bar if equipping a weapon
+            if (gameObject.tag == "Player")
+            {
+                Weapon weapon = currentHeldItem.GetComponent<Weapon>();
+                if (weapon != null && cooldownBar != null)
+                {
+                    cooldownBar.Bind(weapon);
+                }
+            }
+
         }
 
 

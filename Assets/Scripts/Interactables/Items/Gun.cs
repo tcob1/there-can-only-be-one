@@ -26,17 +26,11 @@ public class Gun : Weapon
 
     void Update()
     {
-        if (isHeld)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Attack();
-            }
-        } else if (guard != null)
+        if (guard != null)
         {
             if (guard.currentGuardState == GuardNav.GuardState.Shooting)
             {
-                Attack();
+                Attack(gameObject);
             }
         }
 
@@ -47,12 +41,8 @@ public class Gun : Weapon
         transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.identity, Time.deltaTime * recoilRecoverySpeed);
     }
 
-    public override void Attack()
+    public override void CustomAttack()
     {
-        if (!CanUse())
-        {
-            return;
-        }
 
         SFXManager.Instance.PlaySFX("shoot");
         shootPS.Play();
@@ -73,7 +63,6 @@ public class Gun : Weapon
 
         ApplyRecoil();
 
-        lastUseTime = Time.time;
 
         // Trigger global event for player shooting (for guard reactions, etc.)
         GlobalEvents.Instance.TriggerPlayerShoot(firePoint.position);

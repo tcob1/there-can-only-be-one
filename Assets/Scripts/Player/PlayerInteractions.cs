@@ -64,19 +64,17 @@ public class PlayerInteractions : MonoBehaviour
 
         if (equippedItem != null)
         {
-            Usable usable = equippedItem.GetComponent<Usable>();
+            Weapon usable = equippedItem.GetComponent<Weapon>();
             if (usable != null)
             {
-                usable.Attack();
+                usable.Attack(gameObject);
                 return;
             }
         }
         if (fists != null && fists.gameObject != null)
         {
-            fists.Attack();
+            fists.Attack(gameObject);
         }
-
-
     }
 
     private void UpdateHovered()
