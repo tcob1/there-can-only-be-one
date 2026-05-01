@@ -266,6 +266,15 @@ public class Inventory : MonoBehaviour
 
     public GameObject GetEquippedItem()
     {
+        if (currentHeldItem == null)
+        {
+            return null;
+        }
         return currentHeldItem;
+    }
+
+    public bool HasItemInHand()
+    {
+        return currentHeldItem != null;
     }
 }

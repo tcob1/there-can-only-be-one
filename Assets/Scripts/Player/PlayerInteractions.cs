@@ -17,6 +17,8 @@ public class PlayerInteractions : MonoBehaviour
 
     private HashSet<Interactable> hoveredInteractables = new HashSet<Interactable>();
 
+    [SerializeField] private Fists fists;
+
     void Start()
     {
         interactAction = InputSystem.actions.FindAction("Interact");
@@ -59,11 +61,22 @@ public class PlayerInteractions : MonoBehaviour
     private void UseEquippedItem()
     {
         GameObject equippedItem = inventory.GetEquippedItem();
-        if (equippedItem == null) return; 
 
-        //if item has usable class, attack
-        Usable usable = equippedItem.GetComponent<Usable>();
-        usable?.Attack(); 
+        if (equippedItem != null)
+        {
+            Usable usable = equippedItem.GetComponent<Usable>();
+            if (usable != null)
+            {
+                usable.Attack();
+                return;
+            }
+        }
+        if (fists != null && fists.gameObject != null)
+        {
+            fists.Attack();
+        }
+
+
     }
 
     private void UpdateHovered()
