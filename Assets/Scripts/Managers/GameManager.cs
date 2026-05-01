@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -49,9 +50,16 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         if (!IsGameRunning) return;
-
         IsGameRunning = false;
         OnGameOver?.Invoke();
+
+
+        //long timeToRewind = TimeHub.Instance.getTime() - TimeHub.Instance.START_TIME;
+        //TimeHub.Instance.timeBackwards((int)timeToRewind);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        IsGameRunning = true;
     }
 
 }

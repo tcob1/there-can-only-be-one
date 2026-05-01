@@ -263,4 +263,9 @@ public class Inventory : MonoBehaviour
 
         return new Vector3(Mathf.Cos(angle) * radius, 0.2f, Mathf.Sin(angle) * radius);
     }
+
+    public GameObject GetEquippedItem()
+    {
+        return currentHeldItem;
+    }
 }
