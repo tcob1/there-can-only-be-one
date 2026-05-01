@@ -18,17 +18,6 @@ public class Usable : Weapon
         layerMask = ~LayerMask.GetMask("InteractableDetector");
     }
 
-    void Update()
-    {
-        if (isHeld)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Attack();
-            }
-        }
-
-    }
 
     public override void Attack()
     {

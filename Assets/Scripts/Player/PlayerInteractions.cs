@@ -9,6 +9,7 @@ public class PlayerInteractions : MonoBehaviour
 
     private InputAction interactAction;
     private InputAction dropAction;
+    private InputAction attackAction;
 
     private Inventory inventory;
 
@@ -26,10 +27,12 @@ public class PlayerInteractions : MonoBehaviour
         dropAction.started += ctx => DropFirstInventorySlot();
         dropAction.Enable();
 
+        attackAction = InputSystem.actions.FindAction("Attack");
+        attackAction.started += ctx => UseEquippedItem();
+        attackAction.Enable();
+
         inventory = player.GetComponent<Inventory>();
-
         layerMask = LayerMask.GetMask("Interactable") | LayerMask.GetMask("InteractableHover");
-
         inventory.EquipSlot(0);
     }
 
@@ -51,6 +54,16 @@ public class PlayerInteractions : MonoBehaviour
 
         if (Keyboard.current.digit5Key.wasPressedThisFrame)
             inventory.EquipSlot(4);
+    }
+
+    private void UseEquippedItem()
+    {
+        GameObject equippedItem = inventory.GetEquippedItem();
+        if (equippedItem == null) return; 
+
+        //if item has usable class, attack
+        Usable usable = equippedItem.GetComponent<Usable>();
+        usable?.Attack(); 
     }
 
     private void UpdateHovered()
