@@ -64,16 +64,24 @@ public class Door : StatefulInteractable
     public void TryOpen()
     {
         if (State != DoorState.Closed)
+        {
+            Debug.Log("Cannot open door: " + State);
+            SFXManager.Instance.PlaySFX("DoorInvalid");
             return;
+        }
         State = DoorState.Open;
+        SFXManager.Instance.PlaySFX("DoorSwing");
         OnOpen.Invoke();
     }
 
     public void TryClose()
     {
         if (State != DoorState.Open)
+        {
             return;
+        }
         State = DoorState.Closed;
+        SFXManager.Instance.PlaySFX("DoorSwing");
         OnClose.Invoke();
     }
 
@@ -82,6 +90,7 @@ public class Door : StatefulInteractable
         if (State != DoorState.Closed)
             return;
         State = DoorState.Locked;
+        SFXManager.Instance.PlaySFX("DoorLock");
         OnLock.Invoke();
     }
 
@@ -99,6 +108,7 @@ public class Door : StatefulInteractable
         if (State != DoorState.Locked)
             return;
         State = DoorState.Closed;
+        SFXManager.Instance.PlaySFX("DoorLock");
         OnUnlock.Invoke();
     }
 
@@ -120,6 +130,10 @@ public class Door : StatefulInteractable
         else if (State == DoorState.Closed)
         {
             TryOpen();
+        }
+        else if (State == DoorState.Locked)
+        {
+            SFXManager.Instance.PlaySFX("DoorInvalid");
         }
     }
 
