@@ -18,7 +18,7 @@ public class PlayerInteractions : MonoBehaviour
 
     private int layerMask;
 
-    private HashSet<Interactable> hoveredInteractables = new HashSet<Interactable>();
+    private Interactable currentHovered = null;
 
     [SerializeField] private Fists fists;
 
@@ -39,7 +39,7 @@ public class PlayerInteractions : MonoBehaviour
         attackAction.started += ctx => UseEquippedItem();
         attackAction.Enable();
 
-        layerMask = LayerMask.GetMask("Interactable");
+        layerMask = LayerMask.GetMask("Interactable") | LayerMask.GetMask("InteractableHover");
 
         //navigating inventory
         scrollAction = InputSystem.actions.FindAction("ScrollSlot");
@@ -113,43 +113,42 @@ public class PlayerInteractions : MonoBehaviour
     //update the list of hovered interactables based on raycast results, and call hover highlight, text methods
     private void UpdateHovered()
     {
-        Interactable currentInteractable = null;
+        // Unity == null catches destroyed objects
+        if (currentHovered == null)
+        {
+            currentHovered = null; // clear the stale reference
+            UIManager.Instance.HideInteractionText();
+        }
+
+        Interactable newInteractable = null;
 
         if (GetRaycastHit(out RaycastHit hitInfo))
-            currentInteractable = hitInfo.collider.GetComponent<Interactable>();
+            newInteractable = hitInfo.collider.GetComponent<Interactable>();
 
-        if (currentInteractable != null)
+        if (newInteractable != currentHovered)
         {
-            if (!hoveredInteractables.Contains(currentInteractable))
+            if (currentHovered != null)
             {
-                hoveredInteractables.Add(currentInteractable);
-                currentInteractable.OnHoverEnter();
+                currentHovered.OnHoverExit();
+                UIManager.Instance.HideInteractionText();
             }
 
-            //if the interactable has states, pass the current state to GetHoverText so it can return state-specific text
-            StatefulInteractable statefulInteractable = currentInteractable.GetComponentInParent<StatefulInteractable>();
-            string state = statefulInteractable?.GetCurrentState();
-            string hoverText = currentInteractable.GetHoverText(player, state);
+            currentHovered = newInteractable;
+
+            if (currentHovered != null)
+                currentHovered.OnHoverEnter();
+        }
+
+        if (currentHovered != null)
+        {
+            StatefulInteractable stateful = currentHovered.GetComponentInParent<StatefulInteractable>();
+            string state = stateful?.GetCurrentState();
+            string hoverText = currentHovered.GetHoverText(player, state);
             if (!string.IsNullOrEmpty(hoverText))
                 UIManager.Instance.ShowInteractionText(hoverText);
             else
                 UIManager.Instance.HideInteractionText();
         }
-        else
-        {
-            UIManager.Instance.HideInteractionText();
-        }
-
-        hoveredInteractables.RemoveWhere(interactable =>
-        {
-            if (interactable == null) return true;
-            if (interactable != currentInteractable)
-            {
-                interactable.OnHoverExit();
-                return true;
-            }
-            return false;
-        });
     }
 
     private void SendInteractionRay()
