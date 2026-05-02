@@ -13,6 +13,7 @@ public class FadeText : MonoBehaviour
 
     private void Start()
     {
+        gameObject.SetActive(true);
         if (text == null)
         {
             text = GetComponent<TextMeshProUGUI>();
@@ -47,5 +48,6 @@ public class FadeText : MonoBehaviour
 
         text.alpha = 0f;
         currentCoroutine = null;
+        gameObject.SetActive(false);
     }
 }

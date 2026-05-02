@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
     [SerializeField] private TitlesUI titlesUI;
     [SerializeField] private InteractionUI interactionUI;
+    [SerializeField] private FadeText heldItemNameFadeEffect;
 
     private void Awake()
     {
@@ -19,6 +20,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        heldItemNameFadeEffect.gameObject.SetActive(false);
         GameManager.Instance.OnGameStart += () =>
         {
             ShowTitle("THERE CAN ONLY BE ONE");
@@ -28,6 +30,12 @@ public class UIManager : MonoBehaviour
         {
             ShowTitle("YOU ARE NOT THE ONE");
         };
+    }
+
+    public void ShowEquipText(string itemName)
+    {
+        heldItemNameFadeEffect.gameObject.SetActive(true);
+        heldItemNameFadeEffect.Fade(itemName);
     }
 
     public void ShowInteractionText(string text)

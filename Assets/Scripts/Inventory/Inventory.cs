@@ -143,9 +143,15 @@ public class Inventory : MonoBehaviour
             currentHeldItem.transform.localPosition = Vector3.zero;
             currentHeldItem.transform.localRotation = Quaternion.identity;
 
+            // Set world item to held state so it can adjust scale and disable interactions
             WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
             if (worldItemComponent != null)
+            {
                 worldItemComponent.isHeld = true;
+            }
+
+            // Show the name of the equipped item UI
+            UIManager.Instance.ShowEquipText(itemSlots[index].itemData.itemName);
 
             //add cooldown bar if equipping a weapon
             if (gameObject.tag == "Player")
