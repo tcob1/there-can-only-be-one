@@ -4,6 +4,8 @@ using UnityEngine.Events;
 public class Interactable : MonoBehaviour
 {
     public UnityEvent<GameObject> OnInteract;
+    [SerializeField] private string hoverText;
+
 
     void Start()
     {
@@ -24,5 +26,20 @@ public class Interactable : MonoBehaviour
     public void Interact(GameObject interactor)
     {
         OnInteract.Invoke(interactor);
+    }
+
+    public virtual string GetHoverText()
+    {
+        if (hoverText == null)
+        {
+            Debug.LogWarning($"Interactable '{gameObject.name}' has no default hover text set.");
+            return null;
+        }
+        return hoverText;
+    }
+
+    public void SetHoverText(string text)
+    {
+        hoverText = text;
     }
 }

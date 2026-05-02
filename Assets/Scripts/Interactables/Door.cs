@@ -43,8 +43,11 @@ public class Door : StatefulInteractable
         lockInteractable.OnInteract.AddListener(TryToggleLockWithKey);
         moveInteractable.OnInteract.AddListener(TryToggleMove);
 
+        UpdateHoverText();
+
         OnInitialized.Invoke();
     }
+
 
     public override Dictionary<string, object> GetState()
     {
@@ -61,6 +64,25 @@ public class Door : StatefulInteractable
         }
     }
 
+    public override void UpdateHoverText()
+    {
+        switch (State)
+        {
+            case DoorState.Open:
+                moveInteractable.SetHoverText("Close(E)");
+                lockInteractable.SetHoverText("Lock(Need Key)");
+                break;
+            case DoorState.Closed:
+                moveInteractable.SetHoverText("Open(E)");
+                lockInteractable.SetHoverText("Lock(Need Key)");
+                break;
+            case DoorState.Locked:
+                moveInteractable.SetHoverText("Locked");
+                lockInteractable.SetHoverText("Unlock(Need Key)");
+                break;
+        }
+    }
+
     public void TryOpen()
     {
         if (State != DoorState.Closed)
@@ -70,6 +92,7 @@ public class Door : StatefulInteractable
             return;
         }
         State = DoorState.Open;
+        UpdateHoverText();
         SFXManager.Instance.PlaySFX("DoorSwing");
         OnOpen.Invoke();
     }
@@ -81,6 +104,7 @@ public class Door : StatefulInteractable
             return;
         }
         State = DoorState.Closed;
+        UpdateHoverText();
         SFXManager.Instance.PlaySFX("DoorSwing");
         OnClose.Invoke();
     }
@@ -90,6 +114,7 @@ public class Door : StatefulInteractable
         if (State != DoorState.Closed)
             return;
         State = DoorState.Locked;
+        UpdateHoverText();
         SFXManager.Instance.PlaySFX("DoorLock");
         OnLock.Invoke();
     }
@@ -108,6 +133,7 @@ public class Door : StatefulInteractable
         if (State != DoorState.Locked)
             return;
         State = DoorState.Closed;
+        UpdateHoverText();
         SFXManager.Instance.PlaySFX("DoorLock");
         OnUnlock.Invoke();
     }

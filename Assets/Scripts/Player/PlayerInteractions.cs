@@ -86,20 +86,30 @@ public class PlayerInteractions : MonoBehaviour
             {
                 if (!hoveredInteractables.Contains(interactable))
                 {
-
                     hoveredInteractables.Add(interactable);
                     interactable.OnHoverEnter();
                 }
+
+                // show hover text
+                string hoverText = interactable.GetHoverText();
+                if (hoverText != null && hoverText != "")
+                    UIManager.Instance.ShowInteractionText(hoverText);
+                else
+                    UIManager.Instance.HideInteractionText();
             }
         }
+        else
+        {
+            UIManager.Instance.HideInteractionText();
+        }
 
-        // Remove hover from interactables that are no longer hit
         hoveredInteractables.RemoveWhere(interactable =>
         {
-            if (interactable == null) return true; // Remove destroyed interactables
+            if (interactable == null) return true;
             if (!GetRaycastHit(out RaycastHit hitInfo) || hitInfo.collider.GetComponent<Interactable>() != interactable)
             {
                 interactable.OnHoverExit();
+                UIManager.Instance.HideInteractionText();
                 return true;
             }
             return false;

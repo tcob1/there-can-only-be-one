@@ -125,6 +125,7 @@ MonoBehaviour:
   OnInteract:
     m_PersistentCalls:
       m_Calls: []
+  hoverText: Simple Key\nPickup(E)
 --- !u!114 &1506513845810800725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +141,7 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: 932fa00151d20e633b76bb6059bfe51e, type: 2}
   isHeld: 0
   damage: 10
-  cooldown: 0
+  cooldown: 0.1
   range: 1.5
   sphereRadius: 0.2
   recoilAmount: 25

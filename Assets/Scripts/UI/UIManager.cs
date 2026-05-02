@@ -4,6 +4,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
     [SerializeField] private TitlesUI titlesUI;
+    [SerializeField] private InteractionUI interactionUI;
 
     private void Awake()
     {
@@ -27,6 +28,16 @@ public class UIManager : MonoBehaviour
         {
             ShowTitle("YOU ARE NOT THE ONE");
         };
+    }
+
+    public void ShowInteractionText(string text)
+    {
+        interactionUI.Show(text);
+    }
+
+    public void HideInteractionText()
+    {
+        interactionUI.Hide();
     }
 
     public void ShowTitle(string text)
