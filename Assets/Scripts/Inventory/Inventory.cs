@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using NUnit.Framework.Internal.Execution;
 
 [System.Serializable]
 public class InventorySlot
@@ -180,6 +181,7 @@ public class Inventory : MonoBehaviour
             WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
             if (worldItemComponent != null)
                 worldItemComponent.isHeld = false;
+                worldItemComponent.SetToWorldScale();
 
             currentHeldItem = null;
         }
