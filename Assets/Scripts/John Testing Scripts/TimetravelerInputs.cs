@@ -9,7 +9,7 @@ public class TimetravelerInputs : MonoBehaviour
 
     private InputAction chargeTTAction;
     private InputAction chargeTTScroll;
-    private bool chargingTT;
+    public bool chargingTT;
     private float scrollCharge;
     
     private float currCharge;

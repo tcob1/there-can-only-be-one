@@ -23,8 +23,9 @@ public class FadeText : MonoBehaviour
     public void Fade(string message)
     {
         if (currentCoroutine != null)
+        {
             StopCoroutine(currentCoroutine);
-
+        }
         currentCoroutine = StartCoroutine(FadeRoutine(message));
     }
 
