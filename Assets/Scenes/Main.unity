@@ -4700,6 +4700,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: Swinging Door
       objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[0].state
+      value: Open
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[1].state
+      value: Closed
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[2].state
+      value: Locked
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[3].state
+      value: Locked
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[4].state
+      value: Closed
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[0].hoverText
+      value: Lock (E)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[1].hoverText
+      value: Lock (E)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[2].hoverText
+      value: Unlock (E)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[3].hoverText
+      value: Unlock\n(Need Key)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[4].hoverText
+      value: Lock\n(Need Key)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[0].requiredItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 932fa00151d20e633b76bb6059bfe51e, type: 2}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[1].requiredItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 932fa00151d20e633b76bb6059bfe51e, type: 2}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[2].requiredItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 932fa00151d20e633b76bb6059bfe51e, type: 2}
+    - target: {fileID: 6199322302606505218, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
+      propertyPath: hoverTextRules.Array.data[3].requiredItem
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8661398804586011443, guid: 1fc790d678a5bde3fba412962a546d4b, type: 3}
       propertyPath: m_LocalScale.x
       value: 2

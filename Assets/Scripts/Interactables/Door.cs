@@ -69,19 +69,21 @@ public class Door : StatefulInteractable
         switch (State)
         {
             case DoorState.Open:
-                moveInteractable.SetHoverText("Close(E)");
-                lockInteractable.SetHoverText("Lock\n(Need Key)");
+                moveInteractable.SetHoverText("Close (E)");
+                //lockInteractable.SetHoverText("Lock\n(Need Key)"); - now handled with hoverrules as serial field
                 break;
             case DoorState.Closed:
-                moveInteractable.SetHoverText("Open(E)");
-                lockInteractable.SetHoverText("Lock\n(Need Key)");
+                moveInteractable.SetHoverText("Open (E)");
+                //lockInteractable.SetHoverText("Lock\n(Need Key)");
                 break;
             case DoorState.Locked:
                 moveInteractable.SetHoverText("Locked");
-                lockInteractable.SetHoverText("Unlock\n(Need Key)");
+                //lockInteractable.SetHoverText("Unlock\n(Need Key)");
                 break;
         }
     }
+
+    public override string GetCurrentState() => State.ToString();
 
     public void TryOpen()
     {

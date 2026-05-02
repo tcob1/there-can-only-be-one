@@ -78,6 +78,7 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
+    //update the list of hovered interactables based on raycast results, and call hover highlight, text methods
     private void UpdateHovered()
     {
         Interactable currentInteractable = null;
@@ -93,7 +94,10 @@ public class PlayerInteractions : MonoBehaviour
                 currentInteractable.OnHoverEnter();
             }
 
-            string hoverText = currentInteractable.GetHoverText();
+            //if the interactable has states, pass the current state to GetHoverText so it can return state-specific text
+            StatefulInteractable statefulInteractable = currentInteractable.GetComponentInParent<StatefulInteractable>();
+            string state = statefulInteractable?.GetCurrentState();
+            string hoverText = currentInteractable.GetHoverText(player, state);
             if (!string.IsNullOrEmpty(hoverText))
                 UIManager.Instance.ShowInteractionText(hoverText);
             else
