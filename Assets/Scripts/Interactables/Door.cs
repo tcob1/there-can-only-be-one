@@ -70,15 +70,15 @@ public class Door : StatefulInteractable
         {
             case DoorState.Open:
                 moveInteractable.SetHoverText("Close(E)");
-                lockInteractable.SetHoverText("Lock(Need Key)");
+                lockInteractable.SetHoverText("Lock\n(Need Key)");
                 break;
             case DoorState.Closed:
                 moveInteractable.SetHoverText("Open(E)");
-                lockInteractable.SetHoverText("Lock(Need Key)");
+                lockInteractable.SetHoverText("Lock\n(Need Key)");
                 break;
             case DoorState.Locked:
                 moveInteractable.SetHoverText("Locked");
-                lockInteractable.SetHoverText("Unlock(Need Key)");
+                lockInteractable.SetHoverText("Unlock\n(Need Key)");
                 break;
         }
     }

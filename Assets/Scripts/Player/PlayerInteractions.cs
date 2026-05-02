@@ -35,6 +35,7 @@ public class PlayerInteractions : MonoBehaviour
 
         inventory = player.GetComponent<Inventory>();
         layerMask = LayerMask.GetMask("Interactable") | LayerMask.GetMask("InteractableHover");
+
         inventory.EquipSlot(0);
     }
 
@@ -79,24 +80,24 @@ public class PlayerInteractions : MonoBehaviour
 
     private void UpdateHovered()
     {
-        if (GetRaycastHit(out RaycastHit hitInfo))
-        {
-            Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-            if (interactable != null)
-            {
-                if (!hoveredInteractables.Contains(interactable))
-                {
-                    hoveredInteractables.Add(interactable);
-                    interactable.OnHoverEnter();
-                }
+        Interactable currentInteractable = null;
 
-                // show hover text
-                string hoverText = interactable.GetHoverText();
-                if (hoverText != null && hoverText != "")
-                    UIManager.Instance.ShowInteractionText(hoverText);
-                else
-                    UIManager.Instance.HideInteractionText();
+        if (GetRaycastHit(out RaycastHit hitInfo))
+            currentInteractable = hitInfo.collider.GetComponent<Interactable>();
+
+        if (currentInteractable != null)
+        {
+            if (!hoveredInteractables.Contains(currentInteractable))
+            {
+                hoveredInteractables.Add(currentInteractable);
+                currentInteractable.OnHoverEnter();
             }
+
+            string hoverText = currentInteractable.GetHoverText();
+            if (!string.IsNullOrEmpty(hoverText))
+                UIManager.Instance.ShowInteractionText(hoverText);
+            else
+                UIManager.Instance.HideInteractionText();
         }
         else
         {
@@ -106,10 +107,9 @@ public class PlayerInteractions : MonoBehaviour
         hoveredInteractables.RemoveWhere(interactable =>
         {
             if (interactable == null) return true;
-            if (!GetRaycastHit(out RaycastHit hitInfo) || hitInfo.collider.GetComponent<Interactable>() != interactable)
+            if (interactable != currentInteractable)
             {
                 interactable.OnHoverExit();
-                UIManager.Instance.HideInteractionText();
                 return true;
             }
             return false;
