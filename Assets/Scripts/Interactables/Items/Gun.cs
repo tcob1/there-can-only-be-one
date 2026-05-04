@@ -3,7 +3,7 @@ using UnityEngine;
 public class Gun : Weapon
 {
     [SerializeField] private float range = 100f;
-    private Transform firePoint;
+    private Transform attackPosition;
 
     //Effects
     [SerializeField] private GameObject hitEffectPrefab;
@@ -21,7 +21,22 @@ public class Gun : Weapon
     {
         base.Start();
         layerMask = ~LayerMask.GetMask("Interactable");
-        firePoint = GameManager.Instance.playerAttackPosition;
+
+        attackPosition = new GameObject("AttackPosition").transform;
+
+        //for precise shoot pos
+        if (transform.root.CompareTag("Player"))
+        {
+            Camera cam = transform.root.GetComponentInChildren<Camera>();
+            attackPosition.SetParent(cam.transform);
+            attackPosition.localPosition = Vector3.zero;
+        }
+        else
+        {
+            attackPosition.SetParent(transform.root);
+            attackPosition.localPosition = new Vector3(0, 0f, 0.6f);
+        }
+
     }
 
     void Update()
@@ -47,7 +62,7 @@ public class Gun : Weapon
         SFXManager.Instance.PlaySFX("shoot");
         shootPS.Play();
 
-        if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, range, layerMask))
+        if (Physics.Raycast(attackPosition.position, transform.parent.forward, out RaycastHit hit, range, layerMask))
         {
 
             ParticleSystem effect = Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal)).GetComponent<ParticleSystem>();
@@ -65,7 +80,8 @@ public class Gun : Weapon
 
 
         // Trigger global event for player shooting (for guard reactions, etc.)
-        GlobalEvents.Instance.TriggerPlayerShoot(firePoint.position);
+        GlobalEvents.Instance.TriggerPlayerShoot(attackPosition.position);
+
     }
 
     private void ApplyRecoil()
@@ -76,5 +92,14 @@ public class Gun : Weapon
 
         // Apply gun model recoil
         transform.localRotation *= Quaternion.Euler(-y, x, 0);
+    }
+
+    void OnDestroy()
+    {
+        if (attackPosition != null)
+        {
+            Destroy(attackPosition.gameObject);
+        }
+            
     }
 }

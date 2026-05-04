@@ -54,11 +54,6 @@ public class GameManager : MonoBehaviour
         OnGameOver?.Invoke();
 
 
-        //long timeToRewind = TimeHub.Instance.getTime() - TimeHub.Instance.START_TIME;
-        //TimeHub.Instance.timeBackwards((int)timeToRewind);
-
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
         IsGameRunning = true;
     }
 
