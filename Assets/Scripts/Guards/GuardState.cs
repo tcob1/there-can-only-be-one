@@ -37,4 +37,9 @@ public class GuardState : MobileInteractable
         inventory.activeSlotIndex = base.GetValue<int>("ActiveSlotIndex");
 
     }
+
+    public override string GetCurrentState()
+    {
+        return guardNav.currentGuardState.ToString();
+    }
 }

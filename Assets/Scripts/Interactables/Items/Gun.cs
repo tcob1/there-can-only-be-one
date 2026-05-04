@@ -80,7 +80,11 @@ public class Gun : Weapon
 
 
         // Trigger global event for player shooting (for guard reactions, etc.)
-        GlobalEvents.Instance.TriggerPlayerShoot(attackPosition.position);
+        if (transform.root.CompareTag("Player"))
+        {
+            GlobalEvents.Instance.TriggerPlayerShoot(attackPosition.position);
+        }
+            
 
     }
 
