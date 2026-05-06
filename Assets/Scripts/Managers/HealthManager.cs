@@ -19,8 +19,7 @@ public class HealthManager : MonoBehaviour
     {
         if (inv != null)
         {
-            Debug.Log("Player dropped all items on death");
-            inv.DropAll();
+            inv.DropAllPlayer();
         }
 
         if (gameObject.tag == "Player")
