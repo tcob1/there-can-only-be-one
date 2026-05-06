@@ -169,7 +169,7 @@ public class GuardNav : MonoBehaviour
 
             if (distanceToPlayer <= stopAndShootRange)
             {
-                if (player_inv.currentHeldItem && player_inv.currentHeldItem.name == "Pistol")
+                if (!player_inv.currentHeldItem || (player_inv.currentHeldItem && player_inv.currentHeldItem.name != "Pistol(Clone)"))
                 {
                     agent.SetDestination(transform.position);
                 }
