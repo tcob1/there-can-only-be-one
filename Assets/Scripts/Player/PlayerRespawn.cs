@@ -16,6 +16,7 @@ public class PlayerRespawn : MonoBehaviour
     [SerializeField] private CinemachineCamera vcamDeath;
     [SerializeField] private float deathScreenDelay = 1f;
     [SerializeField] private CinemachineBrain cinemachineBrain;
+    [SerializeField] private Transform cameraTarget;
 
     void Start()
     {
@@ -70,22 +71,11 @@ public class PlayerRespawn : MonoBehaviour
 
     private void HandleRespawn()
     {
-        // drop items and reset time
         TimeHub.Instance.timeChange((int)-TimeHub.Instance.getTime());
 
-        // re-enable player
-        playerMovement.enabled = true;
-        mouseLook.enabled = true;
-        playerInteractions.enabled = true;
-        playerRenderer.enabled = true;
-
-        playerMovement.gameObject.layer = LayerMask.NameToLayer("Player");
-
-        fists.SetActive(true);
-
-        // lock cursor
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        // reset rotation for seamless camera transition
+        cameraTarget.rotation = vcamDeath.transform.rotation;
+        mouseLook.SetRotation(vcamDeath.transform.rotation);
 
         // switch cameras back
         vcamPlayer.gameObject.SetActive(true);
@@ -93,5 +83,26 @@ public class PlayerRespawn : MonoBehaviour
 
         // hide death screen
         UIManager.Instance.HideDeathScreen();
+
+        // re-enable player after blend
+        StartCoroutine(ReenablePlayerAfterBlend());
+    }
+
+    private IEnumerator ReenablePlayerAfterBlend()
+    {
+        // re-enable renderer immediately
+        playerRenderer.enabled = true;
+
+        yield return null;
+        yield return new WaitUntil(() => !cinemachineBrain.IsBlending);
+
+        playerMovement.enabled = true;
+        mouseLook.enabled = true;
+        playerInteractions.enabled = true;
+        playerMovement.gameObject.layer = LayerMask.NameToLayer("Player");
+        fists.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

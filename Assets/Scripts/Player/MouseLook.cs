@@ -87,4 +87,19 @@ public class MouseLook : MonoBehaviour
         pos.y = y;
         cameraTarget.localPosition = pos;
     }
+
+    public void ResetRotation()
+    {
+        xRotation = 0f;
+        cameraTarget.localRotation = Quaternion.identity;
+        playerBody.rotation = Quaternion.identity;
+    }
+
+    public void SetRotation(Quaternion rotation)
+    {
+        xRotation = rotation.eulerAngles.x;
+        if (xRotation > 180f) xRotation -= 360f; 
+        cameraTarget.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        playerBody.rotation = Quaternion.Euler(0f, rotation.eulerAngles.y, 0f);
+    }
 }
