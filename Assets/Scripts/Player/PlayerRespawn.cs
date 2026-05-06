@@ -62,7 +62,10 @@ public class PlayerRespawn : MonoBehaviour
         yield return new WaitForSeconds(deathScreenDelay);
 
         UIManager.Instance.ShowTitle("YOU ARE NOT THE ONE");
-        //UIManager.Instance.ShowDeathScreen();
+
+        yield return new WaitForSeconds(2);
+
+        UIManager.Instance.ShowDeathScreen();
     }
 
     private void HandleRespawn()
@@ -89,6 +92,6 @@ public class PlayerRespawn : MonoBehaviour
         vcamDeath.gameObject.SetActive(false);
 
         // hide death screen
-        //UIManager.Instance.HideDeathScreen();
+        UIManager.Instance.HideDeathScreen();
     }
 }

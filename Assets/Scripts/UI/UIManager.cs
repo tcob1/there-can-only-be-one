@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private FadeText heldItemNameFadeEffect;
     [SerializeField] private GameObject clock;
     [SerializeField] private GameObject inventoryBar;
-    //[SerializeField] private DeathScreenUI deathScreenUI;
+    [SerializeField] private DeathScreenUI deathScreenUI;
 
     private void Awake()
     {
@@ -38,16 +38,15 @@ public class UIManager : MonoBehaviour
         };
     }
 
-    //public void ShowDeathScreen()
-    //{
-    //    deathScreenUI.gameObject.SetActive(true);
-    //    deathScreenUI.FadeIn();
-    //}
+    public void ShowDeathScreen()
+    {
+        deathScreenUI.gameObject.SetActive(true);
+    }
 
-    //public void HideDeathScreen()
-    //{
-    //    deathScreenUI.gameObject.SetActive(false);
-    //}
+    public void HideDeathScreen()
+    {
+        deathScreenUI.gameObject.SetActive(false);
+    }
 
     public void ShowEquipText(string itemName)
     {
@@ -73,7 +72,7 @@ public class UIManager : MonoBehaviour
 
     private void ShowClock()
     {
-        clock.SetActive(false);
+        clock.SetActive(true);
     }
 
     private void HideClock()
