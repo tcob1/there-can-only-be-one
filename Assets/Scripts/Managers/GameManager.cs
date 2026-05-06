@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour
     // Fired when the game ends or player dies
     public event Action OnGameOver;
 
+    public event Action OnRespawn;
+
 
     // ---------- Properties ----------
     public bool IsGameRunning { get; private set; }
-
-    [SerializeField] public Transform playerAttackPosition;
 
 
     private void Awake()
@@ -54,7 +54,13 @@ public class GameManager : MonoBehaviour
         OnGameOver?.Invoke();
 
 
+
+    }
+
+    public void Respawn()
+    {
         IsGameRunning = true;
+        OnRespawn?.Invoke();
     }
 
 }

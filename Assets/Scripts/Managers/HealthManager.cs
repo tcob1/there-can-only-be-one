@@ -17,17 +17,19 @@ public class HealthManager : MonoBehaviour
 
     void Die()
     {
+        if (inv != null)
+        {
+            Debug.Log("Player dropped all items on death");
+            inv.DropAll();
+        }
+
         if (gameObject.tag == "Player")
         {
             GameManager.Instance.EndGame();
+
         }
         else
         {
-            if (inv != null)
-            {
-                inv.DropAll();
-            }
-
             // Don't destroy, just disable to keep timeline intact
             gameObject.SetActive(false);
         }

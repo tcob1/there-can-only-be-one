@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_LocalScale.x
@@ -401,7 +401,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_LocalScale.x
@@ -483,7 +483,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4962039562683002, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
       propertyPath: m_LocalScale.x
@@ -565,7 +565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4962039562683002, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
       propertyPath: m_LocalScale.x
@@ -643,7 +643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 450645193150303657, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 607049772743322326, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_LocalScale.x
@@ -984,7 +984,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1010,7 +1010,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 450645193150303657, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 607049772743322326, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_LocalScale.x
@@ -1099,7 +1099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1647689469582066, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4153231348813984, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -1354,7 +1354,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1591165099382186, guid: 160a6121b4d25254da31bdab63ad82b7, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4914818815454766, guid: 160a6121b4d25254da31bdab63ad82b7, type: 3}
       propertyPath: m_LocalScale.x
@@ -1436,7 +1436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1978775886026106, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4962039562683002, guid: bbc12ae2f967ec04e8c3c39eeb92733b, type: 3}
       propertyPath: m_LocalScale.x
@@ -1522,7 +1522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1899605190878714, guid: d3f65bf385a3c3847ab550b32f3e53e8, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4411305546473658, guid: d3f65bf385a3c3847ab550b32f3e53e8, type: 3}
       propertyPath: m_LocalScale.x
@@ -1604,7 +1604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 450645193150303657, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 607049772743322326, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_LocalScale.x
@@ -1930,7 +1930,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1647689469582066, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4153231348813984, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -2141,7 +2141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1196428747069424, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4062619256373206, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_LocalScale.y
@@ -2211,7 +2211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_LocalScale.x
@@ -2324,7 +2324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1902795669187520, guid: 6fb840e833a0f2049b655aba4bf98513, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4420830335550748, guid: 6fb840e833a0f2049b655aba4bf98513, type: 3}
       propertyPath: m_LocalScale.x
@@ -2621,7 +2621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1647689469582066, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4153231348813984, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -2730,7 +2730,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1196428747069424, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4062619256373206, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_LocalScale.y
@@ -2804,7 +2804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1647689469582066, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4153231348813984, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -3038,7 +3038,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1196428747069424, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4062619256373206, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_LocalScale.y
@@ -3218,7 +3218,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1647689469582066, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4153231348813984, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -3312,7 +3312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3764ba40a169c0e4e94d44cb7ad9753f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAttackPosition: {fileID: 0}
 --- !u!4 &929747340
 Transform:
   m_ObjectHideFlags: 0
@@ -3360,7 +3359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_LocalScale.x
@@ -3438,7 +3437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_LocalScale.x
@@ -3516,7 +3515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 450645193150303657, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 607049772743322326, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_LocalScale.x
@@ -3594,7 +3593,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_LocalScale.x
@@ -3707,7 +3706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1647689469582066, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4153231348813984, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -3822,7 +3821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1647689469582066, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4153231348813984, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -3935,7 +3934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CollideAgainst:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 65
   IgnoreTag: 
   TransparentLayers:
     serializedVersion: 2
@@ -3952,7 +3951,7 @@ MonoBehaviour:
     Strategy: 0
     MaximumEffort: 4
     SmoothingTime: 0
-    Damping: 0.4
+    Damping: 0.1
     DampingWhenOccluded: 0.2
   ShotQualityEvaluation:
     Enabled: 0
@@ -4140,7 +4139,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 450645193150303657, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 607049772743322326, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_LocalScale.x
@@ -4453,7 +4452,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1647689469582066, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4153231348813984, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -4863,7 +4862,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1590855381051568, guid: f0371e756e6017b4c84e42073506be40, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4901645553587172, guid: f0371e756e6017b4c84e42073506be40, type: 3}
       propertyPath: m_LocalScale.x
@@ -5157,7 +5156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5691,7 +5690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1902795669187520, guid: 6fb840e833a0f2049b655aba4bf98513, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4420830335550748, guid: 6fb840e833a0f2049b655aba4bf98513, type: 3}
       propertyPath: m_LocalScale.x
@@ -5891,7 +5890,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_LocalScale.x
@@ -5969,7 +5968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1196428747069424, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4062619256373206, guid: a2e435ea5b0f606429670d1f3f1f1504, type: 3}
       propertyPath: m_LocalScale.y
@@ -6070,7 +6069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_LocalScale.x
@@ -6313,7 +6312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6370,7 +6369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761572497134762, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4963671626276604, guid: 4ec4cfadebd96154690192fbd49e28b8, type: 3}
       propertyPath: m_LocalScale.x
@@ -6871,7 +6870,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6901,7 +6900,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1647689469582066, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4153231348813984, guid: 807bf6650795ad04395313d04ebe88c5, type: 3}
       propertyPath: m_LocalScale.x
@@ -7027,7 +7026,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7298,7 +7297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7372,7 +7371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7481,7 +7480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7507,7 +7506,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1755429121576396, guid: 4a0ab548b1b39cf4b8b48726d5f4fbfe, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4574243262341506, guid: 4a0ab548b1b39cf4b8b48726d5f4fbfe, type: 3}
       propertyPath: m_LocalScale.x
@@ -7633,7 +7632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7707,7 +7706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8041,7 +8040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
-  inv: {fileID: 0}
+  inv: {fileID: 5268491465884910947}
 --- !u!20 &4151320194166512822
 Camera:
   m_ObjectHideFlags: 0
@@ -8234,6 +8233,7 @@ GameObject:
   - component: {fileID: 224451178092785027}
   - component: {fileID: 5268491465884910947}
   - component: {fileID: 4142382592485855422}
+  - component: {fileID: 7874009694164788469}
   m_Layer: 9
   m_Name: CHRONOSGODOFTIME
   m_TagString: Player
@@ -8318,7 +8318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010240792228253463, guid: 7efc8f28e119d2742a021e8cd70adc25, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8339,7 +8339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 450645193150303657, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_TagString
-      value: Environment
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 607049772743322326, guid: 7c5b9ec64fddd394bbfeb3d9a69db57f, type: 3}
       propertyPath: m_LocalScale.x
@@ -8424,7 +8424,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4465774654222925689}
   - component: {fileID: 7603514862635632053}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: CameraTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8476,6 +8476,26 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7874009694164788469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5937500226608028511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 481f2d04301991e4eaa55e647e6d27f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 224451178092785027}
+  mouseLook: {fileID: 7603514862635632053}
+  playerInteractions: {fileID: 5736573255983566664}
+  playerRenderer: {fileID: 2916507987435866407}
+  fists: {fileID: 3137364424383150233}
+  vcamPlayer: {fileID: 408870610}
+  vcamDeath: {fileID: 1032113843}
+  deathScreenDelay: 1
 --- !u!1 &7946351166553446166
 GameObject:
   m_ObjectHideFlags: 0

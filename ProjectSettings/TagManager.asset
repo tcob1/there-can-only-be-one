@@ -6,7 +6,6 @@ TagManager:
   tags:
   - Cube
   - Interactable
-  - Environment
   layers:
   - Default
   - TransparentFX
@@ -16,7 +15,7 @@ TagManager:
   - UI
   - Ground
   - Interactable
-  - Environment
+  - 
   - Player
   - InteractableHover
   - 
