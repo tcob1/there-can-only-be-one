@@ -36,6 +36,12 @@ public class UIManager : MonoBehaviour
             HideClock();
             HideInventoryBar();
         };
+
+        GameManager.Instance.OnRespawn += () =>
+        {
+            ShowClock();
+            ShowInventoryBar();
+        };
     }
 
     public void ShowDeathScreen()
