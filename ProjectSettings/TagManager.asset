@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cube
   - Interactable
+  - Door
   layers:
   - Default
   - TransparentFX

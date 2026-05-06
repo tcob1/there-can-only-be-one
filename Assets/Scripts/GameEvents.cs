@@ -86,7 +86,7 @@ public class GameEvents : MonoBehaviour
     private void OnSecondTick()
     {
         long currentTime = TimeHub.Instance.getTime();
-        Debug.Log(currentTime);
+        //Debug.Log(currentTime);
 
         // when going back in time reset events that haven't happened yet
         foreach (var gameEvent in events)

@@ -25,7 +25,7 @@ public class Door : StatefulInteractable
     [SerializeField] private Interactable moveInteractable;
     [SerializeField] private Interactable lockInteractable;
     [SerializeField] private DoorState initialState = DoorState.Closed;
-    [SerializeField] private string keyItemName = "Key";
+    [SerializeField] private string keyItemName = "Simple Key";
 
     void Start()
     {
@@ -61,8 +61,12 @@ public class Door : StatefulInteractable
         }
     }
 
-    public void TryOpen()
+    public void TryOpen(GameObject interactor)
     {
+        if (State == DoorState.Locked)
+        {
+            TryUnlockWithKey(interactor);
+        }
         if (State != DoorState.Closed)
             return;
         State = DoorState.Open;
@@ -119,7 +123,7 @@ public class Door : StatefulInteractable
         }
         else if (State == DoorState.Closed)
         {
-            TryOpen();
+            TryOpen(interactor);
         }
     }
 

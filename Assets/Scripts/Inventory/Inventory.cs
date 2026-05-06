@@ -45,7 +45,7 @@ public class Inventory : MonoBehaviour
 
     public Transform rightHoldPosition;
 
-    private GameObject currentHeldItem;
+    public GameObject currentHeldItem;
 
     // which slot is equipped
     public int activeSlotIndex = -1;
@@ -171,6 +171,7 @@ public class Inventory : MonoBehaviour
             if (!itemSlots[i].IsEmpty() &&
                  itemSlots[i].itemData.itemName == itemName)
             {
+                Debug.Log("Equipping: " +  itemName);
                 EquipSlot(i);
                 return;
             }

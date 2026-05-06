@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 8044246496778824906}
   m_Layer: 7
   m_Name: Door Mesh
-  m_TagString: Interactable
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 6199322302606505218}
   m_Layer: 7
   m_Name: Knobs
-  m_TagString: Interactable
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
