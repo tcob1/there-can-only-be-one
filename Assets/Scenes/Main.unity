@@ -8196,7 +8196,7 @@ MonoBehaviour:
     DefaultMode: 2
   DefaultBlend:
     Style: 1
-    Time: 2
+    Time: 1
     CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -8495,7 +8495,8 @@ MonoBehaviour:
   fists: {fileID: 3137364424383150233}
   vcamPlayer: {fileID: 408870610}
   vcamDeath: {fileID: 1032113843}
-  deathScreenDelay: 1
+  deathScreenDelay: 0.2
+  cinemachineBrain: {fileID: 5515883545053187778}
 --- !u!1 &7946351166553446166
 GameObject:
   m_ObjectHideFlags: 0

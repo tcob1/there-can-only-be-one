@@ -15,6 +15,7 @@ public class PlayerRespawn : MonoBehaviour
     [SerializeField] private CinemachineCamera vcamPlayer;
     [SerializeField] private CinemachineCamera vcamDeath;
     [SerializeField] private float deathScreenDelay = 1f;
+    [SerializeField] private CinemachineBrain cinemachineBrain;
 
     void Start()
     {
@@ -54,7 +55,13 @@ public class PlayerRespawn : MonoBehaviour
 
     private IEnumerator ShowDeathScreenAfterDelay()
     {
+        yield return null;
+
+        yield return new WaitUntil(() => !cinemachineBrain.IsBlending);
+
         yield return new WaitForSeconds(deathScreenDelay);
+
+        UIManager.Instance.ShowTitle("YOU ARE NOT THE ONE");
         //UIManager.Instance.ShowDeathScreen();
     }
 
