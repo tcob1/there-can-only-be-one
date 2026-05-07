@@ -46,7 +46,7 @@ public class Inventory : MonoBehaviour
 
     public Transform rightHoldPosition;
 
-    private GameObject currentHeldItem;
+    public GameObject currentHeldItem;
 
     [SerializeField] private CooldownBar cooldownBar;
 
@@ -140,7 +140,7 @@ public class Inventory : MonoBehaviour
         if (!itemSlots[index].IsEmpty())
         {
             currentHeldItem = Instantiate(itemSlots[index].itemData.worldPrefab, rightHoldPosition);
-            if (currentHeldItem.name == "Pistol" && isGuard)
+            if (currentHeldItem.name == "Pistol(Clone)" && isGuard)
             {
                 Gun GunScript = currentHeldItem.GetComponent<Gun>();
                 GunScript.guard = guardNav;
@@ -187,6 +187,7 @@ public class Inventory : MonoBehaviour
             if (!itemSlots[i].IsEmpty() &&
                  itemSlots[i].itemData.itemName == itemName)
             {
+                Debug.Log("Equipping: " +  itemName);
                 EquipSlot(i);
                 return;
             }

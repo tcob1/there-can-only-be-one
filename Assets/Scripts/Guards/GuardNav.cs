@@ -165,9 +165,18 @@ public class GuardNav : MonoBehaviour
 
             float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
+            Inventory player_inv = player.GetComponent<Inventory>();
+
             if (distanceToPlayer <= stopAndShootRange)
             {
-                SwapToShooting();
+                if (!player_inv.currentHeldItem || (player_inv.currentHeldItem && player_inv.currentHeldItem.name != "Pistol(Clone)"))
+                {
+                    agent.SetDestination(transform.position);
+                }
+                else
+                {
+                    SwapToShooting();
+                }
             }
             else
             {
