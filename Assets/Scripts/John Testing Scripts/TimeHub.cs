@@ -18,6 +18,9 @@ public class TimeHub : MonoBehaviour
     public delegate void OnSecond();
     public static event OnSecond onSecond;
 
+    public delegate void OnTimeChange(int delta, long newTime);
+    public static event OnTimeChange onTimeChange;
+
     public struct StateChange
     {
         public Dictionary<string, object> state;
@@ -112,6 +115,7 @@ public class TimeHub : MonoBehaviour
     {
         if (newTime > 0) timeForewards(newTime);
         else if (newTime < 0) timeBackwards(-newTime);
+        onTimeChange?.Invoke(newTime, time);
     }
 
     public void timeForewards(int newTime)
