@@ -31,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Crouch Settings")]
     [SerializeField] private float crouchSpeedMultiplier = 0.5f;
 
+    [Header("State")]
+    public bool isActive;
+
     private bool isCrouching;
     private Vector3 velocity;
     private bool isGrounded;
@@ -51,10 +54,14 @@ public class PlayerMovement : MonoBehaviour
         cachedTransform = transform;
         currentSpeed = baseSpeed;
         sqrtJumpValue = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        isActive = true;
     }
 
     private void Update()
     {
+        // TODO: Movement logic should be in FixedUpdate
+        if (!isActive) return;
+
         // Cache input at start of frame
         jumpPressed = Input.GetButtonDown("Jump");
         crouchPressed = Input.GetKeyDown(KeyCode.LeftControl);

@@ -103,6 +103,7 @@ MonoBehaviour:
   bobSpeed: 15
   crouchCameraOffset: -1
   crouchLerpSpeed: 10
+  isActive: 0
 --- !u!1 &5764073053763252855
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +149,7 @@ GameObject:
   - component: {fileID: 5268491467575196851}
   - component: {fileID: 5830575460589197196}
   - component: {fileID: 91119360806352311}
+  - component: {fileID: 715043104979399783}
   m_Layer: 0
   m_Name: CHRONOSGODOFTIME
   m_TagString: Player
@@ -220,6 +222,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   crouchSpeedMultiplier: 0.5
+  isActive: 0
 --- !u!114 &5268491467575196851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,6 +267,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49fa183d95bb0d35af7d1f596c9e5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lookTransform: {fileID: 7941013350008318132}
+  mouseLook: {fileID: 677362374805347032}
+  playerMovement: {fileID: 224451177753007187}
+  playerCamera: {fileID: 8628305872393457813}
+--- !u!114 &715043104979399783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5937500225051845263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5dce82633326988cae8540ee917ad4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraObject: {fileID: 8628305872393457813}
 --- !u!1 &7946351165802573510
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,6 +413,7 @@ GameObject:
   - component: {fileID: 4151320193843520870}
   - component: {fileID: 1220181136583255475}
   - component: {fileID: 4428968409816285264}
+  - component: {fileID: 4841657888096107399}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -518,6 +539,19 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &4841657888096107399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8628305872393457813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5dce82633326988cae8540ee917ad4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraObject: {fileID: 0}
 --- !u!1 &8868679050766453340
 GameObject:
   m_ObjectHideFlags: 0

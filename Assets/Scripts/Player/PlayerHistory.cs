@@ -7,11 +7,13 @@ public class PlayerHistory : MonoBehaviour
     {
         public Vector3 position;
         public Quaternion rotation;
+        public Quaternion cameraRotation;
 
-        public PlayerMovementHistoryEntry(Vector3 position, Quaternion rotation)
+        public PlayerMovementHistoryEntry(Vector3 position, Quaternion rotation, Quaternion cameraRotation)
         {
             this.position = position;
             this.rotation = rotation;
+            this.cameraRotation = cameraRotation;
         }
     }
 
@@ -27,9 +29,15 @@ public class PlayerHistory : MonoBehaviour
         }
     }
 
+    public Transform lookTransform;
+    public MouseLook mouseLook;
+    public PlayerMovement playerMovement;
+    public GameObject playerCamera;
+
     private List<PlayerMovementHistoryEntry> movementHistory;
     private List<PlayerActionHistoryEntry> actionHistory;
     private long currentTime;
+    private bool isActivePlayer = true;
 
     public bool isReplaying { get; private set; }
 
@@ -61,13 +69,14 @@ public class PlayerHistory : MonoBehaviour
                 {
                     transform.position = entry.position;
                     transform.rotation = entry.rotation;
+                    lookTransform.rotation = entry.cameraRotation;
                 }
             }
         }
         else
         {
             // record the player's position and rotation in the history
-            movementHistory.Add(new PlayerMovementHistoryEntry(transform.position, transform.rotation));
+            movementHistory.Add(new PlayerMovementHistoryEntry(transform.position, transform.rotation, lookTransform.rotation));
         }
 
         currentTime++;
@@ -80,8 +89,9 @@ public class PlayerHistory : MonoBehaviour
 
     void StartReplay()
     {
-        Debug.Log("Starting replay at time " + currentTime);
         isReplaying = true;
+        mouseLook.isActive = false;
+        playerMovement.isActive = false;
     }
 
     void StopReplay()
@@ -91,15 +101,27 @@ public class PlayerHistory : MonoBehaviour
 
     void OnTimeTravel(int delta, long newTime)
     {
+        Destroy(playerCamera);
         // if time is in the past, start replaying
         if (delta < 0)
         {
-            Debug.Log("Time traveled backwards by " + (-delta) + " seconds to time " + newTime);
-            Debug.Log("Current time: " + currentTime);
+            CreateDuplicate();
             currentTime += delta * (long)(1.0f / Time.fixedDeltaTime);
-            Debug.Log("New current time: " + currentTime);
             StartReplay();
         }
         // TODO: is this it???
+    }
+
+    void CreateDuplicate()
+    {
+        if (isActivePlayer)
+        {
+            Debug.Log("Creating duplicate player for replay");
+            // create a duplicate of the player at the current position and rotation, and set it to replay the history
+            GameObject duplicate = Instantiate(gameObject, transform.position, transform.rotation);
+            // destroy the camera so it uses the duplicate's camera, which is the new main player
+            Destroy(playerCamera);
+            isActivePlayer = false;
+        }
     }
 }

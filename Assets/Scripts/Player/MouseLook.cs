@@ -17,6 +17,8 @@ public class MouseLook : MonoBehaviour
     [SerializeField] private float crouchLerpSpeed = 10f;
     private float targetBaseY;
 
+    [Header("State")]
+    public bool isActive;
 
     private float xRotation;
     //starting Y position of the camera
@@ -25,6 +27,7 @@ public class MouseLook : MonoBehaviour
     private float baseY;
     private float bobTimer;
     private float currentBobAmount;
+
 
     void Start()
     {
@@ -36,11 +39,16 @@ public class MouseLook : MonoBehaviour
 
         playerMovement.OnPlayerMove += PlayerMovement_BobWhileMoving;
         playerMovement.OnCrouchToggled += PlayerMovement_OnCrouchToggled;
+
+        isActive = true;
     }
 
     void Update()
     {
-        HandleMouseLook();
+        if (isActive)
+        {
+            HandleMouseLook();
+        }
         UpdateCrouchLerp();
 
     }

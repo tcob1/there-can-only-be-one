@@ -454,32 +454,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5e8eaa1b0a700abae03fcf4b2ee1d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &31451554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31451549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7aeb69b3e6c56e346834d007537f1c37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 30
-  inv: {fileID: 0}
---- !u!114 &31451558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31451549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e49fa183d95bb0d35af7d1f596c9e5d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &44442337
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -774,11 +748,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1013164325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &101114849 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8788873597177001510, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
-  m_PrefabInstance: {fileID: 1824635344}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &158229717
 GameObject:
   m_ObjectHideFlags: 0
@@ -6204,10 +6173,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5268491467575196851, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
-      propertyPath: leftHoldPosition
-      value: 
-      objectReference: {fileID: 101114849}
     - target: {fileID: 5937500225051845263, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
       propertyPath: m_Name
       value: CHRONOSGODOFTIME
@@ -6215,13 +6180,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5937500225051845263, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 31451554}
-    - targetCorrespondingSourceObject: {fileID: 5937500225051845263, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 31451558}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d93077b49d072c48b69fd52b132f373, type: 3}
 --- !u!1001 &1825399037
 PrefabInstance:
