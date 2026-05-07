@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using NUnit.Framework.Internal.Execution;
 
 [System.Serializable]
 public class InventorySlot
@@ -46,6 +47,8 @@ public class Inventory : MonoBehaviour
     public Transform rightHoldPosition;
 
     private GameObject currentHeldItem;
+
+    [SerializeField] private CooldownBar cooldownBar;
 
     // which slot is equipped
     public int activeSlotIndex = -1;
@@ -124,9 +127,6 @@ public class Inventory : MonoBehaviour
         if (index < 0 || index >= itemSlots.Length)
             return;
 
-        //equipping only exisitng items
-        //if (itemSlots[index].IsEmpty())
-        //    return;
 
         //get rid of item currently in hand
         if (currentHeldItem != null)
@@ -152,9 +152,25 @@ public class Inventory : MonoBehaviour
                 currentHeldItem.transform.localRotation = Quaternion.identity;
             }
 
+            // Set world item to held state so it can adjust scale and disable interactions
             WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
             if (worldItemComponent != null && !isGuard)
                 worldItemComponent.isHeld = true;
+            }
+
+            // Show the name of the equipped item UI
+            UIManager.Instance.ShowEquipText(itemSlots[index].itemData.itemName);
+
+            //add cooldown bar if equipping a weapon
+            if (gameObject.tag == "Player")
+            {
+                Weapon weapon = currentHeldItem.GetComponent<Weapon>();
+                if (weapon != null && cooldownBar != null)
+                {
+                    cooldownBar.Bind(weapon);
+                }
+            }
+
         }
 
 
@@ -195,6 +211,7 @@ public class Inventory : MonoBehaviour
             WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
             if (worldItemComponent != null)
                 worldItemComponent.isHeld = false;
+                worldItemComponent.SetToWorldScale();
 
             currentHeldItem = null;
         }
@@ -287,5 +304,19 @@ public class Inventory : MonoBehaviour
         float radius = 0.5f + stackIndex * 0.2f;
 
         return new Vector3(Mathf.Cos(angle) * radius, 0.2f, Mathf.Sin(angle) * radius);
+    }
+
+    public GameObject GetEquippedItem()
+    {
+        if (currentHeldItem == null)
+        {
+            return null;
+        }
+        return currentHeldItem;
+    }
+
+    public bool HasItemInHand()
+    {
+        return currentHeldItem != null;
     }
 }

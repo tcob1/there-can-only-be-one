@@ -43,4 +43,9 @@ public class GuardState : MobileInteractable
         // Re-equip so the held world object matches restored state
         inventory.EquipSlot(inventory.activeSlotIndex);
     }
+
+    public override string GetCurrentState()
+    {
+        return guardNav.currentGuardState.ToString();
+    }
 }

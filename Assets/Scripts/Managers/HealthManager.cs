@@ -17,7 +17,6 @@ public class HealthManager : MonoBehaviour
 
     void Die()
     {
-
         if (gameObject.tag == "Player")
         {
             GameManager.Instance.EndGame();

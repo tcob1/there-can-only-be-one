@@ -2,7 +2,11 @@ using UnityEngine;
 
 public abstract class WorldItem : MonoBehaviour
 {
+    //change this if you want to adjust the scale of world items without changing the held scale
+    private const float WORLD_SCALE_MULTIPLIER = 1f;
+
     [SerializeField] protected ItemData itemData;
+    [SerializeField] protected Vector3 heldScale;
 
     protected Interactable interactable;
     public bool isHeld;
@@ -18,6 +22,13 @@ public abstract class WorldItem : MonoBehaviour
         }
         
         interactable.OnInteract.AddListener(PickUp);
+
+        heldScale = transform.localScale;
+        if (!isHeld && transform.parent == null)
+        {
+            transform.localScale = heldScale * WORLD_SCALE_MULTIPLIER;
+        }
+            
     }
 
     protected virtual void PickUp(GameObject picker)
@@ -32,5 +43,10 @@ public abstract class WorldItem : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    public void SetToWorldScale()
+    {
+        transform.localScale = heldScale * WORLD_SCALE_MULTIPLIER;
     }
 }

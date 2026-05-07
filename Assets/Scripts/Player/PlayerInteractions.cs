@@ -9,15 +9,24 @@ public class PlayerInteractions : MonoBehaviour
 
     private InputAction interactAction;
     private InputAction dropAction;
+    private InputAction attackAction;
+    private InputAction scrollAction;
+    private InputAction slot1Action, slot2Action, slot3Action, slot4Action, slot5Action;
 
     private Inventory inventory;
+    [SerializeField] private TimetravelerInputs timetravelerInputs;
 
     private int layerMask;
 
-    private HashSet<Interactable> hoveredInteractables = new HashSet<Interactable>();
+    private Interactable currentHovered = null;
+
+    [SerializeField] private Fists fists;
 
     void Start()
     {
+        inventory = player.GetComponent<Inventory>();
+
+        //actions
         interactAction = InputSystem.actions.FindAction("Interact");
         interactAction.started += ctx => SendInteractionRay();
         interactAction.Enable();
@@ -26,9 +35,35 @@ public class PlayerInteractions : MonoBehaviour
         dropAction.started += ctx => DropFirstInventorySlot();
         dropAction.Enable();
 
-        inventory = player.GetComponent<Inventory>();
+        attackAction = InputSystem.actions.FindAction("Attack");
+        attackAction.started += ctx => UseEquippedItem();
+        attackAction.Enable();
 
         layerMask = LayerMask.GetMask("Interactable") | LayerMask.GetMask("InteractableHover");
+
+        //navigating inventory
+        scrollAction = InputSystem.actions.FindAction("ScrollSlot");
+        scrollAction.Enable();
+
+        slot1Action = InputSystem.actions.FindAction("Slot1");
+        slot1Action.started += ctx => inventory.EquipSlot(0);
+        slot1Action.Enable();
+
+        slot2Action = InputSystem.actions.FindAction("Slot2");
+        slot2Action.started += ctx => inventory.EquipSlot(1);
+        slot2Action.Enable();
+
+        slot3Action = InputSystem.actions.FindAction("Slot3");
+        slot3Action.started += ctx => inventory.EquipSlot(2);
+        slot3Action.Enable();
+
+        slot4Action = InputSystem.actions.FindAction("Slot4");
+        slot4Action.started += ctx => inventory.EquipSlot(3);
+        slot4Action.Enable();
+
+        slot5Action = InputSystem.actions.FindAction("Slot5");
+        slot5Action.started += ctx => inventory.EquipSlot(4);
+        slot5Action.Enable();
 
         inventory.EquipSlot(0);
     }
@@ -36,50 +71,84 @@ public class PlayerInteractions : MonoBehaviour
     void Update()
     {
         UpdateHovered();
-
-        if (Keyboard.current.digit1Key.wasPressedThisFrame)
-            inventory.EquipSlot(0);
-
-        if (Keyboard.current.digit2Key.wasPressedThisFrame)
-            inventory.EquipSlot(1);
-
-        if (Keyboard.current.digit3Key.wasPressedThisFrame)
-            inventory.EquipSlot(2);
-
-        if (Keyboard.current.digit4Key.wasPressedThisFrame)
-            inventory.EquipSlot(3);
-
-        if (Keyboard.current.digit5Key.wasPressedThisFrame)
-            inventory.EquipSlot(4);
+        HandleScroll();
     }
 
-    private void UpdateHovered()
+    private void HandleScroll()
     {
-        if (GetRaycastHit(out RaycastHit hitInfo))
-        {
-            Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-            if (interactable != null)
-            {
-                if (!hoveredInteractables.Contains(interactable))
-                {
+        //no scroll if controlling time travel
+        if (timetravelerInputs.chargingTT) return;
 
-                    hoveredInteractables.Add(interactable);
-                    interactable.OnHoverEnter();
-                }
-            }
+        float scroll = scrollAction.ReadValue<Vector2>().y;
+        if (scroll == 0)
+        {
+            return;
         }
 
-        // Remove hover from interactables that are no longer hit
-        hoveredInteractables.RemoveWhere(interactable =>
+        int newSlot = inventory.activeSlotIndex + (scroll < 0 ? -1 : 1);
+        //wraparound logic: if newSlot goes below 0 or above max index, wrap it around to the other end of the inventory
+        newSlot = (newSlot + inventory.itemSlots.Length) % inventory.itemSlots.Length;
+        inventory.EquipSlot(newSlot);
+    }
+
+    private void UseEquippedItem()
+    {
+        GameObject equippedItem = inventory.GetEquippedItem();
+
+        if (equippedItem != null)
         {
-            if (interactable == null) return true; // Remove destroyed interactables
-            if (!GetRaycastHit(out RaycastHit hitInfo) || hitInfo.collider.GetComponent<Interactable>() != interactable)
+            Weapon usable = equippedItem.GetComponent<Weapon>();
+            if (usable != null)
             {
-                interactable.OnHoverExit();
-                return true;
+                usable.Attack(gameObject);
+                return;
             }
-            return false;
-        });
+        }
+        if (fists != null && fists.gameObject != null)
+        {
+            fists.Attack(gameObject);
+        }
+    }
+
+    //update the list of hovered interactables based on raycast results, and call hover highlight, text methods
+    private void UpdateHovered()
+    {
+        // Unity == null catches destroyed objects
+        if (currentHovered == null)
+        {
+            currentHovered = null; // clear the stale reference
+            UIManager.Instance.HideInteractionText();
+        }
+
+        Interactable newInteractable = null;
+
+        if (GetRaycastHit(out RaycastHit hitInfo))
+            newInteractable = hitInfo.collider.GetComponent<Interactable>();
+
+        if (newInteractable != currentHovered)
+        {
+            if (currentHovered != null)
+            {
+                currentHovered.OnHoverExit();
+                UIManager.Instance.HideInteractionText();
+            }
+
+            currentHovered = newInteractable;
+
+            if (currentHovered != null)
+                currentHovered.OnHoverEnter();
+        }
+
+        if (currentHovered != null)
+        {
+            StatefulInteractable stateful = currentHovered.GetComponentInParent<StatefulInteractable>();
+            string state = stateful?.GetCurrentState();
+            string hoverText = currentHovered.GetHoverText(player, state);
+            if (!string.IsNullOrEmpty(hoverText))
+                UIManager.Instance.ShowInteractionText(hoverText);
+            else
+                UIManager.Instance.HideInteractionText();
+        }
     }
 
     private void SendInteractionRay()

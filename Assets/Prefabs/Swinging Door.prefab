@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8830248572545939250}
   m_Layer: 0
   m_Name: Swinging Door
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14.66, y: 1.63, z: 4.85}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.68, y: 2.05, z: 1.71}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7052222359476077681}
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6703d5d8eb30d2b59b7a8585aab176be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: HouseFrontDoor
+  uniqueID: StairsDoorTemp
   OnInitialized:
     m_PersistentCalls:
       m_Calls: []
@@ -65,8 +65,8 @@ MonoBehaviour:
       m_Calls: []
   moveInteractable: {fileID: 5745056172450222502}
   lockInteractable: {fileID: 6199322302606505218}
-  initialState: 1
-  keyItemName: Key
+  initialState: 2
+  keyItemName: Simple Key
 --- !u!114 &8830248572545939250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationDuration: 0.5
-  openAngle: -90
+  openAngle: 90
   closedAngle: 0
 --- !u!1 &7105326340608872379
 GameObject:
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 7235254864474033514}
   - component: {fileID: 2141705456383410439}
   - component: {fileID: 5745056172450222502}
-  - component: {fileID: 8044246496778824906}
+  - component: {fileID: 600817155627106638}
   m_Layer: 7
   m_Name: Door Mesh
   m_TagString: Interactable
@@ -235,7 +235,9 @@ MonoBehaviour:
   OnInteract:
     m_PersistentCalls:
       m_Calls: []
---- !u!208 &8044246496778824906
+  hoverText: 
+  hoverTextRules: []
+--- !u!208 &600817155627106638
 NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -377,3 +379,20 @@ MonoBehaviour:
   OnInteract:
     m_PersistentCalls:
       m_Calls: []
+  hoverText: 
+  hoverTextRules:
+  - state: Open
+    requiredItem: {fileID: 0}
+    hoverText: 
+  - state: Closed
+    requiredItem: {fileID: 11400000, guid: 932fa00151d20e633b76bb6059bfe51e, type: 2}
+    hoverText: Lock (E)
+  - state: Locked
+    requiredItem: {fileID: 11400000, guid: 932fa00151d20e633b76bb6059bfe51e, type: 2}
+    hoverText: Unlock (E)
+  - state: Locked
+    requiredItem: {fileID: 0}
+    hoverText: Unlock\n(Need Key)
+  - state: Closed
+    requiredItem: {fileID: 0}
+    hoverText: Lock\n(Need Key)

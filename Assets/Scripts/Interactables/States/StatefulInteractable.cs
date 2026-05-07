@@ -33,4 +33,15 @@ public class StatefulInteractable : MonoBehaviour, IStateful
         state = new Dictionary<string, object>(newState);
         gameObject.SetActive(GetValue("Enabled", true));
     }
+
+    public virtual string GetCurrentState()
+    {
+        Debug.LogWarning(gameObject.name + " has no GetCurrentState implemented");
+        return null;
+    }
+
+    public virtual void UpdateHoverText()
+    {
+        Debug.LogWarning(gameObject.name + " has no UpdateHoverTexts implemented");
+    }
 }
