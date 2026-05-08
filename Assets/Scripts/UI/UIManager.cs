@@ -6,6 +6,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TitlesUI titlesUI;
     [SerializeField] private InteractionUI interactionUI;
     [SerializeField] private FadeText heldItemNameFadeEffect;
+    [SerializeField] private GameObject clock;
+    [SerializeField] private GameObject inventoryBar;
+    [SerializeField] private DeathScreenUI deathScreenUI;
 
     private void Awake()
     {
@@ -23,13 +26,32 @@ public class UIManager : MonoBehaviour
         heldItemNameFadeEffect.gameObject.SetActive(false);
         GameManager.Instance.OnGameStart += () =>
         {
+            ShowClock();
+            ShowInventoryBar();
             ShowTitle("THERE CAN ONLY BE ONE");
         };
 
         GameManager.Instance.OnGameOver += () =>
         {
-            ShowTitle("YOU ARE NOT THE ONE");
+            HideClock();
+            HideInventoryBar();
         };
+
+        GameManager.Instance.OnRespawn += () =>
+        {
+            ShowClock();
+            ShowInventoryBar();
+        };
+    }
+
+    public void ShowDeathScreen()
+    {
+        deathScreenUI.gameObject.SetActive(true);
+    }
+
+    public void HideDeathScreen()
+    {
+        deathScreenUI.gameObject.SetActive(false);
     }
 
     public void ShowEquipText(string itemName)
@@ -52,5 +74,25 @@ public class UIManager : MonoBehaviour
     {
         titlesUI.Show();
         titlesUI.typeText(text);
+    }
+
+    private void ShowClock()
+    {
+        clock.SetActive(true);
+    }
+
+    private void HideClock()
+    {
+        clock.SetActive(false);
+    }
+
+    private void ShowInventoryBar()
+    {
+        inventoryBar.SetActive(true);
+    }
+
+    private void HideInventoryBar()
+    {
+        inventoryBar.SetActive(false);
     }
 }

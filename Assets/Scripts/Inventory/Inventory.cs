@@ -298,6 +298,17 @@ public class Inventory : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 
+    public void DropAllPlayer()
+    {
+        if (currentHeldItem != null)
+        {
+            Destroy(currentHeldItem);
+            currentHeldItem = null;
+        }
+
+        DropAll();
+    }
+
     private Vector3 GetScatterOffset(int slotIndex, int stackIndex)
     {
         // Spread items in a circle based on slot

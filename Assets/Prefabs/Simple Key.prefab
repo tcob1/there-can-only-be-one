@@ -125,7 +125,8 @@ MonoBehaviour:
   OnInteract:
     m_PersistentCalls:
       m_Calls: []
-  hoverText: Simple Key\nPickup(E)
+  hoverText: Pickup(E)
+  hoverTextRules: []
 --- !u!114 &1506513845810800725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 932fa00151d20e633b76bb6059bfe51e, type: 2}
+  heldScale: {x: 0, y: 0, z: 0}
   isHeld: 0
   damage: 10
   cooldown: 0.1

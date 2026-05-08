@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 548f6a4cc31417642a9fc0365439da1d, type: 2}
+  heldScale: {x: 0, y: 0, z: 0}
   isHeld: 0
   damage: 30
   cooldown: 1
@@ -150,7 +151,8 @@ MonoBehaviour:
   OnInteract:
     m_PersistentCalls:
       m_Calls: []
-  hoverText: Pistol\nPickup(E)
+  hoverText: Pickup(E)
+  hoverTextRules: []
 --- !u!65 &6344802298613999878
 BoxCollider:
   m_ObjectHideFlags: 0

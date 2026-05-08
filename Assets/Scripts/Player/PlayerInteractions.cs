@@ -68,6 +68,32 @@ public class PlayerInteractions : MonoBehaviour
         inventory.EquipSlot(0);
     }
 
+    void OnEnable()
+    {
+        interactAction?.Enable();
+        dropAction?.Enable();
+        attackAction?.Enable();
+        scrollAction?.Enable();
+        slot1Action?.Enable();
+        slot2Action?.Enable();
+        slot3Action?.Enable();
+        slot4Action?.Enable();
+        slot5Action?.Enable();
+    }
+
+    void OnDisable()
+    {
+        interactAction?.Disable();
+        dropAction?.Disable();
+        attackAction?.Disable();
+        scrollAction?.Disable();
+        slot1Action?.Disable();
+        slot2Action?.Disable();
+        slot3Action?.Disable();
+        slot4Action?.Disable();
+        slot5Action?.Disable();
+    }
+
     void Update()
     {
         UpdateHovered();

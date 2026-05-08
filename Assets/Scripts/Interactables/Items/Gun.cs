@@ -27,8 +27,8 @@ public class Gun : Weapon
         //for precise shoot pos
         if (transform.root.CompareTag("Player"))
         {
-            Camera cam = transform.root.GetComponentInChildren<Camera>();
-            attackPosition.SetParent(cam.transform);
+            Transform cameraTarget = transform.root.Find("CameraTarget");
+            attackPosition.SetParent(cameraTarget.transform);
             attackPosition.localPosition = Vector3.zero;
         }
         else
