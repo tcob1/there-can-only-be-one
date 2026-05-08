@@ -154,16 +154,19 @@ public class Inventory : MonoBehaviour
 
             // Set world item to held state so it can adjust scale and disable interactions
             WorldItem worldItemComponent = currentHeldItem.GetComponent<WorldItem>();
-            if (worldItemComponent != null && !isGuard)
+            if (worldItemComponent != null && gameObject.tag == "Player")
+            {
                 worldItemComponent.isHeld = true;
             }
 
-            // Show the name of the equipped item UI
-            UIManager.Instance.ShowEquipText(itemSlots[index].itemData.itemName);
+            
 
             //add cooldown bar if equipping a weapon
             if (gameObject.tag == "Player")
             {
+                // Show the name of the equipped item UI
+                UIManager.Instance.ShowEquipText(itemSlots[index].itemData.itemName);
+
                 Weapon weapon = currentHeldItem.GetComponent<Weapon>();
                 if (weapon != null && cooldownBar != null)
                 {
@@ -172,7 +175,6 @@ public class Inventory : MonoBehaviour
             }
 
         }
-
 
         OnInventoryChanged?.Invoke();
     }
