@@ -2147,11 +2147,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1261524271437838100, guid: 2fbab5f68d4dac214a80534b7f98dbde, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1261524271437838100, guid: 2fbab5f68d4dac214a80534b7f98dbde, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 1261524271437838100, guid: 2fbab5f68d4dac214a80534b7f98dbde, type: 3}
       propertyPath: m_LocalRotation.y
@@ -2163,7 +2163,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1261524271437838100, guid: 2fbab5f68d4dac214a80534b7f98dbde, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1261524271437838100, guid: 2fbab5f68d4dac214a80534b7f98dbde, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -8839,9 +8839,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSlots: []
   rightHoldPosition: {fileID: 7477260683837636739}
+  currentHeldItem: {fileID: 0}
   cooldownBar: {fileID: 1651598557}
   activeSlotIndex: -1
   isGuard: 0
+  guardNav: {fileID: 0}
   startItems: []
 --- !u!114 &5515883545053187778
 MonoBehaviour:

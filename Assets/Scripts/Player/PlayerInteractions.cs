@@ -149,7 +149,11 @@ public class PlayerInteractions : MonoBehaviour
         Interactable newInteractable = null;
 
         if (GetRaycastHit(out RaycastHit hitInfo))
-            newInteractable = hitInfo.collider.GetComponent<Interactable>();
+        {
+            Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
+            if (interactable != null && interactable.enabled)
+                newInteractable = interactable;
+        }
 
         if (newInteractable != currentHovered)
         {
@@ -182,7 +186,8 @@ public class PlayerInteractions : MonoBehaviour
         if (GetRaycastHit(out RaycastHit hitInfo))
         {
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
-            interactable?.Interact(player);
+            if (interactable != null && interactable.enabled)
+                interactable.Interact(player);
         }
     }
 

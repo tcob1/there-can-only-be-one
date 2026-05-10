@@ -149,7 +149,6 @@ public class Inventory : MonoBehaviour
             if (!isGuard)
             {
                 currentHeldItem.transform.localPosition = Vector3.zero;
-                currentHeldItem.transform.localRotation = Quaternion.identity;
             }
 
             // Set world item to held state so it can adjust scale and disable interactions
@@ -164,6 +163,14 @@ public class Inventory : MonoBehaviour
             //add cooldown bar if equipping a weapon
             if (gameObject.tag == "Player")
             {
+                // player cant repickup while in hand
+                Interactable interactable = currentHeldItem.GetComponent<Interactable>();
+                if (interactable != null)
+                {
+                    interactable.enabled = false;
+                    Collider col = currentHeldItem.GetComponent<Collider>();
+                    if (col != null) col.enabled = false;
+                }
                 // Show the name of the equipped item UI
                 UIManager.Instance.ShowEquipText(itemSlots[index].itemData.itemName);
 
@@ -208,6 +215,14 @@ public class Inventory : MonoBehaviour
 
         if (currentHeldItem != null)
         {
+            Interactable interactable = currentHeldItem.GetComponent<Interactable>();
+            if (interactable != null)
+            {
+                interactable.enabled = true;
+                Collider col = currentHeldItem.GetComponent<Collider>();
+                if (col != null) col.enabled = true;
+            }
+
             currentHeldItem.transform.parent = null;
             currentHeldItem.transform.position = dropPosition;
 
