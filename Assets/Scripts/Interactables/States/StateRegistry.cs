@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class StateRegistry : MonoBehaviour
 {
@@ -13,7 +14,6 @@ public class StateRegistry : MonoBehaviour
 
     void Awake()
     {
-        // TODO: Clean up during scene transitions?
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -21,11 +21,22 @@ public class StateRegistry : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     void Start()
     {
         //StartCoroutine(DebugPrintStates());
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        interactables.Clear();
     }
 
     public void Register(IStateful interactable)
