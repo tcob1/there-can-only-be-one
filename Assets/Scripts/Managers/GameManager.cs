@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     // Fired when the game ends or player dies
     public event Action OnGameOver;
+    public event Action OnGameWin;
 
     public event Action OnRespawn;
 
@@ -53,8 +54,19 @@ public class GameManager : MonoBehaviour
         IsGameRunning = false;
         OnGameOver?.Invoke();
 
+    }
 
-
+    public void WinGame()
+    {
+        if (!IsGameRunning) return;
+        IsGameRunning = false;
+        OnGameWin?.Invoke();
+        Debug.Log("Game Won!");
+        // temporary
+        SFXManager.Instance.StopLoopingMusic();
+        SceneManager.LoadScene("MainMenu");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void Respawn()
