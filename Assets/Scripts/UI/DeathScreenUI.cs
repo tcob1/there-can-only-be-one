@@ -12,6 +12,7 @@ public class DeathScreenUI : MonoBehaviour
 
     public void OnMainMenu()
     {
+        SFXManager.Instance.StopLoopingMusic();
         SceneManager.LoadScene("MainMenu");
     }
 }

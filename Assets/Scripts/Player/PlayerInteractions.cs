@@ -22,47 +22,53 @@ public class PlayerInteractions : MonoBehaviour
 
     [SerializeField] private Fists fists;
 
+
+    private void OnInteractStarted(InputAction.CallbackContext ctx) => SendInteractionRay();
+    private void OnDropStarted(InputAction.CallbackContext ctx) => DropFirstInventorySlot();
+    private void OnAttackStarted(InputAction.CallbackContext ctx) => UseEquippedItem();
+    private void OnSlot1Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(0);
+    private void OnSlot2Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(1);
+    private void OnSlot3Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(2);
+    private void OnSlot4Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(3);
+    private void OnSlot5Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(4);
     void Start()
     {
         inventory = player.GetComponent<Inventory>();
+        layerMask = LayerMask.GetMask("Interactable") | LayerMask.GetMask("InteractableHover");
 
-        //actions
         interactAction = InputSystem.actions.FindAction("Interact");
-        interactAction.started += ctx => SendInteractionRay();
+        interactAction.started += OnInteractStarted;
         interactAction.Enable();
 
         dropAction = InputSystem.actions.FindAction("Drop");
-        dropAction.started += ctx => DropFirstInventorySlot();
+        dropAction.started += OnDropStarted;
         dropAction.Enable();
 
         attackAction = InputSystem.actions.FindAction("Attack");
-        attackAction.started += ctx => UseEquippedItem();
+        attackAction.started += OnAttackStarted;
         attackAction.Enable();
 
-        layerMask = LayerMask.GetMask("Interactable") | LayerMask.GetMask("InteractableHover");
-
-        //navigating inventory
         scrollAction = InputSystem.actions.FindAction("ScrollSlot");
         scrollAction.Enable();
 
         slot1Action = InputSystem.actions.FindAction("Slot1");
-        slot1Action.started += ctx => inventory.EquipSlot(0);
+        slot1Action.started += OnSlot1Started;
         slot1Action.Enable();
 
         slot2Action = InputSystem.actions.FindAction("Slot2");
-        slot2Action.started += ctx => inventory.EquipSlot(1);
+        slot2Action.started += OnSlot2Started;
         slot2Action.Enable();
 
         slot3Action = InputSystem.actions.FindAction("Slot3");
-        slot3Action.started += ctx => inventory.EquipSlot(2);
+        slot3Action.started += OnSlot3Started;
         slot3Action.Enable();
 
         slot4Action = InputSystem.actions.FindAction("Slot4");
-        slot4Action.started += ctx => inventory.EquipSlot(3);
+        slot4Action.started += OnSlot4Started;
         slot4Action.Enable();
 
         slot5Action = InputSystem.actions.FindAction("Slot5");
-        slot5Action.started += ctx => inventory.EquipSlot(4);
+        slot5Action.started += OnSlot5Started;
         slot5Action.Enable();
 
         inventory.EquipSlot(0);
@@ -93,6 +99,20 @@ public class PlayerInteractions : MonoBehaviour
         slot4Action?.Disable();
         slot5Action?.Disable();
     }
+
+    void OnDestroy()
+    {
+        if (interactAction != null) interactAction.started -= OnInteractStarted;
+        if (dropAction != null) dropAction.started -= OnDropStarted;
+        if (attackAction != null) attackAction.started -= OnAttackStarted;
+        if (slot1Action != null) slot1Action.started -= OnSlot1Started;
+        if (slot2Action != null) slot2Action.started -= OnSlot2Started;
+        if (slot3Action != null) slot3Action.started -= OnSlot3Started;
+        if (slot4Action != null) slot4Action.started -= OnSlot4Started;
+        if (slot5Action != null) slot5Action.started -= OnSlot5Started;
+    }
+
+
 
     void Update()
     {
@@ -185,6 +205,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (GetRaycastHit(out RaycastHit hitInfo))
         {
+
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
             if (interactable != null && interactable.enabled)
                 interactable.Interact(player);

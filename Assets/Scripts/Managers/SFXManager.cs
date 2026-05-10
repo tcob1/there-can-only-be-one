@@ -94,6 +94,10 @@ public class SFXManager : MonoBehaviour
         {
             musicSource.Stop();
         }
+        else
+        {
+            Debug.LogWarning($"Music clip '{name}' not found!");
+        }
     }
 }
 

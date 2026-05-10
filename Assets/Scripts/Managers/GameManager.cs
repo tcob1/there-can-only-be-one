@@ -6,20 +6,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    // ---------- Events ----------
-    // Fired when the game starts
     public event Action OnGameStart;
-
-    // Fired when the game ends or player dies
     public event Action OnGameOver;
     public event Action OnGameWin;
-
     public event Action OnRespawn;
 
-
-    // ---------- Properties ----------
     public bool IsGameRunning { get; private set; }
-
 
     private void Awake()
     {
@@ -28,23 +20,42 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        OnGameStart = null;
+        OnGameOver = null;
+        OnGameWin = null;
+        OnRespawn = null;
+
+        IsGameRunning = false;
+
+        if (scene.name == "Main")
+        {
+            StartGame();
+        }
     }
 
     private void Start()
     {
-        StartGame();
+
     }
 
     public void StartGame()
     {
         if (IsGameRunning) return;
-
         IsGameRunning = true;
         OnGameStart?.Invoke();
-
+        SFXManager.Instance.StopLoopingMusic();
         SFXManager.Instance.PlayLoopingMusic("AnotherMe", 0f, 0.3f);
     }
 
