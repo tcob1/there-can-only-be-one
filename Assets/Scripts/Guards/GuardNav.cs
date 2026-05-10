@@ -37,6 +37,8 @@ public class GuardNav : MonoBehaviour
 
     public GuardState currentGuardState = GuardState.Patrolling;
 
+    [SerializeField] private Animator animator;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -150,6 +152,9 @@ public class GuardNav : MonoBehaviour
     private void SwapToChasing()
     {
         //Debug.Log("Swapping to chasing");
+        //animator.SetBool("isRunning", true);
+
+
         currentGuardState = GuardState.Chasing;
         inv.GuardEquipByName("Gun");
         lastKnownPlayerPosition = player.transform.position;

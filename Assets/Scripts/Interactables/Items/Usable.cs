@@ -25,7 +25,7 @@ public class Usable : Weapon
     {
 
         Vector3 origin = transform.position;
-        Vector3 direction = transform.forward;
+        Vector3 direction = transform.parent.forward;
 
         RaycastHit[] hits = Physics.SphereCastAll(
             origin,
