@@ -140,6 +140,7 @@ public class Inventory : MonoBehaviour
         if (!itemSlots[index].IsEmpty())
         {
             currentHeldItem = Instantiate(itemSlots[index].itemData.worldPrefab, rightHoldPosition);
+            currentHeldItem.tag = "Untagged";
             if (currentHeldItem.name == "Pistol(Clone)" && isGuard)
             {
                 Gun GunScript = currentHeldItem.GetComponent<Gun>();
