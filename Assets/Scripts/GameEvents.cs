@@ -17,6 +17,9 @@ public class GameEventArgs : EventArgs
 {
     public GameEvent Event;
     public long CurrentTime;
+    public Vector3 Position;
+    // appears on ui when player logs event
+    public string Description;
 }
 
 public class GameEvents : MonoBehaviour
@@ -69,7 +72,6 @@ public class GameEvents : MonoBehaviour
         }
     }
 
-    // Ai generated, for ease of inspector input
     // D:HH:MM:SS to seconds
     public static long ParseTime(string time)
     {
@@ -83,6 +85,7 @@ public class GameEvents : MonoBehaviour
         return (day * 86400) + (hour * 3600) + (minute * 60) + second;
     }
 
+    // check every second if any events should be triggered or reset when going back in time
     private void OnSecondTick()
     {
         long currentTime = TimeHub.Instance.getTime();
@@ -112,27 +115,38 @@ public class GameEvents : MonoBehaviour
     void TriggerEvent(GameEvent gameEvent, long currentTime)
     {
         gameEvent.hasTriggered = true;
-        Debug.Log($"(GameEvents) '{gameEvent.id}' triggered at t={currentTime}s");
+        Vector3 eventPosition = Vector3.zero;
+        string description = "";
+        bool eventSuccess = true;
 
-        // we can set events in this script or sub to OnGameEvent in other scripts to trigger things when certain events happen
         switch (gameEvent.id)
         {
             case "guard_drops_key":
-                // not efficient for now
                 GuardNav guard = FindAnyObjectByType<GuardNav>();
                 if (guard != null && keyPrefab != null)
                 {
-                    Instantiate(keyPrefab, guard.transform.position, Quaternion.identity);
+                    eventPosition = guard.transform.position;
+                    description = "Key dropped";
+                    Instantiate(keyPrefab, eventPosition, Quaternion.identity);
+                }
+                else
+                {
+                    eventSuccess = false;
                 }
                 break;
         }
 
-
-        OnGameEvent?.Invoke(this, new GameEventArgs
+        if (eventSuccess)
         {
-            Event = gameEvent,
-            CurrentTime = currentTime
-        });
+            OnGameEvent?.Invoke(this, new GameEventArgs
+            {
+                Event = gameEvent,
+                CurrentTime = currentTime,
+                Position = eventPosition,
+                Description = description
+            });
+        }
+
     }
 
     // add a new event from other scripts. like when certain events in time only happen under certain conditions
