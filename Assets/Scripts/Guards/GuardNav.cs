@@ -1,6 +1,7 @@
 using System.Timers;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class GuardNav : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class GuardNav : MonoBehaviour
     public GameObject player;
     public GameObject guard;
     public Inventory inv;
+    public Slider angerBar;
+    public float fillDuration = 5.0f;    // Takes 5 seconds to fill completely
+    public float depleteDuration = 3.0f; // Takes 3 seconds to empty completely
     private Vector3 lastKnownPlayerPosition;
     public float detectRange = 100;
     public float hearingRange = 50;
@@ -63,6 +67,28 @@ public class GuardNav : MonoBehaviour
     void FixedUpdate()
     {
         UpdatePlayerDetection();
+
+        if (currentGuardState == GuardState.Chasing)
+        {
+            // Gradually increase anger over time
+            angerBar.value += Time.fixedDeltaTime / fillDuration;
+        }
+        else
+        {
+            // Gradually decrease anger over time
+            angerBar.value -= Time.fixedDeltaTime / depleteDuration;
+        }
+        // Clamp the value between 0 and 1 so it never overshoots the slider bounds
+        angerBar.value = Mathf.Clamp01(angerBar.value);
+
+        if (angerBar.value <= 0)
+        {
+            angerBar.gameObject.SetActive(false);
+        }
+        else
+        {
+            angerBar.gameObject.SetActive(true);
+        }
 
         switch (currentGuardState)
         {
@@ -174,7 +200,7 @@ public class GuardNav : MonoBehaviour
 
             if (distanceToPlayer <= stopAndShootRange)
             {
-                if (!player_inv.currentHeldItem || (player_inv.currentHeldItem && player_inv.currentHeldItem.name != "Pistol(Clone)"))
+                if ((!player_inv.currentHeldItem || (player_inv.currentHeldItem && player_inv.currentHeldItem.name != "Pistol(Clone)")) && angerBar.value < 1.0)
                 {
                     agent.SetDestination(transform.position);
                 }
