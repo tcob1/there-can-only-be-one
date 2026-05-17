@@ -14,7 +14,7 @@ public class TimeHub : MonoBehaviour
     public int FIXED_UPDATE_RATE = 10;
     private int subsecondCounter = 0;
 
-    private const float MAX_SIM_TIMESCALE = 15f;
+    private const float MAX_SIM_TIMESCALE = 50f;
     public float CurrentSimScale { get; private set; } = 1f;
 
     public delegate void OnSecond();

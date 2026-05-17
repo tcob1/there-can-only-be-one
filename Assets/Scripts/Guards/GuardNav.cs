@@ -77,7 +77,7 @@ public class GuardNav : MonoBehaviour
         float simScale = TimeHub.Instance.CurrentSimScale;
         agent.speed = baseSpeed * simScale;
         agent.acceleration = baseAcceleration * simScale * 4f;
-        agent.angularSpeed = baseAngularSpeed * simScale * 6f;
+        agent.angularSpeed = baseAngularSpeed * simScale * 10f;
 
         UpdatePlayerDetection();
 
