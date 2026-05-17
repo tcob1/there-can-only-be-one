@@ -9,11 +9,13 @@ public class TimeHub : MonoBehaviour
     public static TimeHub Instance;
     public TextMeshProUGUI clock;
 
-    // measured in seconds
     private long time;
     public int START_TIME = 10000;
     public int FIXED_UPDATE_RATE = 10;
     private int subsecondCounter = 0;
+
+    private const float MAX_SIM_TIMESCALE = 50f;
+    public float CurrentSimScale { get; private set; } = 1f;
 
     public delegate void OnSecond();
     public static event OnSecond onSecond;
@@ -67,13 +69,14 @@ public class TimeHub : MonoBehaviour
     {
         if (goalTime != 0 && goalTime > time)
         {
-            //clock.enabled = false;
-            Time.fixedDeltaTime = 1 / ((float)FIXED_UPDATE_RATE * 10000);
-
+            // capped at MAX_SIM_TIMESCALE
+            Time.fixedDeltaTime = 1f / ((float)FIXED_UPDATE_RATE * MAX_SIM_TIMESCALE);
+            CurrentSimScale = MAX_SIM_TIMESCALE;
         }
         else
         {
-            Time.fixedDeltaTime = 1 / ((float)FIXED_UPDATE_RATE);
+            Time.fixedDeltaTime = 1f / (float)FIXED_UPDATE_RATE;
+            CurrentSimScale = 1f;
             goalTime = 0;
         }
 
