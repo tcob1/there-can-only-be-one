@@ -1,21 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.AI;
 
 public class GuardState : MobileInteractable
 {
     private GuardNav guardNav;
     private HealthManager healthManager;
     private Inventory inventory;
-
-    void Start()
-    {
-        guardNav = GetComponent<GuardNav>();
-        healthManager = GetComponent<HealthManager>();
-        inventory = GetComponent<Inventory>();
-
-        StateRegistry.Instance.Register(this);
-    }
+    private NavMeshAgent agent;
 
     public override Dictionary<string, object> GetState()
     {
@@ -31,17 +24,23 @@ public class GuardState : MobileInteractable
         return base.GetState();
     }
 
-    public override void SetState(Dictionary<string, object> newState)
-    {
-        base.SetState(newState);
-        guardNav.player = base.GetValue<GameObject>("Target");
-        guardNav.currentGuardState = base.GetValue<GuardNav.GuardState>("TrackingState");
-        healthManager.health = base.GetValue<float>("Health");
-        inventory.itemSlots = base.GetValue<InventorySlot[]>("Inventory");
-        inventory.activeSlotIndex = base.GetValue<int>("ActiveSlotIndex");
 
-        // Re-equip so the held world object matches restored state
-        inventory.EquipSlot(inventory.activeSlotIndex);
+
+    void Start()
+    {
+        guardNav = GetComponent<GuardNav>();
+        healthManager = GetComponent<HealthManager>();
+        inventory = GetComponent<Inventory>();
+        agent = GetComponent<NavMeshAgent>();
+        StateRegistry.Instance.Register(this);
+    }
+
+    protected override void ApplyPosition(Vector3 position)
+    {
+        if (agent != null)
+            agent.Warp(position);
+        else
+            transform.position = position;
     }
 
     public override string GetCurrentState()

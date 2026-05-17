@@ -31,7 +31,13 @@ public class MobileInteractable : StatefulInteractable
     public override void SetState(Dictionary<string, object> newState)
     {
         base.SetState(newState);
-        transform.position = base.GetValue<Vector3>("Position");
+        ApplyPosition(base.GetValue<Vector3>("Position"));
         transform.rotation = base.GetValue<Quaternion>("Rotation");
+    }
+
+    // Overridable so guards can use NavMeshAgent.Warp
+    protected virtual void ApplyPosition(Vector3 position)
+    {
+        transform.position = position;
     }
 }
