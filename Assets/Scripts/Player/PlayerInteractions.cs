@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using static EventIndicatorUI;
 
 public class PlayerInteractions : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerInteractions : MonoBehaviour
 
     private Inventory inventory;
     [SerializeField] private TimetravelerInputs timetravelerInputs;
+    [SerializeField] private EventIndicatorUI eventIndicatorUI;
 
     private int layerMask;
 
@@ -203,12 +205,28 @@ public class PlayerInteractions : MonoBehaviour
 
     private void SendInteractionRay()
     {
+        // try logging an event before normal interactions
+        BeaconInstance beacon = eventIndicatorUI.GetLoggableBeacon();
+        if (beacon != null)
+        {
+            EventLogger.Instance.Log(new LoggedEvent(
+                beacon.description,
+                beacon.spawnGameTime,
+                beacon.worldPosition
+            ));
+            eventIndicatorUI.RemoveBeacon(beacon);
+            return;
+        }
+
+        // normal interaction
         if (GetRaycastHit(out RaycastHit hitInfo))
         {
-
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
             if (interactable != null && interactable.enabled)
+            {
                 interactable.Interact(player);
+            }
+
         }
     }
 

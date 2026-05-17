@@ -2548,6 +2548,7 @@ MonoBehaviour:
   maxDistance: 20
   minIconScale: 0.5
   maxIconScale: 0.5
+  logRadius: 3
 --- !u!1 &680311049
 GameObject:
   m_ObjectHideFlags: 0
@@ -3582,6 +3583,7 @@ GameObject:
   - component: {fileID: 929747340}
   - component: {fileID: 929747338}
   - component: {fileID: 929747341}
+  - component: {fileID: 929747342}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3634,6 +3636,18 @@ MonoBehaviour:
     triggerTime: 0
     hasTriggered: 0
   keyPrefab: {fileID: 2762554950203291354, guid: 2fbab5f68d4dac214a80534b7f98dbde, type: 3}
+--- !u!114 &929747342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929747337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87963bdfbc0d7b04bad5fdf1cb31f329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &949986529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9409,6 +9423,7 @@ MonoBehaviour:
   player: {fileID: 5937500226608028511}
   interactionRange: 3
   timetravelerInputs: {fileID: 804703179}
+  eventIndicatorUI: {fileID: 647300752}
   fists: {fileID: 3298813554225663387}
 --- !u!1 &5937500226608028511
 GameObject:
