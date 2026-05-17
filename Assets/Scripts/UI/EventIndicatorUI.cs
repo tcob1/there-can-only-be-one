@@ -16,24 +16,25 @@ public class EventIndicatorUI : MonoBehaviour
     [SerializeField] private float minIconScale = 0.6f;
     [SerializeField] private float maxIconScale = 1.2f;
 
+
+    private List<BeaconInstance> activeBeacons = new List<BeaconInstance>();
+    private Camera cam;
+
     private class BeaconInstance
     {
         public Vector3 worldPosition;
-        public float spawnTime;
+        public long spawnGameTime;
         public RectTransform rectTransform;
         public Image image;
 
-        public BeaconInstance(Vector3 pos, float time, GameObject icon)
+        public BeaconInstance(Vector3 pos, long gameTime, GameObject icon)
         {
             worldPosition = pos;
-            spawnTime = time;
+            spawnGameTime = gameTime;
             rectTransform = icon.GetComponent<RectTransform>();
             image = icon.GetComponentInChildren<Image>();
         }
     }
-
-    private List<BeaconInstance> activeBeacons = new List<BeaconInstance>();
-    private Camera cam;
 
     void Start()
     {
@@ -46,22 +47,25 @@ public class EventIndicatorUI : MonoBehaviour
         GameEvents.OnGameEvent -= HandleGameEvent;
     }
 
+
+
     private void HandleGameEvent(object sender, GameEventArgs args)
     {
         GameObject icon = Instantiate(beaconIconPrefab, canvasRect);
-        BeaconInstance beacon = new BeaconInstance(args.Position, Time.time, icon);
+        BeaconInstance beacon = new BeaconInstance(args.Position, TimeHub.Instance.getTime(), icon);
         activeBeacons.Add(beacon);
     }
 
     void Update()
     {
-        float currentTime = Time.time;
+        long currentGameTime = TimeHub.Instance.getTime();
 
         for (int i = activeBeacons.Count - 1; i >= 0; i--)
         {
             BeaconInstance beacon = activeBeacons[i];
 
-            if (currentTime - beacon.spawnTime > beaconDuration)
+            // expire based on game time
+            if (currentGameTime - beacon.spawnGameTime > beaconDuration)
             {
                 Destroy(beacon.rectTransform.gameObject);
                 activeBeacons.RemoveAt(i);
