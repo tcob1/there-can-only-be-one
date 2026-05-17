@@ -1,6 +1,8 @@
 using System.Timers;
 using UnityEngine;
 using UnityEngine.AI;
+using Pixelplacement;
+using Pixelplacement.TweenSystem;
 
 public class GuardNav : MonoBehaviour
 {
@@ -37,15 +39,29 @@ public class GuardNav : MonoBehaviour
 
     public GuardState currentGuardState = GuardState.Patrolling;
 
+    private float DEFAULT_DELTA_TIME;
+    private TweenBase pathTween;
+
     [SerializeField] private Animator animator;
+    
+
+    void Awake()
+    {
+        
+
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(patrolPoints[currentPointIndex].position);
+        agent.updatePosition = false;
+        agent.updateRotation = false;
 
         GlobalEvents.Instance.OnPlayerShoot += OnHearNoise;
+
+        DEFAULT_DELTA_TIME = 1 / ((float)TimeHub.Instance.FIXED_UPDATE_RATE);
     }
 
     void OnEnable()
@@ -82,6 +98,8 @@ public class GuardNav : MonoBehaviour
                 HandleInspecting();
                 break;
         }
+
+        HandlePathing();
     }
 
     private void UpdatePlayerDetection()
@@ -89,6 +107,11 @@ public class GuardNav : MonoBehaviour
         isInAngle = false;
         isInDetectRange = false;
         isVisible = false;
+
+        if (TimeHub.Instance.IsJumpingForwards())
+        {
+            return;
+        }
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
         if (distanceToPlayer <= detectRange)
@@ -381,5 +404,51 @@ public class GuardNav : MonoBehaviour
 
             previousPoint = currentPoint;
         }
+    }
+
+    void HandlePathing()
+    {
+        agent.nextPosition = transform.position;
+        Vector3 v = agent.desiredVelocity;
+        v.y = 0f;
+        Vector3 newPos = transform.position + v * DEFAULT_DELTA_TIME;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(newPos, out hit, 5.0f, NavMesh.AllAreas))
+        {
+            newPos = hit.position;
+            newPos.y = transform.position.y;
+        }
+        else
+        {
+            newPos = transform.position;
+        }
+
+        StopTweening();
+        
+        if (!TimeHub.Instance.IsJumpingForwards()) {
+            
+            pathTween = Tween.Position(transform, newPos, DEFAULT_DELTA_TIME, 0f, null, Tween.LoopType.None);
+        } else
+        {
+            //print("TRAVELIN!");
+            transform.position = newPos;
+        }
+        
+
+        Vector3 flatVelocity = v;
+        flatVelocity.y = 0f;
+
+        if (flatVelocity.sqrMagnitude > 0.25f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(flatVelocity);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 720 * DEFAULT_DELTA_TIME);
+        }
+    }
+
+    public void StopTweening()
+    {
+        pathTween?.Stop();
     }
 }

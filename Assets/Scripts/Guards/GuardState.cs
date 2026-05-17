@@ -33,6 +33,7 @@ public class GuardState : MobileInteractable
 
     public override void SetState(Dictionary<string, object> newState)
     {
+        guardNav.StopTweening();
         base.SetState(newState);
         guardNav.player = base.GetValue<GameObject>("Target");
         guardNav.currentGuardState = base.GetValue<GuardNav.GuardState>("TrackingState");

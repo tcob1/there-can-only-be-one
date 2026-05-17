@@ -13,6 +13,7 @@ public class TimeHub : MonoBehaviour
     private long time;
     public int START_TIME = 10000;
     public int FIXED_UPDATE_RATE = 10;
+    private bool isJumpingForwards = false;
     private int subsecondCounter = 0;
 
     public delegate void OnSecond();
@@ -69,12 +70,14 @@ public class TimeHub : MonoBehaviour
         {
             //clock.enabled = false;
             Time.fixedDeltaTime = 1 / ((float)FIXED_UPDATE_RATE * 10000);
+            isJumpingForwards = true;
 
         }
         else
         {
             Time.fixedDeltaTime = 1 / ((float)FIXED_UPDATE_RATE);
             goalTime = 0;
+            isJumpingForwards = false;
         }
 
         subsecondCounter++;
@@ -215,5 +218,10 @@ public class TimeHub : MonoBehaviour
         time = time * FIXED_UPDATE_RATE;
 
         return time;
+    }
+
+    public bool IsJumpingForwards()
+    {
+        return isJumpingForwards;
     }
 }
