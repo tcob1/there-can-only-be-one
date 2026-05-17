@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class LoggedEvent
 {
+    // This class is used to store information about game events for later display in the UI.
     public string description;
     public long gameTime;
     public Vector3 position;

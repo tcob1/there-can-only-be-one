@@ -20,20 +20,55 @@ public class EventIndicatorUI : MonoBehaviour
     private List<BeaconInstance> activeBeacons = new List<BeaconInstance>();
     private Camera cam;
 
-    private class BeaconInstance
+    [SerializeField] private float logRadius = 3f;
+
+    public class BeaconInstance
     {
         public Vector3 worldPosition;
         public long spawnGameTime;
+        public string description;
         public RectTransform rectTransform;
         public Image image;
 
-        public BeaconInstance(Vector3 pos, long gameTime, GameObject icon)
+        public BeaconInstance(Vector3 pos, long gameTime, string desc, GameObject icon)
         {
             worldPosition = pos;
             spawnGameTime = gameTime;
+            description = desc;
             rectTransform = icon.GetComponent<RectTransform>();
             image = icon.GetComponentInChildren<Image>();
         }
+    }
+
+    private void HandleGameEvent(object sender, GameEventArgs args)
+    {
+        GameObject icon = Instantiate(beaconIconPrefab, canvasRect);
+        BeaconInstance beacon = new BeaconInstance(
+            args.Position,
+            TimeHub.Instance.getTime(),
+            args.Event.id,
+            icon
+        );
+        activeBeacons.Add(beacon);
+    }
+
+    public BeaconInstance GetLoggableBeacon()
+    {
+        foreach (BeaconInstance beacon in activeBeacons)
+        {
+            // if player is within logRadius of beacon, return it for logging
+            if (Vector3.Distance(player.position, beacon.worldPosition) <= logRadius)
+            {
+                return beacon;
+            }
+        }
+        return null;
+    }
+
+    public void RemoveBeacon(BeaconInstance beacon)
+    {
+        Destroy(beacon.rectTransform.gameObject);
+        activeBeacons.Remove(beacon);
     }
 
     void Start()
@@ -45,15 +80,6 @@ public class EventIndicatorUI : MonoBehaviour
     void OnDestroy()
     {
         GameEvents.OnGameEvent -= HandleGameEvent;
-    }
-
-
-
-    private void HandleGameEvent(object sender, GameEventArgs args)
-    {
-        GameObject icon = Instantiate(beaconIconPrefab, canvasRect);
-        BeaconInstance beacon = new BeaconInstance(args.Position, TimeHub.Instance.getTime(), icon);
-        activeBeacons.Add(beacon);
     }
 
     void Update()
