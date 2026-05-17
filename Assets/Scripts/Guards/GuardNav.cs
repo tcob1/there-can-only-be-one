@@ -39,11 +39,21 @@ public class GuardNav : MonoBehaviour
 
     [SerializeField] private Animator animator;
 
+    private float baseSpeed;
+    private float baseAcceleration;
+    private float baseAngularSpeed;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.SetDestination(patrolPoints[currentPointIndex].position);
+
+        // cache base values
+        baseSpeed = agent.speed;
+        baseAcceleration = agent.acceleration;
+        baseAngularSpeed = agent.angularSpeed;
 
         GlobalEvents.Instance.OnPlayerShoot += OnHearNoise;
     }
@@ -62,6 +72,13 @@ public class GuardNav : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
+        // scale agent with sim speed
+        float simScale = TimeHub.Instance.CurrentSimScale;
+        agent.speed = baseSpeed * simScale;
+        agent.acceleration = baseAcceleration * simScale * 4f;
+        agent.angularSpeed = baseAngularSpeed * simScale * 6f;
+
         UpdatePlayerDetection();
 
         switch (currentGuardState)
