@@ -24,6 +24,7 @@ public class PlayerInteractions : MonoBehaviour
 
     [SerializeField] private Fists fists;
 
+    [SerializeField] private string logEventHoverText = "Log Event (E)";
 
     private void OnInteractStarted(InputAction.CallbackContext ctx) => SendInteractionRay();
     private void OnDropStarted(InputAction.CallbackContext ctx) => DropFirstInventorySlot();
@@ -201,32 +202,43 @@ public class PlayerInteractions : MonoBehaviour
             else
                 UIManager.Instance.HideInteractionText();
         }
+        else
+        {
+            if (eventIndicatorUI != null && eventIndicatorUI.CurrentLoggableBeacon != null)
+            {
+                UIManager.Instance.ShowInteractionText(logEventHoverText);
+                return;
+            }
+        }
+
     }
 
     private void SendInteractionRay()
     {
-        // try logging an event before normal interactions
-        BeaconInstance beacon = eventIndicatorUI.GetLoggableBeacon();
-        if (beacon != null)
-        {
-            EventLogger.Instance.Log(new LoggedEvent(
-                beacon.description,
-                beacon.spawnGameTime,
-                beacon.worldPosition
-            ));
-            eventIndicatorUI.RemoveBeacon(beacon);
-            return;
-        }
-
-        // normal interaction
+        // normal interaction first
         if (GetRaycastHit(out RaycastHit hitInfo))
         {
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
             if (interactable != null && interactable.enabled)
             {
                 interactable.Interact(player);
+                return;
             }
+        }
 
+        // fall through to logging if no interaction
+        if (eventIndicatorUI != null)
+        {
+            BeaconInstance beacon = eventIndicatorUI.CurrentLoggableBeacon;
+            if (beacon != null && EventLogger.Instance != null)
+            {
+                EventLogger.Instance.Log(new LoggedEvent(
+                    beacon.description,
+                    beacon.spawnGameTime,
+                    beacon.worldPosition
+                ));
+                eventIndicatorUI.RemoveBeacon(beacon);
+            }
         }
     }
 

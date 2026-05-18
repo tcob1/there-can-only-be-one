@@ -8,19 +8,21 @@ public class EventIndicatorUI : MonoBehaviour
     [SerializeField] private float beaconDuration = 30f;
     [SerializeField] private GameObject beaconIconPrefab;
     [SerializeField] private Transform player;
-    [SerializeField] private RectTransform canvasRect; // screen-space canvas root
-    [SerializeField] private float edgePadding = 60f;  // distance from screen edge for off-screen icons
+    [SerializeField] private RectTransform canvasRect;
+    [SerializeField] private float edgePadding = 60f;
 
     [Header("Distance Scaling")]
     [SerializeField] private float maxDistance = 30f;
     [SerializeField] private float minIconScale = 0.6f;
     [SerializeField] private float maxIconScale = 1.2f;
 
+    [Header("Event Logging")]
+    [SerializeField] private float logRadius = 3f;
+
+    public BeaconInstance CurrentLoggableBeacon { get; private set; }
 
     private List<BeaconInstance> activeBeacons = new List<BeaconInstance>();
     private Camera cam;
-
-    [SerializeField] private float logRadius = 3f;
 
     public class BeaconInstance
     {
@@ -40,6 +42,17 @@ public class EventIndicatorUI : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        cam = Camera.main;
+        GameEvents.OnGameEvent += HandleGameEvent;
+    }
+
+    void OnDestroy()
+    {
+        GameEvents.OnGameEvent -= HandleGameEvent;
+    }
+
     private void HandleGameEvent(object sender, GameEventArgs args)
     {
         GameObject icon = Instantiate(beaconIconPrefab, canvasRect);
@@ -52,39 +65,20 @@ public class EventIndicatorUI : MonoBehaviour
         activeBeacons.Add(beacon);
     }
 
-    public BeaconInstance GetLoggableBeacon()
-    {
-        foreach (BeaconInstance beacon in activeBeacons)
-        {
-            // if player is within logRadius of beacon, return it for logging
-            if (Vector3.Distance(player.position, beacon.worldPosition) <= logRadius)
-            {
-                return beacon;
-            }
-        }
-        return null;
-    }
-
     public void RemoveBeacon(BeaconInstance beacon)
     {
         Destroy(beacon.rectTransform.gameObject);
         activeBeacons.Remove(beacon);
-    }
-
-    void Start()
-    {
-        cam = Camera.main;
-        GameEvents.OnGameEvent += HandleGameEvent;
-    }
-
-    void OnDestroy()
-    {
-        GameEvents.OnGameEvent -= HandleGameEvent;
+        if (CurrentLoggableBeacon == beacon) CurrentLoggableBeacon = null;
     }
 
     void Update()
     {
         long currentGameTime = TimeHub.Instance.getTime();
+        Vector3 playerPos = player.position;
+        float logRadiusSqr = logRadius * logRadius; // squared for cheap comparison
+
+        CurrentLoggableBeacon = null; // reset each frame
 
         for (int i = activeBeacons.Count - 1; i >= 0; i--)
         {
@@ -98,21 +92,26 @@ public class EventIndicatorUI : MonoBehaviour
                 continue;
             }
 
-            UpdateBeacon(beacon);
+            UpdateBeacon(beacon, playerPos);
+
+            // cache loggable beacon (only need first one in range)
+            if (CurrentLoggableBeacon == null)
+            {
+                float sqrDist = (beacon.worldPosition - playerPos).sqrMagnitude;
+                if (sqrDist <= logRadiusSqr)
+                    CurrentLoggableBeacon = beacon;
+            }
         }
     }
 
-    private void UpdateBeacon(BeaconInstance beacon)
+    private void UpdateBeacon(BeaconInstance beacon, Vector3 playerPos)
     {
         Vector3 screenPos = cam.WorldToScreenPoint(beacon.worldPosition);
         bool isBehind = screenPos.z < 0;
 
-        float padX = edgePadding;
-        float padY = edgePadding;
-
         bool isOnScreen = !isBehind &&
-                          screenPos.x > padX && screenPos.x < Screen.width - padX &&
-                          screenPos.y > padY && screenPos.y < Screen.height - padY;
+                          screenPos.x > edgePadding && screenPos.x < Screen.width - edgePadding &&
+                          screenPos.y > edgePadding && screenPos.y < Screen.height - edgePadding;
 
         Vector2 anchoredPos;
 
@@ -145,7 +144,7 @@ public class EventIndicatorUI : MonoBehaviour
 
         beacon.rectTransform.anchoredPosition = anchoredPos;
 
-        float distance = Vector3.Distance(player.position, beacon.worldPosition);
+        float distance = Vector3.Distance(playerPos, beacon.worldPosition);
         float t = Mathf.Clamp01(1f - (distance / maxDistance));
         float iconScale = Mathf.Lerp(maxIconScale, minIconScale, t);
         beacon.rectTransform.localScale = Vector3.one * iconScale;
