@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Gun
   m_EditorClassIdentifier: 
   itemName: Gun
-  icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 1310590615, guid: bb9a01e36188c9d43834cf2315a1b1cc, type: 3}
   worldPrefab: {fileID: 2992511512375121445, guid: 303901261b6e24845865f13ff04e3c4b, type: 3}
   maxStackSize: 1

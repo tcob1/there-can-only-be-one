@@ -239,6 +239,7 @@ public class PlayerInteractions : MonoBehaviour
         // fall through to logging if no interaction
         if (eventIndicatorUI != null)
         {
+            SFXManager.Instance.PlaySFX("DoorSwing");
             BeaconInstance beacon = eventIndicatorUI.CurrentLoggableBeacon;
             if (beacon != null && EventLogger.Instance != null)
             {
