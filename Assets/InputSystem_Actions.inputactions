@@ -167,6 +167,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "OpenNotes",
+                    "type": "Button",
+                    "id": "04e63f89-abce-443d-a071-81ccdea11e14",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -662,6 +671,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "ScrollSlot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2aa7cb5-198f-426e-a438-f559e6d9afa0",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenNotes",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

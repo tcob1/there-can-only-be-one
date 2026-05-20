@@ -13,6 +13,7 @@ public class PlayerInteractions : MonoBehaviour
     private InputAction attackAction;
     private InputAction scrollAction;
     private InputAction slot1Action, slot2Action, slot3Action, slot4Action, slot5Action;
+    private InputAction notepageAction;
 
     private Inventory inventory;
     [SerializeField] private TimetravelerInputs timetravelerInputs;
@@ -34,6 +35,8 @@ public class PlayerInteractions : MonoBehaviour
     private void OnSlot3Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(2);
     private void OnSlot4Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(3);
     private void OnSlot5Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(4);
+    private void OnNotepageStarted(InputAction.CallbackContext ctx) => UIManager.Instance.ToggleNotepage();
+
     void Start()
     {
         inventory = player.GetComponent<Inventory>();
@@ -74,6 +77,10 @@ public class PlayerInteractions : MonoBehaviour
         slot5Action.started += OnSlot5Started;
         slot5Action.Enable();
 
+        notepageAction = InputSystem.actions.FindAction("OpenNotes");
+        notepageAction.started += OnNotepageStarted;
+        notepageAction.Enable();
+
         inventory.EquipSlot(0);
     }
 
@@ -88,6 +95,7 @@ public class PlayerInteractions : MonoBehaviour
         slot3Action?.Enable();
         slot4Action?.Enable();
         slot5Action?.Enable();
+        notepageAction?.Enable();
     }
 
     void OnDisable()
@@ -101,6 +109,7 @@ public class PlayerInteractions : MonoBehaviour
         slot3Action?.Disable();
         slot4Action?.Disable();
         slot5Action?.Disable();
+        notepageAction?.Disable();
     }
 
     void OnDestroy()
@@ -113,6 +122,7 @@ public class PlayerInteractions : MonoBehaviour
         if (slot3Action != null) slot3Action.started -= OnSlot3Started;
         if (slot4Action != null) slot4Action.started -= OnSlot4Started;
         if (slot5Action != null) slot5Action.started -= OnSlot5Started;
+        if (notepageAction != null) notepageAction.started -= OnNotepageStarted;
     }
 
 

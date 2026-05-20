@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 14830805}
   - component: {fileID: 14830806}
   - component: {fileID: 14830807}
+  - component: {fileID: 14830808}
   m_Layer: 5
   m_Name: OverlayCanvas
   m_TagString: Untagged
@@ -380,6 +381,7 @@ MonoBehaviour:
   clock: {fileID: 1510442526}
   inventoryBar: {fileID: 463281870}
   deathScreenUI: {fileID: 144025566}
+  notepageUI: {fileID: 14830808}
 --- !u!114 &14830807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,6 +395,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionText: {fileID: 1388008680}
+--- !u!114 &14830808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14830800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29d838248e79dc1418956821888bd52a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 1446767093}
+  notePage: {fileID: 1586360481}
+  logText: {fileID: 2064794730}
+  slideDuration: 0.4
+  offScreenX: -600
+  onScreenX: 50
 --- !u!1001 &27017899
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6002,7 +6022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1446767094
 RectTransform:
   m_ObjectHideFlags: 0
