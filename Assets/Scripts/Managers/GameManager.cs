@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     public event Action OnGameOver;
     public event Action OnGameWin;
     public event Action OnRespawn;
+    public event Action OnPause;
+    public event Action OnResume;
+
+    public bool IsPaused { get; private set; }
 
     public bool IsGameRunning { get; private set; }
 
@@ -84,6 +88,22 @@ public class GameManager : MonoBehaviour
     {
         IsGameRunning = true;
         OnRespawn?.Invoke();
+    }
+
+    public void Pause()
+    {
+        if (IsPaused) return;
+        IsPaused = true;
+        Time.timeScale = 0f;
+        OnPause?.Invoke();
+    }
+
+    public void Resume()
+    {
+        if (!IsPaused) return;
+        IsPaused = false;
+        Time.timeScale = 1f;
+        OnResume?.Invoke();
     }
 
 }
