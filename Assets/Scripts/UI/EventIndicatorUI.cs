@@ -57,9 +57,10 @@ public class EventIndicatorUI : MonoBehaviour
     {
         GameObject icon = Instantiate(beaconIconPrefab, canvasRect);
         BeaconInstance beacon = new BeaconInstance(
+            //args is from GameEvents args invokation, so it has the position of the event and the event details
             args.Position,
             TimeHub.Instance.getTime(),
-            args.Event.id,
+            args.Event.description,
             icon
         );
         activeBeacons.Add(beacon);

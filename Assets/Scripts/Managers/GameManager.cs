@@ -95,6 +95,9 @@ public class GameManager : MonoBehaviour
         if (IsPaused) return;
         IsPaused = true;
         Time.timeScale = 0f;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         OnPause?.Invoke();
     }
 
@@ -103,6 +106,9 @@ public class GameManager : MonoBehaviour
         if (!IsPaused) return;
         IsPaused = false;
         Time.timeScale = 1f;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         OnResume?.Invoke();
     }
 

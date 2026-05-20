@@ -47,23 +47,22 @@ public class NotepageUI : MonoBehaviour
 
         GameManager.Instance.Pause();
 
-        //Cursor.lockState = CursorLockMode.None;
-        //Cursor.visible = true;
+
     }
 
     public void Close()
     {
         IsOpen = false;
-        if (currentSlide != null)
-        {
-            StopCoroutine(currentSlide);
-        }
-        currentSlide = StartCoroutine(SlideOutAndHide());
 
         GameManager.Instance.Resume();
 
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        //if (currentSlide != null)
+        //{
+        //    StopCoroutine(currentSlide);
+        //}
+        //currentSlide = StartCoroutine(SlideOutAndHide());
+        currentSlide = null;
+        Hide();
     }
 
     private IEnumerator Slide(float targetX)
@@ -91,6 +90,12 @@ public class NotepageUI : MonoBehaviour
         panel.SetActive(false);
     }
 
+    private void Hide()
+    {
+        notePage.anchoredPosition = new Vector2(offScreenX, notePage.anchoredPosition.y);
+        panel.SetActive(false);
+    }
+
     // refreshes the log text with the current events from the EventLogger
     private void RefreshLog()
     {
@@ -109,6 +114,8 @@ public class NotepageUI : MonoBehaviour
     {
         long hour = (time / 3600) % 24;
         long min = (time / 60) % 60;
-        return $"{hour:D2}:{min:D2}";
+        long sec = time % 60;
+        // D2 is 2 digit padding
+        return $"{hour:D2}:{min:D2}:{sec:D2}";
     }
 }
