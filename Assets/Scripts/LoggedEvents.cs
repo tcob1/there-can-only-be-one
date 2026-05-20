@@ -11,6 +11,7 @@ public class LoggedEvent
     {
         this.description = description;
         this.gameTime = gameTime;
+        // doesnt acc matter for now but feel like would be useful
         this.position = position;
     }
 }
