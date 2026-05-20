@@ -192,6 +192,18 @@ public class GuardNav : MonoBehaviour
         }
     }
 
+    private void RedirectInstantly(Vector3 newTarget)
+    {
+        NavMeshPath path = new NavMeshPath();
+        // Synchronously calculates the path
+        if (NavMesh.CalculatePath(transform.position, newTarget, NavMesh.AllAreas, path))
+        {
+            // Immediately assigns the completed path to the agent
+            agent.SetPath(path);
+        }
+    }
+
+
     private void SwapToChasing()
     {
         //Debug.Log("Swapping to chasing");
@@ -201,17 +213,17 @@ public class GuardNav : MonoBehaviour
         currentGuardState = GuardState.Chasing;
         inv.GuardEquipByName("Gun");
         lastKnownPlayerPosition = player.transform.position;
-        agent.SetDestination(lastKnownPlayerPosition);
+        RedirectInstantly(lastKnownPlayerPosition);
     }
 
     private void HandleChasing()
     {
-        if (isVisible)
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+
+        if (isVisible || distanceToPlayer <= hearingRange)
         {
             // If we can see the player, move forward until we can shoot, then shoot
             lastKnownPlayerPosition = player.transform.position;
-
-            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
             Inventory player_inv = player.GetComponent<Inventory>();
 
@@ -228,7 +240,7 @@ public class GuardNav : MonoBehaviour
             }
             else
             {
-                agent.SetDestination(player.transform.position);
+                RedirectInstantly(player.transform.position);
             }
         }
         else
