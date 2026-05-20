@@ -6,7 +6,8 @@ public class EventIndicatorUI : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private float beaconDuration = 30f;
-    [SerializeField] private GameObject beaconIconPrefab;
+    [SerializeField] private GameObject unloggedIconPrefab;
+    [SerializeField] private GameObject loggedIconPrefab;
     [SerializeField] private Transform player;
     [SerializeField] private RectTransform canvasRect;
     [SerializeField] private float edgePadding = 60f;
@@ -26,19 +27,23 @@ public class EventIndicatorUI : MonoBehaviour
 
     public class BeaconInstance
     {
+        public string eventId;
         public Vector3 worldPosition;
         public long spawnGameTime;
         public string description;
         public RectTransform rectTransform;
         public Image image;
+        public bool alreadyLogged;
 
-        public BeaconInstance(Vector3 pos, long gameTime, string desc, GameObject icon)
+        public BeaconInstance(string id, Vector3 pos, long gameTime, string desc, GameObject icon, bool alreadyLogged)
         {
+            eventId = id;
             worldPosition = pos;
             spawnGameTime = gameTime;
             description = desc;
             rectTransform = icon.GetComponent<RectTransform>();
             image = icon.GetComponentInChildren<Image>();
+            this.alreadyLogged = alreadyLogged;
         }
     }
 
@@ -55,13 +60,20 @@ public class EventIndicatorUI : MonoBehaviour
 
     private void HandleGameEvent(object sender, GameEventArgs args)
     {
-        GameObject icon = Instantiate(beaconIconPrefab, canvasRect);
+
+        bool wasLogged = EventLogger.Instance != null && EventLogger.Instance.HasBeenLogged(args.Event.id);
+
+        GameObject iconPrefab = wasLogged ? loggedIconPrefab : unloggedIconPrefab;
+
+        GameObject icon = Instantiate(iconPrefab, canvasRect);
         BeaconInstance beacon = new BeaconInstance(
             //args is from GameEvents args invokation, so it has the position of the event and the event details
+            args.Event.id,
             args.Position,
             TimeHub.Instance.getTime(),
             args.Event.description,
-            icon
+            icon,
+            wasLogged
         );
         activeBeacons.Add(beacon);
     }
@@ -73,11 +85,12 @@ public class EventIndicatorUI : MonoBehaviour
         if (CurrentLoggableBeacon == beacon) CurrentLoggableBeacon = null;
     }
 
+    //this func might be a little expensive if there are a lot of beacons, but we expect only a few at a time and it keeps the logic simple
     void Update()
     {
         long currentGameTime = TimeHub.Instance.getTime();
         Vector3 playerPos = player.position;
-        float logRadiusSqr = logRadius * logRadius; // squared for cheap comparison
+        float logRadiusSqr = logRadius * logRadius;
 
         CurrentLoggableBeacon = null; // reset each frame
 
@@ -93,14 +106,25 @@ public class EventIndicatorUI : MonoBehaviour
                 continue;
             }
 
+            float sqrDist = (beacon.worldPosition - playerPos).sqrMagnitude;
+
+            if (beacon.alreadyLogged && sqrDist <= logRadiusSqr)
+            {
+                Destroy(beacon.rectTransform.gameObject);
+                activeBeacons.RemoveAt(i);
+                continue;
+            }
+
             UpdateBeacon(beacon, playerPos);
 
             // cache loggable beacon (only need first one in range)
-            if (CurrentLoggableBeacon == null)
+            if (CurrentLoggableBeacon == null && !beacon.alreadyLogged)
             {
-                float sqrDist = (beacon.worldPosition - playerPos).sqrMagnitude;
                 if (sqrDist <= logRadiusSqr)
+                {
                     CurrentLoggableBeacon = beacon;
+                }
+
             }
         }
     }

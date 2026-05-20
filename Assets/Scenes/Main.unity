@@ -2562,7 +2562,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beaconDuration: 20
-  beaconIconPrefab: {fileID: 2521865403985815749, guid: 3e3907fb1a1840e449106b290a7b79f7, type: 3}
+  unloggedIconPrefab: {fileID: 2521865403985815749, guid: 3e3907fb1a1840e449106b290a7b79f7, type: 3}
+  loggedIconPrefab: {fileID: 2521865403985815749, guid: b16e00d7dfa2dce4fb6ce161780d097f, type: 3}
   player: {fileID: 1835651818322257702}
   canvasRect: {fileID: 14830804}
   edgePadding: 60
@@ -3653,6 +3654,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events:
   - id: guard_drops_key
+    description: Guard drops key
     triggerTimeString: 0:2:46:47
     triggerTime: 0
     hasTriggered: 0

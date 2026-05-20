@@ -17,6 +17,15 @@ public class EventLogger : MonoBehaviour
         Instance = this;
     }
 
+    public bool HasBeenLogged(string id)
+    {
+        foreach (LoggedEvent e in loggedEvents)
+        {
+            if (e.eventId == id) return true;
+        }
+        return false;
+    }
+
     public void Log(LoggedEvent loggedEvent)
     {
         loggedEvents.Add(loggedEvent);

@@ -243,6 +243,7 @@ public class PlayerInteractions : MonoBehaviour
             if (beacon != null && EventLogger.Instance != null)
             {
                 EventLogger.Instance.Log(new LoggedEvent(
+                    beacon.eventId,
                     beacon.description,
                     beacon.spawnGameTime,
                     beacon.worldPosition
