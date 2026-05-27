@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject inventoryBar;
     [SerializeField] private DeathScreenUI deathScreenUI;
     [SerializeField] private GameObject timetravelScreen;
+    [SerializeField] private NotepageUI notepageUI;
+
 
     private void Awake()
     {
@@ -43,6 +45,11 @@ public class UIManager : MonoBehaviour
             ShowClock();
             ShowInventoryBar();
         };
+    }
+
+    public void ToggleNotepage()
+    {
+        notepageUI.Toggle();
     }
 
     public void ShowDeathScreen()

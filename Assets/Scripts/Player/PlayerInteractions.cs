@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using static EventIndicatorUI;
 
 public class PlayerInteractions : MonoBehaviour
 {
@@ -12,9 +13,11 @@ public class PlayerInteractions : MonoBehaviour
     private InputAction attackAction;
     private InputAction scrollAction;
     private InputAction slot1Action, slot2Action, slot3Action, slot4Action, slot5Action;
+    private InputAction notepageAction;
 
     private Inventory inventory;
     [SerializeField] private TimetravelerInputs timetravelerInputs;
+    [SerializeField] private EventIndicatorUI eventIndicatorUI;
 
     private int layerMask;
 
@@ -22,6 +25,7 @@ public class PlayerInteractions : MonoBehaviour
 
     [SerializeField] private Fists fists;
 
+    [SerializeField] private string logEventHoverText = "Log Event (E)";
 
     private void OnInteractStarted(InputAction.CallbackContext ctx) => SendInteractionRay();
     private void OnDropStarted(InputAction.CallbackContext ctx) => DropFirstInventorySlot();
@@ -31,6 +35,8 @@ public class PlayerInteractions : MonoBehaviour
     private void OnSlot3Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(2);
     private void OnSlot4Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(3);
     private void OnSlot5Started(InputAction.CallbackContext ctx) => inventory.EquipSlot(4);
+    private void OnNotepageStarted(InputAction.CallbackContext ctx) => UIManager.Instance.ToggleNotepage();
+
     void Start()
     {
         inventory = player.GetComponent<Inventory>();
@@ -71,6 +77,10 @@ public class PlayerInteractions : MonoBehaviour
         slot5Action.started += OnSlot5Started;
         slot5Action.Enable();
 
+        notepageAction = InputSystem.actions.FindAction("OpenNotes");
+        notepageAction.started += OnNotepageStarted;
+        notepageAction.Enable();
+
         inventory.EquipSlot(0);
     }
 
@@ -85,6 +95,7 @@ public class PlayerInteractions : MonoBehaviour
         slot3Action?.Enable();
         slot4Action?.Enable();
         slot5Action?.Enable();
+        notepageAction?.Enable();
     }
 
     void OnDisable()
@@ -98,6 +109,7 @@ public class PlayerInteractions : MonoBehaviour
         slot3Action?.Disable();
         slot4Action?.Disable();
         slot5Action?.Disable();
+        notepageAction?.Disable();
     }
 
     void OnDestroy()
@@ -110,6 +122,7 @@ public class PlayerInteractions : MonoBehaviour
         if (slot3Action != null) slot3Action.started -= OnSlot3Started;
         if (slot4Action != null) slot4Action.started -= OnSlot4Started;
         if (slot5Action != null) slot5Action.started -= OnSlot5Started;
+        if (notepageAction != null) notepageAction.started -= OnNotepageStarted;
     }
 
 
@@ -199,16 +212,45 @@ public class PlayerInteractions : MonoBehaviour
             else
                 UIManager.Instance.HideInteractionText();
         }
+        else
+        {
+            if (eventIndicatorUI != null && eventIndicatorUI.CurrentLoggableBeacon != null)
+            {
+                UIManager.Instance.ShowInteractionText(logEventHoverText);
+                return;
+            }
+        }
+
     }
 
     private void SendInteractionRay()
     {
+        // normal interaction first
         if (GetRaycastHit(out RaycastHit hitInfo))
         {
-
             Interactable interactable = hitInfo.collider.GetComponent<Interactable>();
             if (interactable != null && interactable.enabled)
+            {
                 interactable.Interact(player);
+                return;
+            }
+        }
+
+        // fall through to logging if no interaction
+        if (eventIndicatorUI != null)
+        {
+            SFXManager.Instance.PlaySFX("DoorSwing");
+            BeaconInstance beacon = eventIndicatorUI.CurrentLoggableBeacon;
+            if (beacon != null && EventLogger.Instance != null)
+            {
+                EventLogger.Instance.Log(new LoggedEvent(
+                    beacon.eventId,
+                    beacon.description,
+                    beacon.spawnGameTime,
+                    beacon.worldPosition
+                ));
+                eventIndicatorUI.RemoveBeacon(beacon);
+            }
         }
     }
 

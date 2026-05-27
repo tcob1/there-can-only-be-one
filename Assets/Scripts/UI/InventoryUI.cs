@@ -36,6 +36,7 @@ public class InventoryUI : MonoBehaviour
             {
                 slotImages[i].sprite = slot.itemData.icon;
                 slotImages[i].color = Color.white;
+                slotImages[i].preserveAspect = true;
             }
             else
             {

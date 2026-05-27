@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Simple Key
   m_EditorClassIdentifier: 
   itemName: Simple Key
-  icon: {fileID: 21300000, guid: a53d48bbee01973a0a3cb80f7c462b7e, type: 3}
+  icon: {fileID: 1149811732, guid: bb9a01e36188c9d43834cf2315a1b1cc, type: 3}
   worldPrefab: {fileID: 2762554950203291354, guid: 2fbab5f68d4dac214a80534b7f98dbde, type: 3}
   maxStackSize: 1
