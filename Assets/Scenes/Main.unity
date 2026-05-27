@@ -381,6 +381,7 @@ MonoBehaviour:
   inventoryBar: {fileID: 463281870}
   deathScreenUI: {fileID: 144025566}
   timetravelScreen: {fileID: 1806407257}
+  notepageUI: {fileID: 0}
 --- !u!114 &14830807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1863,7 +1864,7 @@ Transform:
   m_GameObject: {fileID: 408870608}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.75, y: 25.62, z: 8.86}
+  m_LocalPosition: {x: -16.75, y: 2.771, z: 8.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2543,13 +2544,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   beaconDuration: 30
-  beaconIconPrefab: {fileID: 2521865403985815749, guid: 3e3907fb1a1840e449106b290a7b79f7, type: 3}
+  unloggedIconPrefab: {fileID: 2521865403985815749, guid: 3e3907fb1a1840e449106b290a7b79f7, type: 3}
+  loggedIconPrefab: {fileID: 2521865403985815749, guid: b16e00d7dfa2dce4fb6ce161780d097f, type: 3}
   player: {fileID: 1835651818322257702}
   canvasRect: {fileID: 14830804}
   edgePadding: 60
   maxDistance: 20
   minIconScale: 0.5
   maxIconScale: 0.5
+  logRadius: 3
 --- !u!1 &680311049
 GameObject:
   m_ObjectHideFlags: 0
@@ -8478,6 +8481,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   events:
   - id: guard_drops_key
+    description: Guard drops key
     triggerTimeString: 0:2:46:47
     triggerTime: 0
     hasTriggered: 0
@@ -13926,7 +13930,7 @@ Transform:
   m_GameObject: {fileID: 8628305870719838533}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.75, y: 25.62, z: 8.86}
+  m_LocalPosition: {x: -16.75, y: 2.771, z: 8.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13981,7 +13985,7 @@ Transform:
   m_GameObject: {fileID: 5937500226608028511}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.75, y: 24.85, z: 8.86}
+  m_LocalPosition: {x: -16.75, y: 2.001, z: 8.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14333,7 +14337,9 @@ MonoBehaviour:
   player: {fileID: 5937500226608028511}
   interactionRange: 3
   timetravelerInputs: {fileID: 804703179}
+  eventIndicatorUI: {fileID: 0}
   fists: {fileID: 3298813554225663387}
+  logEventHoverText: Log Event (E)
 --- !u!1 &5937500226608028511
 GameObject:
   m_ObjectHideFlags: 0
