@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using TMPro;
 using System;
+using System.Collections;
 
 public class TimeHub : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class TimeHub : MonoBehaviour
         Time.fixedDeltaTime = 1 / (float)FIXED_UPDATE_RATE;
 
         onSecond += () => updateClock(time);
+        
 
         timeline = new Dictionary<string, Stack<StateChange>>();
 
@@ -72,12 +74,14 @@ public class TimeHub : MonoBehaviour
             // capped at MAX_SIM_TIMESCALE
             Time.fixedDeltaTime = 1f / ((float)FIXED_UPDATE_RATE * MAX_SIM_TIMESCALE);
             CurrentSimScale = MAX_SIM_TIMESCALE;
+            UIManager.Instance.ShowTimetravelScreen();
         }
         else
         {
             Time.fixedDeltaTime = 1f / (float)FIXED_UPDATE_RATE;
             CurrentSimScale = 1f;
             goalTime = 0;
+            UIManager.Instance.HideTimetravelScreen();
         }
 
         subsecondCounter++;
@@ -153,6 +157,19 @@ public class TimeHub : MonoBehaviour
 
             StateRegistry.Instance.SetSingleState(id, stateChanges.Peek().state);
         }
+        
+        StartCoroutine(FinishedBackwardsJump());
+
+    }
+
+    public IEnumerator FinishedBackwardsJump()
+    {
+        UIManager.Instance.ShowTimetravelScreen();
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(1f); 
+        Time.timeScale = 1f;
+        UIManager.Instance.HideTimetravelScreen();
+
     }
 
     public void logChange(IStateful obj)

@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject clock;
     [SerializeField] private GameObject inventoryBar;
     [SerializeField] private DeathScreenUI deathScreenUI;
+    [SerializeField] private GameObject timetravelScreen;
 
     private void Awake()
     {
@@ -94,5 +95,15 @@ public class UIManager : MonoBehaviour
     private void HideInventoryBar()
     {
         inventoryBar.SetActive(false);
+    }
+
+    public void ShowTimetravelScreen()
+    {
+        timetravelScreen.SetActive(true);
+    }
+
+    public void HideTimetravelScreen()
+    {
+        timetravelScreen.SetActive(false);
     }
 }
