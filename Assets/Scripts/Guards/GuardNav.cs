@@ -76,7 +76,6 @@ public class GuardNav : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
         // scale agent with sim speed
         float simScale = TimeHub.Instance.CurrentSimScale;
         agent.speed = baseSpeed * simScale;
