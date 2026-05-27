@@ -19,6 +19,8 @@ public class NotepageUI : MonoBehaviour
     {
         panel.SetActive(false);
         notePage.anchoredPosition = new Vector2(offScreenX, notePage.anchoredPosition.y);
+
+        RefreshLog();
     }
 
     public void Toggle()
@@ -56,11 +58,6 @@ public class NotepageUI : MonoBehaviour
 
         GameManager.Instance.Resume();
 
-        //if (currentSlide != null)
-        //{
-        //    StopCoroutine(currentSlide);
-        //}
-        //currentSlide = StartCoroutine(SlideOutAndHide());
         currentSlide = null;
         Hide();
     }
