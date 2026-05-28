@@ -47,7 +47,10 @@ public class PlayerHistory : MonoBehaviour
         movementHistory = new();
         actionHistory = new();
         currentTime = 0;
+        isActivePlayer = true;
+        isOutsideOfTimeRange = false;
         TimeHub.onTimeChange += OnTimeTravel;
+        TimeHub.onTimeTravelForwardEnd += OnForwardTimeTravelEnd;
     }
 
     // Update is called once per frame
@@ -68,16 +71,17 @@ public class PlayerHistory : MonoBehaviour
             // If the current time is before the start of the history, the
             // player has not yet time traveled back to this point, so despawn
             // them. They will become active in later loops.
-            if (currentTime > movementHistory.Count - 1)
+            if (!isOutsideOfTimeRange && currentTime > movementHistory.Count - 1)
             {
                 isOutsideOfTimeRange = true;
                 Despawn();
             }
-            else if (currentTime >= 0)
+            else if (currentTime >= 0 && currentTime <= movementHistory.Count - 1)
             {
                 if (isOutsideOfTimeRange)
                 {
                     // Player has just entered the replay zone and should be spawned in
+                    isOutsideOfTimeRange = false;
                     Spawn();
                 }
                 PlayerMovementHistoryEntry entry = movementHistory[(int)currentTime];
@@ -98,34 +102,45 @@ public class PlayerHistory : MonoBehaviour
         actionHistory.Add(new PlayerActionHistoryEntry(actionName, currentTime));
     }
 
-    void StartReplay()
-    {
-        isActivePlayer = false;
-        mouseLook.isActive = false;
-        playerMovement.isActive = false;
-    }
-
     void OnTimeTravel(int delta, long newTime)
     {
-        Destroy(playerCamera);
-        // if time is in the past, start replaying
-        if (delta < 0)
+        if (delta == 0)
+        {
+            return;
+        }
+
+        if (isActivePlayer)
         {
             CreateDuplicate();
-            currentTime += delta * (long)(1.0f / Time.fixedDeltaTime);
-            StartReplay();
-            if (currentTime < 0)
-            {
-                // before the player spawned in
-                isOutsideOfTimeRange = true;
-                Despawn();
-            }
-            else if (isOutsideOfTimeRange && currentTime < movementHistory.Count)
-            {
-                // the player was past the time range but has moved back into it
-                isOutsideOfTimeRange = false;
-                Spawn();
-            }
+            Destroy(playerCamera);
+            isActivePlayer = false;
+            mouseLook.isActive = false;
+            playerMovement.isActive = false;
+        }
+
+        if (delta < 0)
+        {
+            int timestepAdjusted = delta * (int)Mathf.Round((float)(1.0f / Time.fixedDeltaTime));
+            currentTime += timestepAdjusted;
+            Debug.Log($"Time travel detected! Delta: {delta}, Timestep Adjusted: {timestepAdjusted}, New Time: {currentTime}");
+        }
+        else if (delta > 0)
+        {
+            // Forward time travel gets simulated through fixed update so don't add to current time.
+            Debug.Log($"Time travel detected! Delta: {delta}");
+        }
+
+        if (currentTime < 0 || currentTime > movementHistory.Count - 1)
+        {
+            // before the player spawned in or after they time travelled out
+            isOutsideOfTimeRange = true;
+            Despawn();
+        }
+        else if (isOutsideOfTimeRange)
+        {
+            // the player was past the time range but has moved back into it
+            isOutsideOfTimeRange = false;
+            Spawn();
         }
     }
 
@@ -150,6 +165,7 @@ public class PlayerHistory : MonoBehaviour
         {
             child.gameObject.SetActive(false);
         }
+        Debug.Log("Player despawned");
     }
 
     void Spawn()
@@ -158,6 +174,22 @@ public class PlayerHistory : MonoBehaviour
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(true);
+        }
+        Debug.Log("Player spawned");
+    }
+
+    void OnForwardTimeTravelEnd(long newTime)
+    {
+        // TODO: disable movement while time traveling forward
+        // After the player time travels forward, their history must be reset.
+        // During the forward time travel, they will have accumulated a lot of
+        // history that they were not in existence for, so this is where we
+        // remove that.
+        if (isActivePlayer)
+        {
+            movementHistory = new();
+            actionHistory = new();
+            currentTime = 0;
         }
     }
 }

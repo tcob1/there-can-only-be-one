@@ -7,7 +7,8 @@ public class CameraAutoActivate : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log("CameraAutoActivate: Start called, enabling camera and audio listener if they are disabled.");
+        if (!cameraObject) return;
+
         // if the camera is disabled, enable it
         if (!cameraObject.GetComponent<Camera>().enabled)
         {

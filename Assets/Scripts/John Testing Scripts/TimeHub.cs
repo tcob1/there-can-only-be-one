@@ -21,6 +21,9 @@ public class TimeHub : MonoBehaviour
     public delegate void OnTimeChange(int delta, long newTime);
     public static event OnTimeChange onTimeChange;
 
+    public delegate void OnTimeTravelForwardEnd(long newTime);
+    public static event OnTimeTravelForwardEnd onTimeTravelForwardEnd;
+
     public struct StateChange
     {
         public Dictionary<string, object> state;
@@ -76,6 +79,10 @@ public class TimeHub : MonoBehaviour
         }
         else
         {
+            if (goalTime != 0)
+            {
+                onTimeTravelForwardEnd?.Invoke(time);
+            }
             Time.fixedDeltaTime = 1 / ((float)FIXED_UPDATE_RATE);
             goalTime = 0;
         }
