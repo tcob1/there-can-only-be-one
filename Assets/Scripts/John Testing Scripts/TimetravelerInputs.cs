@@ -24,7 +24,7 @@ public class TimetravelerInputs : MonoBehaviour
     {
         
         scrollCharge = chargeTTScroll.ReadValue<Vector2>().y;
-        if (chargingTT)
+        if (chargingTT && TimeHub.Instance.isTimetravelReady())
         {
             
             currCharge += (chargeMod * scrollCharge * Time.deltaTime * Mathf.Sqrt(Mathf.Abs(currCharge) + .1f));

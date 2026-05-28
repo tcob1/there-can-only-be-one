@@ -13,7 +13,9 @@ public class TimeHub : MonoBehaviour
     private long time;
     public int START_TIME = 10000;
     public int FIXED_UPDATE_RATE = 10;
+    public float timetravelCooldown = 3f;
     private int subsecondCounter = 0;
+    private bool timetravelReady = true;
 
     private const float MAX_SIM_TIMESCALE = 50f;
     public float CurrentSimScale { get; private set; } = 1f;
@@ -125,6 +127,11 @@ public class TimeHub : MonoBehaviour
     {
         Debug.Log("Traveled " + newTime + " seconds forewards");
         goalTime = time + newTime;
+
+        timetravelReady = false;
+        UIManager.Instance.ShowOverheated();
+        Invoke("setTimetravelReady", timetravelCooldown);
+        
     }
 
     public void timeBackwards(int newTime)
@@ -157,7 +164,11 @@ public class TimeHub : MonoBehaviour
 
             StateRegistry.Instance.SetSingleState(id, stateChanges.Peek().state);
         }
-        
+
+        timetravelReady = false;
+        UIManager.Instance.ShowOverheated();
+        Invoke("setTimetravelReady", timetravelCooldown);
+
         StartCoroutine(FinishedBackwardsJump());
 
     }
@@ -235,5 +246,16 @@ public class TimeHub : MonoBehaviour
         time = time * FIXED_UPDATE_RATE;
 
         return time;
+    }
+
+    public bool isTimetravelReady()
+    {
+        return timetravelReady;
+    }
+
+    public void setTimetravelReady()
+    {
+        timetravelReady = true;
+        UIManager.Instance.HideOverheated();
     }
 }

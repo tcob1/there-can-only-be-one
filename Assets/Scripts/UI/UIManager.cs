@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject inventoryBar;
     [SerializeField] private DeathScreenUI deathScreenUI;
     [SerializeField] private GameObject timetravelScreen;
+    [SerializeField] private GameObject overheated;
 
     private void Awake()
     {
@@ -29,12 +30,14 @@ public class UIManager : MonoBehaviour
         {
             ShowClock();
             ShowInventoryBar();
+            HideOverheated();
             ShowTitle("THERE CAN ONLY BE ONE");
         };
 
         GameManager.Instance.OnGameOver += () =>
         {
             HideClock();
+            HideOverheated();
             HideInventoryBar();
         };
 
@@ -42,6 +45,7 @@ public class UIManager : MonoBehaviour
         {
             ShowClock();
             ShowInventoryBar();
+            HideOverheated();
         };
     }
 
@@ -105,5 +109,15 @@ public class UIManager : MonoBehaviour
     public void HideTimetravelScreen()
     {
         timetravelScreen.SetActive(false);
+    }
+
+    public void ShowOverheated()
+    {
+        overheated.SetActive(true);
+    }
+
+    public void HideOverheated()
+    {
+        overheated.SetActive(false);
     }
 }

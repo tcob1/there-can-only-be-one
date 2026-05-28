@@ -30,7 +30,8 @@ public class TTParticles : MonoBehaviour
 
     void OnTimetravelStarted(InputAction.CallbackContext context)
     {
-        ps.Play();
+        if (TimeHub.Instance.isTimetravelReady()) {ps.Play();}
+        
 
     }
 
