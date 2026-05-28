@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -813,7 +813,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -4551,7 +4551,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.9
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -6676,7 +6676,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -8210,7 +8210,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -12577,7 +12577,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -13703,7 +13703,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.9
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -14326,7 +14326,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -17603,7 +17603,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -18144,7 +18144,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -20490,7 +20490,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -33617,6 +33617,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
+      propertyPath: scanInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -34990,7 +34994,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.8
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -36793,7 +36797,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -36924,7 +36928,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -40600,7 +40604,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -44675,7 +44679,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -50612,7 +50616,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.9
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -52202,7 +52206,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -58592,7 +58596,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -63939,6 +63943,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
+      propertyPath: scanInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -64614,7 +64622,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -66859,7 +66867,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.7
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -68006,7 +68014,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -74068,7 +74076,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -76180,7 +76188,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -76929,7 +76937,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: scanInterval
-      value: 0.6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
@@ -77928,6 +77936,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
+      propertyPath: scanInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -78609,6 +78621,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
+      propertyPath: scanInterval
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1855238741779210069, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
       propertyPath: wanderPoints.Array.size
       value: 1
