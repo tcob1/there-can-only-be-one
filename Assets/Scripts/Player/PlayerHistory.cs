@@ -34,6 +34,9 @@ public class PlayerHistory : MonoBehaviour
     public PlayerMovement playerMovement;
     public GameObject playerCamera;
 
+    private Vector3 previousPosition;
+    private Vector3 currentPosition;
+
     private List<PlayerMovementHistoryEntry> movementHistory;
     private List<PlayerActionHistoryEntry> actionHistory;
     private long currentTime;
@@ -51,6 +54,17 @@ public class PlayerHistory : MonoBehaviour
         isOutsideOfTimeRange = false;
         TimeHub.onTimeChange += OnTimeTravel;
         TimeHub.onTimeTravelForwardEnd += OnForwardTimeTravelEnd;
+    }
+
+    void Update()
+    {
+        if (!isActivePlayer)
+        {
+            // Linearly interpolate the player's position for in-between frames
+            float t = (Time.time - Time.fixedTime) / Time.fixedDeltaTime;
+            Debug.Log($"Lerping with t={t}");
+            transform.position = Vector3.Lerp(previousPosition, currentPosition, t);
+        }
     }
 
     // Update is called once per frame
@@ -85,9 +99,11 @@ public class PlayerHistory : MonoBehaviour
                     Spawn();
                 }
                 PlayerMovementHistoryEntry entry = movementHistory[(int)currentTime];
+                PlayerMovementHistoryEntry previousEntry = movementHistory[Mathf.Max(0, (int)currentTime - 1)];
                 if (entry != null)
                 {
-                    transform.position = entry.position;
+                    previousPosition = previousEntry.position;
+                    currentPosition = entry.position;
                     transform.rotation = entry.rotation;
                     lookTransform.rotation = entry.cameraRotation;
                 }
