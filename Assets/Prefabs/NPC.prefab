@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 8099661098976624487}
   - component: {fileID: 5977391448688203069}
   - component: {fileID: 1855238741779210069}
+  - component: {fileID: 8403603645262416240}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -217,3 +218,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 034a268072dc4da469c641b1171da284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  dialogueTrigger: {fileID: 8403603645262416240}
+  wanderPoints: []
+  hearingRange: 50
+  detectRange: 100
+  detectAngle: 90
+  calmDownTime: 5
+  scanInterval: 0.2
+  currentNPCState: 0
+--- !u!114 &8403603645262416240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5721389327632959223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdec795cb063e4549a9023edd521acbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 0}
