@@ -13,8 +13,5 @@ MonoBehaviour:
   m_Name: ClerkLines
   m_EditorClassIdentifier: 
   lines:
-  - fwioefoiwehfhwoeeowhefge
-  - fffffffffffffffffffffffffffff
-  - hhhhhhhhhhhhhhhhhhh
-  - ssssssssssssssssssssssssssss
-  - aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  - 'Clerk: I hate my job...'
+  - 'Clerk: It''s a good thing we close soon.'
