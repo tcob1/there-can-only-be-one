@@ -17240,6 +17240,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 407504, guid: b0db04ffe8e8d054c8d535475b6e8669, type: 3}
   m_PrefabInstance: {fileID: 436743303}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &438002294 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5721389327632959223, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
+  m_PrefabInstance: {fileID: 13398574}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &438657645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39313,6 +39318,13 @@ MonoBehaviour:
     triggerTimeString: 0:2:46:47
     triggerTime: 0
     hasTriggered: 0
+    relatedObject: {fileID: 0}
+  - id: npc_speaks
+    description: NPC Speaks
+    triggerTimeString: 0:2:46:48
+    triggerTime: 0
+    hasTriggered: 0
+    relatedObject: {fileID: 438002294}
   keyPrefab: {fileID: 2762554950203291354, guid: 2fbab5f68d4dac214a80534b7f98dbde, type: 3}
 --- !u!114 &929747342
 MonoBehaviour:

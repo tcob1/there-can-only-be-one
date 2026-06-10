@@ -32,7 +32,7 @@ public class NpcNav : MonoBehaviour
     private float lastScanTime = 0f;
     private Transform trackedThreat = null;
 
-    private bool dialogueTriggered = false;
+    public bool dialogueTriggered = false;
 
     // Reusable buffer shared across ALL NPC instances to avoid per-scan allocation
     private static readonly Collider[] scanBuffer = new Collider[32];
@@ -89,7 +89,7 @@ public class NpcNav : MonoBehaviour
         }
     }
 
-    private void HandleDialogue()
+    public void HandleDialogue()
     {
         if (player)
         {

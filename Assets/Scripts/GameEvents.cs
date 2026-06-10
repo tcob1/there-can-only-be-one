@@ -12,6 +12,7 @@ public class GameEvent
     public string triggerTimeString;
     public long triggerTime;
     public bool hasTriggered;
+    public GameObject relatedObject;
 }
 
 public class GameEventArgs : EventArgs
@@ -28,6 +29,7 @@ public class GameEvents : MonoBehaviour
     private List<GameEvent> events = new List<GameEvent>
     {
         new GameEvent { id = "guard_drops_key", description = "Guard drops key", triggerTime = 10007L },
+        new GameEvent { id = "npc_speaks", description = "NPC Speaks", triggerTime = 10008L },
     };
 
     public static event EventHandler<GameEventArgs> OnGameEvent;
@@ -109,6 +111,19 @@ public class GameEvents : MonoBehaviour
                 {
                     eventPosition = guard.transform.position;
                     Instantiate(keyPrefab, eventPosition, Quaternion.identity);
+                }
+                else
+                {
+                    eventSuccess = false;
+                }
+                break;
+            case "npc_speaks":
+                NpcNav NPC = gameEvent.relatedObject.GetComponent<NpcNav>();
+                if (NPC != null)
+                {
+                    eventPosition = NPC.transform.position;
+                    NPC.HandleDialogue();
+                    NPC.dialogueTriggered = true;
                 }
                 else
                 {
