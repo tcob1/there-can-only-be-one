@@ -4,6 +4,8 @@ using UnityEngine.AI;
 public class NpcNav : MonoBehaviour
 {
     public enum NPCState { Wandering, Running }
+    public GameObject player;
+    public DialogueTrigger dialogueTrigger;
 
     [Header("Patrol")]
     public Transform[] wanderPoints;
@@ -30,7 +32,9 @@ public class NpcNav : MonoBehaviour
     private float lastScanTime = 0f;
     private Transform trackedThreat = null;
 
-    // Reusable buffer — shared across ALL NPC instances to avoid per-scan allocation
+    public bool dialogueTriggered = false;
+
+    // Reusable buffer shared across ALL NPC instances to avoid per-scan allocation
     private static readonly Collider[] scanBuffer = new Collider[32];
 
     // Layer mask set in Start to only scan relevant layers
@@ -74,6 +78,7 @@ public class NpcNav : MonoBehaviour
             case NPCState.Wandering:
                 ThrottledScan();
                 HandleWandering();
+                HandleDialogue();
                 break;
 
             case NPCState.Running:
@@ -81,6 +86,19 @@ public class NpcNav : MonoBehaviour
                 HandleRunning();
                 CheckCalmDown();
                 break;
+        }
+    }
+
+    public void HandleDialogue()
+    {
+        if (player)
+        {
+            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            if (distanceToPlayer < 10f && !dialogueTriggered)
+            {
+                dialogueTriggered = true;
+                dialogueTrigger.Interact();
+            }
         }
     }
 
