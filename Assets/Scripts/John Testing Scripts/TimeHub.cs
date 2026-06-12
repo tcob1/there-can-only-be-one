@@ -11,7 +11,7 @@ public class TimeHub : MonoBehaviour
     public TextMeshProUGUI clock;
 
     private long time;
-    public int START_TIME = 10000;
+    public int START_TIME = 0;
     public int FIXED_UPDATE_RATE = 10;
     private int subsecondCounter = 0;
 
