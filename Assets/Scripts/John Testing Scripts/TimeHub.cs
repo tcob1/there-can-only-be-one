@@ -225,7 +225,7 @@ public class TimeHub : MonoBehaviour
 
         sec = time;
 
-        clock.text = "Day " + day + "\n" + hour + " : " + min + " : " + sec;
+        clock.text = hour + " : " + min + " : " + sec;
     }
 
     public long nextSec(long time)

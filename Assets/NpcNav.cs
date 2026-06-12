@@ -17,7 +17,9 @@ public class NpcNav : MonoBehaviour
 
     [Header("Performance")]
     [Tooltip("Seconds between each vision/threat scan. Stagger this per NPC.")]
-    public float scanInterval = 0.2f;
+    public float scanInterval = 0.5f;
+    [Tooltip("Beyond this distance from player, NPC skips all updates.")]
+    public float cullingDistance = 80f;
 
     public NPCState currentNPCState = NPCState.Wandering;
 
@@ -29,12 +31,12 @@ public class NpcNav : MonoBehaviour
     private float lastThreatTime = -Mathf.Infinity;
     private float lastScanTime = 0f;
     private Transform trackedThreat = null;
+    private bool isCulled = false;
 
-    // Reusable buffer — shared across ALL NPC instances to avoid per-scan allocation
     private static readonly Collider[] scanBuffer = new Collider[32];
-
-    // Layer mask set in Start to only scan relevant layers
     private static int threatLayerMask = -1;
+    private static Transform playerTransform;
+    private float cullingDistanceSqr;
 
     void Start()
     {
@@ -46,12 +48,18 @@ public class NpcNav : MonoBehaviour
         baseAcceleration = agent.acceleration;
         baseAngularSpeed = agent.angularSpeed;
 
-        // Randomise first scan so all NPCs don't all scan on frame 1
         lastScanTime = Time.time + Random.Range(0f, scanInterval);
 
-        // Build layer mask once 
         if (threatLayerMask == -1)
-            threatLayerMask = LayerMask.GetMask("Entity", "Player");
+            threatLayerMask = LayerMask.GetMask("NPC", "Player");
+
+        cullingDistanceSqr = cullingDistance * cullingDistance;
+
+        if (playerTransform == null)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null) playerTransform = player.transform;
+        }
 
         GlobalEvents.Instance.OnPlayerShoot += OnHearNoise;
     }
@@ -64,10 +72,32 @@ public class NpcNav : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (playerTransform != null)
+        {
+            float sqrDist = (transform.position - playerTransform.position).sqrMagnitude;
+            bool shouldCull = sqrDist > cullingDistanceSqr;
+
+            if (shouldCull != isCulled)
+            {
+                isCulled = shouldCull;
+                agent.enabled = !shouldCull;
+
+                if (!isCulled) // just re-enabled, refresh destination
+                {
+                    if (currentNPCState == NPCState.Wandering && wanderPoints.Length > 0)
+                        agent.SetDestination(wanderPoints[currentPointIndex].position);
+                    else if (currentNPCState == NPCState.Running && trackedThreat != null)
+                        agent.SetDestination(trackedThreat.position);
+                }
+            }
+
+            if (isCulled) return;
+        }
+
         float simScale = TimeHub.Instance.CurrentSimScale;
         agent.speed = baseSpeed * simScale;
-        agent.acceleration = baseAcceleration * simScale * 4f;
-        agent.angularSpeed = baseAngularSpeed * simScale * 10f;
+        agent.acceleration = baseAcceleration * Mathf.Min(simScale * 4f, 100f);
+        agent.angularSpeed = baseAngularSpeed * Mathf.Min(simScale * 10f, 720f);
 
         switch (currentNPCState)
         {
@@ -91,37 +121,31 @@ public class NpcNav : MonoBehaviour
         ScanForArmedEntities();
     }
 
-    // Scans all nearby entities within detectRange and detectAngle for anyone holding a gun
     private void ScanForArmedEntities()
     {
-        // Grab every collider in range
-        Collider[] nearby = Physics.OverlapSphere(transform.position, detectRange);
+        int count = Physics.OverlapSphereNonAlloc(
+            transform.position, detectRange, scanBuffer, threatLayerMask);
 
-        foreach (Collider col in nearby)
+        float halfAngle = detectAngle * 0.5f;
+
+        for (int i = 0; i < count; i++)
         {
+            Collider col = scanBuffer[i];
             if (col.gameObject == gameObject) continue;
 
-            // Angle check
             Vector3 dirToTarget = (col.transform.position - transform.position).normalized;
-            float angle = Vector3.Angle(transform.forward, dirToTarget);
+            if (Vector3.Angle(transform.forward, dirToTarget) > halfAngle) continue;
 
-            if (angle > detectAngle * 0.5f) continue;
-
-            // Gun check via currentHeldItem
             Inventory entity_inv = col.GetComponent<Inventory>();
-
             if (entity_inv == null) continue;
 
             if (IsGun(entity_inv.currentHeldItem))
             {
                 trackedThreat = col.transform;
-
                 lastThreatTime = Time.time;
-
                 if (currentNPCState != NPCState.Running)
                     SwapToRunning();
-
-                return; // One armed entity is enough to stay alarmed
+                return;
             }
         }
     }
@@ -129,7 +153,7 @@ public class NpcNav : MonoBehaviour
     private bool IsGun(GameObject heldItem)
     {
         if (heldItem == null) return false;
-        return heldItem.name == "Pistol(Clone)";
+        return heldItem.GetComponent<Gun>() != null;
     }
 
     private void OnHearNoise(Vector3 noisePosition)
@@ -172,10 +196,9 @@ public class NpcNav : MonoBehaviour
         }
     }
 
-    // Cached flee destination to only recalculate when threat moves significantly
     private Vector3 cachedFleeDestination;
     private Vector3 lastThreatPos;
-    private const float fleePosUpdateThreshold = 3f;
+    private float fleePosUpdateThresholdSqr = 9f;
 
     private void HandleRunning()
     {
@@ -183,18 +206,15 @@ public class NpcNav : MonoBehaviour
             ? trackedThreat.position
             : transform.position;
 
-        // Only re-sample if the threat has moved enough to matter
-        if (Vector3.Distance(fleeOrigin, lastThreatPos) < fleePosUpdateThreshold
-            && cachedFleeDestination != Vector3.zero)
-        {
+        float sqrMoved = (fleeOrigin - lastThreatPos).sqrMagnitude;
+        if (sqrMoved < fleePosUpdateThresholdSqr && cachedFleeDestination != Vector3.zero)
             return;
-        }
 
         lastThreatPos = fleeOrigin;
 
         Vector3 bestPos = transform.position;
         float bestDist = 0f;
-        const int samples = 8;
+        const int samples = 6;
 
         for (int i = 0; i < samples; i++)
         {
@@ -204,7 +224,7 @@ public class NpcNav : MonoBehaviour
 
             if (NavMesh.SamplePosition(candidate, out NavMeshHit hit, detectRange, NavMesh.AllAreas))
             {
-                float dist = Vector3.Distance(fleeOrigin, hit.position);
+                float dist = (fleeOrigin - hit.position).sqrMagnitude;
                 if (dist > bestDist)
                 {
                     bestDist = dist;

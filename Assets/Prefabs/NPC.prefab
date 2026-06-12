@@ -109,11 +109,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wanderPoints:
   - {fileID: 0}
-  hearingRange: 50
-  detectRange: 100
+  hearingRange: 30
+  detectRange: 50
   detectAngle: 90
   calmDownTime: 5
   scanInterval: 2
+  cullingDistance: 60
   currentNPCState: 0
 --- !u!1001 &6240930155853289860
 PrefabInstance:

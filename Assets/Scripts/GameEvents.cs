@@ -82,7 +82,7 @@ public class GameEvents : MonoBehaviour
             if (gameEvent.hasTriggered && gameEvent.triggerTime > currentTime)
             {
                 gameEvent.hasTriggered = false;
-                Debug.Log($"(GameEvents) '{gameEvent.id}' has been reset");
+
             }
         }
 
