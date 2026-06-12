@@ -793,11 +793,20 @@ PrefabInstance:
       propertyPath: uniqueID
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8267771201290427973, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: d6a122630b6d04d458f514ebe6f516de, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
+--- !u!1 &13398575 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5721389327632959223, guid: 9e372becd5294944c94d576a6e0544fa, type: 3}
+  m_PrefabInstance: {fileID: 13398574}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &14198007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37209,26 +37218,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   events:
-  - id: guard_drops_key
-    description: Guard drops key
-    triggerTimeString: 0:0:40
-    triggerTime: 0
-    hasTriggered: 0
-  - id: guard_opens_safe
-    description: Guard opens safe
-    triggerTimeString: 0:0:15
-    triggerTime: 0
-    hasTriggered: 0
-  - id: guard_closes_safe
-    description: Guard closes safe
-    triggerTimeString: 0:0:25
-    triggerTime: 0
-    hasTriggered: 0
   - id: guard_walk_to_safe
     description: Guard walks to safe
     triggerTimeString: 0:0:5
     triggerTime: 0
     hasTriggered: 0
+    relatedObject: {fileID: 0}
+  - id: guard_drops_key
+    description: Guard drops key
+    triggerTimeString: 0:0:30
+    triggerTime: 0
+    hasTriggered: 0
+    relatedObject: {fileID: 0}
+  - id: guard_opens_safe
+    description: Guard opens safe
+    triggerTimeString: 0:0:15
+    triggerTime: 0
+    hasTriggered: 0
+    relatedObject: {fileID: 0}
+  - id: guard_closes_safe
+    description: Guard closes safe
+    triggerTimeString: 0:0:25
+    triggerTime: 0
+    hasTriggered: 0
+    relatedObject: {fileID: 0}
+  - id: npc_speaks
+    description: Clerk speaks
+    triggerTimeString: 0:0:10
+    triggerTime: 0
+    hasTriggered: 0
+    relatedObject: {fileID: 13398575}
   keyPrefab: {fileID: 2762554950203291354, guid: 2fbab5f68d4dac214a80534b7f98dbde, type: 3}
   safeDoor: {fileID: 1436084356}
   safeInteractPosition: {fileID: 655581135}
