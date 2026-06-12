@@ -117,7 +117,6 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        Debug.Log("Inventory full!");
         return false;
     }
 
@@ -197,7 +196,6 @@ public class Inventory : MonoBehaviour
             if (!itemSlots[i].IsEmpty() &&
                  itemSlots[i].itemData.itemName == itemName)
             {
-                Debug.Log("Equipping: " +  itemName);
                 EquipSlot(i);
                 return;
             }

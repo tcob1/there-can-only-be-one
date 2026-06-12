@@ -64,8 +64,7 @@ public class GuardNav : MonoBehaviour
 
     void OnEnable()
     {
-        //Debug.Log(GlobalEvents.Instance);
-        //GlobalEvents.Instance.OnPlayerShoot += OnHearNoise;
+
     }
 
     void OnDisable()
@@ -156,7 +155,6 @@ public class GuardNav : MonoBehaviour
 
     private void SwapToPatrolling()
     {
-        //Debug.Log("Swapping to patrolling");
         currentGuardState = GuardState.Patrolling;
         if (patrolPoints.Length > 0)
         {
@@ -205,10 +203,6 @@ public class GuardNav : MonoBehaviour
 
     private void SwapToChasing()
     {
-        //Debug.Log("Swapping to chasing");
-        //animator.SetBool("isRunning", true);
-
-
         currentGuardState = GuardState.Chasing;
         inv.GuardEquipByName("Gun");
         lastKnownPlayerPosition = player.transform.position;
@@ -257,7 +251,6 @@ public class GuardNav : MonoBehaviour
 
     private void SwapToSearching()
     {
-        //Debug.Log("Swapping to searching");
         currentGuardState = GuardState.Searching;
         agent.SetDestination(lastKnownPlayerPosition); // Stop moving to search
     }
@@ -293,7 +286,6 @@ public class GuardNav : MonoBehaviour
 
     private void SwapToShooting()
     {
-        //Debug.Log("Swapping to shooting");
         currentGuardState = GuardState.Shooting;
         agent.SetDestination(transform.position); // Stop moving to shoot
     }
@@ -340,7 +332,6 @@ public class GuardNav : MonoBehaviour
 
     private void SwapToInspecting(GameObject interactable)
     {
-        //Debug.Log("Swapping To Inspecting");
         currentGuardState = GuardState.Inspecting;
         targetInteractable = interactable;
         agent.SetDestination(targetInteractable.transform.position);
@@ -365,10 +356,6 @@ public class GuardNav : MonoBehaviour
         if (distToObj <= pickupRange)
         {
             Interactable inter = targetInteractable.GetComponent<Interactable>();
-            if (inter != null)
-            {
-                //Debug.Log($"Picking Up Item: {targetInteractable.name}");
-            }
             inter?.Interact(guard);
             Destroy(targetInteractable);
             targetInteractable = null;

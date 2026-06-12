@@ -29,6 +29,5 @@ public class EventLogger : MonoBehaviour
     public void Log(LoggedEvent loggedEvent)
     {
         loggedEvents.Add(loggedEvent);
-        //Debug.Log($"Logged: [{loggedEvent.gameTime}] {loggedEvent.description}");
     }
 }

@@ -76,7 +76,6 @@ public class GameManager : MonoBehaviour
         if (!IsGameRunning) return;
         IsGameRunning = false;
         OnGameWin?.Invoke();
-        Debug.Log("Game Won!");
         // temporary
         SFXManager.Instance.StopLoopingMusic();
         SceneManager.LoadScene("MainMenu");

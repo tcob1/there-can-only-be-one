@@ -93,7 +93,6 @@ public class Door : StatefulInteractable
         }
         if (State != DoorState.Closed)
         {
-            Debug.Log("Cannot open door: " + State);
             SFXManager.Instance.PlaySFX("DoorInvalid");
             return;
         }
