@@ -17,7 +17,6 @@ public abstract class WorldItem : MonoBehaviour
 
         if (interactable == null)
         {
-            Debug.LogError("WorldItem requires an Interactable component!");
             return;
         }
         

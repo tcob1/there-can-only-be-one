@@ -8,7 +8,6 @@ public class HealthManager : MonoBehaviour
     public void TakeDamage(float amount)
     {
         health -= amount;
-        Debug.Log(gameObject.name + " took " + amount + " damage. Health is now " + health);
         if (health <= 0)
         {
             Die();

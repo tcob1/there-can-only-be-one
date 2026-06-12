@@ -33,7 +33,6 @@ public class Interactable : MonoBehaviour
 
     public string GetHoverText(GameObject interactor = null, string state = null)
     {
-        //Debug.Log($"GetHoverText called on {gameObject.name} | state: {state} | interactor: {interactor?.name}");
 
         if (hoverTextRules != null)
         {
@@ -45,17 +44,12 @@ public class Interactable : MonoBehaviour
                 bool itemMatch = rule.requiredItem == null ||
                                 (inventory != null && inventory.HasItem(rule.requiredItem));
 
-                //Debug.Log($"Rule: state={rule.state} item={rule.requiredItem?.name} text={rule.hoverText} | stateMatch={stateMatch} itemMatch={itemMatch}");
-
                 if (stateMatch && itemMatch)
                 {
-                    //Debug.Log($"Matched rule: {rule.hoverText}");
                     return rule.hoverText;
                 }
             }
         }
-
-        //Debug.Log($"No rule matched, returning default: {hoverText}");
         return hoverText;
     }
 

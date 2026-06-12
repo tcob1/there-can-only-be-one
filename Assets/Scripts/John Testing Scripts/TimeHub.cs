@@ -11,7 +11,7 @@ public class TimeHub : MonoBehaviour
     public TextMeshProUGUI clock;
 
     private long time;
-    public int START_TIME = 10000;
+    public int START_TIME = 0;
     public int FIXED_UPDATE_RATE = 10;
     private int subsecondCounter = 0;
 
@@ -123,13 +123,11 @@ public class TimeHub : MonoBehaviour
 
     public void timeForewards(int newTime)
     {
-        Debug.Log("Traveled " + newTime + " seconds forewards");
         goalTime = time + newTime;
     }
 
     public void timeBackwards(int newTime)
     {
-        Debug.Log("Traveled " + newTime + " seconds backwards");
         time = Math.Max(time - newTime, START_TIME);
 
         Dictionary<string, Dictionary<string, object>> currStates = StateRegistry.Instance.GetAllStates();
@@ -143,11 +141,9 @@ public class TimeHub : MonoBehaviour
             {
                 if (stateChanges.Count == 1)
                 {
-                    Debug.LogWarning($"Stopping state change removal at initial state; likely traveled back past limit or this object was instantiated late.");
                 }
                 else if (stateChanges.Count == 0)
                 {
-                    Debug.LogWarning($"Timeline is Empty, how tf did you manage to do that?");
                 }
                 else
                 {
@@ -188,7 +184,6 @@ public class TimeHub : MonoBehaviour
             //print($"Change Logged: {id} changed at time {stateChange.timeStamp}");
 
         }
-        else Debug.LogWarning($"Interactable with ID {id} is not in the timeline.");
 
     }
 
@@ -225,7 +220,7 @@ public class TimeHub : MonoBehaviour
 
         sec = time;
 
-        clock.text = "Day " + day + "\n" + hour + " : " + min + " : " + sec;
+        clock.text = hour + " : " + min + " : " + sec;
     }
 
     public long nextSec(long time)
